@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Product } from '../types';
+
 const { setProducts, updateProductList } = useProducts();
 const route = useRoute();
 const { storeSettings } = useAppConfig();
@@ -21,7 +23,7 @@ watch(
 );
 
 useHead({
-  title: `Products`,
+  title: 'Products',
   meta: [{ hid: 'description', name: 'description', content: 'Products' }],
 });
 </script>

@@ -1,4 +1,15 @@
 <script setup lang="ts">
+useHead({
+  bodyAttrs: {
+    class: 'dark:bg-gray-900',
+  },
+});
+const colorMode = useColorMode();
+
+colorMode.forced = true;
+colorMode.preference = 'dark';
+
+const color = computed(() => (colorMode.value === 'dark' ? '#111827' : 'white'));
 const route = useRoute();
 const { isShowingCart, toggleCart } = useCart();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
@@ -24,7 +35,8 @@ useHead({
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div>
+    <NuxtLoadingIndicator color="#987f57" />
     <AppHeader />
 
     <Transition name="slide-from-right">
@@ -35,40 +47,21 @@ useHead({
       <MobileMenu v-if="isShowingMobileMenu" />
     </Transition>
 
-    <NuxtPage />
+    <Main>
+      <NuxtPage />
+    </Main>
 
     <Transition name="fade">
       <div v-if="isShowingCart || isShowingMobileMenu" class="bg-black opacity-25 inset-0 z-40 fixed" @click="closeCartAndMenu" />
     </Transition>
 
     <AppFooter />
+    <UNotifications />
+    <UModals />
   </div>
 </template>
 
-<style lang="postcss">
-html,
-body {
-  @apply bg-gray-100 text-gray-900;
-  scroll-behavior: smooth;
-}
-
-img {
-  image-rendering: crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-}
-
-pre {
-  @apply rounded bg-gray-800 my-8 text-xs text-white p-4 whitespace-pre-wrap overflow-auto;
-}
-
-select {
-  @apply bg-white border rounded-md font-medium border-gray-300 flex-1 text-sm p-1.5 pr-12 pl-4 text-gray-500 relative inline-flex items-center hover:bg-gray-50 focus:z-20 py-2 px-4 appearance-none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M4 6l4 4 4-4'/%3E%3C/svg%3E")
-    center right 10px no-repeat;
-  background-size: 1rem;
-  padding-right: 2.5rem;
-}
-
+<style>
 /* Slide-from-right & Slide-from-left */
 .slide-from-right-leave-active,
 .slide-from-right-enter-active,
@@ -126,11 +119,14 @@ select {
 
 .custom-scrollbar::-webkit-scrollbar-track,
 .custom-scrollbar::-webkit-scrollbar {
-  @apply rounded bg-gray-100 w-1.5;
+  border-radius: 0.375rem;
+  background-color: #f7fafc;
+  width: 0.375rem;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply rounded bg-gray-400;
+  border-radius: 0.375rem;
+  background-color: #a0aec0;
 }
 
 @keyframes fadeIn {

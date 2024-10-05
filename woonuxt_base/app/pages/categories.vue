@@ -3,9 +3,9 @@ const { data } = await useAsyncGql('getProductCategories');
 const productCategories = data.value.productCategories?.nodes as ProductCategory[];
 
 useHead({
-  title: `Categories`,
+  title: 'Categories',
   meta: [{ name: 'description', content: 'All product categories' }],
-  link: [{ rel: 'canonical', href: 'https://v3.woonuxt.com/categories' }],
+  link: [{ rel: 'canonical', href: 'https://stonecolddown.com/categories' }],
 });
 </script>
 

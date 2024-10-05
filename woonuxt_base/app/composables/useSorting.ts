@@ -40,9 +40,13 @@ export function useSorting() {
       const aPrice = a.rawPrice ? parseFloat([...a.rawPrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b))))) : 0;
       const bPrice = b.rawPrice ? parseFloat([...b.rawPrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b))))) : 0;
       const aSalePrice: number = a.rawSalePrice ? parseFloat([...a.rawSalePrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b))))) : 0;
-      const aRegularPrice: number = a.rawRegularPrice ? parseFloat([...a.rawRegularPrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b))))) : 0;
+      const aRegularPrice: number = a.rawRegularPrice
+        ? parseFloat([...a.rawRegularPrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b)))))
+        : 0;
       const bSalePrice: number = b.rawSalePrice ? parseFloat([...b.rawSalePrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b))))) : 0;
-      const bRegularPrice: number = b.rawRegularPrice ? parseFloat([...b.rawRegularPrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b))))) : 0;
+      const bRegularPrice: number = b.rawRegularPrice
+        ? parseFloat([...b.rawRegularPrice.split(',')].reduce((a, b) => String(Math.max(Number(a), Number(b)))))
+        : 0;
       const aDiscount: number = a.onSale ? Math.round(((aSalePrice - aRegularPrice) / aRegularPrice) * 100) : 0;
       const bDiscount: number = b.onSale ? Math.round(((bSalePrice - bRegularPrice) / bRegularPrice) * 100) : 0;
       const aName: string = a.name || '';

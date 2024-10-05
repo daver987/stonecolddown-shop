@@ -1,6 +1,32 @@
 <script lang="ts" setup>
 import { ProductsOrderByEnum } from '#woo';
+import type { Review } from '../types';
+import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
+});
+
+const bio = {
+  headline: 'Meet The Artist',
+  title: 'Natasha Smith',
+  description:
+    'Natasha Smith is a talented tattoo artist specializing in fine line black and grey tattoos. With years of experience and a passion for creating unique, personalized designs, Natasha brings your vision to life through her artistry.',
+  align: 'left' as 'left' | 'center' | 'right' | undefined,
+  links: [
+    {
+      label: 'Learn More',
+      color: 'primary' as ButtonColor,
+      size: 'md' as ButtonSize,
+      variant: 'outline' as ButtonVariant,
+    },
+  ],
+};
+
 const { siteName, description, shortDescription, siteImage } = useAppConfig();
+
+const { data: reviews } = await useFetch<Review[]>('/api/reviews');
 
 const { data } = await useAsyncGql('getProductCategories', { first: 6 });
 const productCategories = data.value?.productCategories?.nodes || [];
@@ -9,28 +35,18 @@ const { data: productData } = await useAsyncGql('getProducts', { first: 5, order
 const popularProducts = productData.value.products?.nodes || [];
 
 useSeoMeta({
-  title: `Home`,
+  title: 'Home',
   ogTitle: siteName,
   description: description,
   ogDescription: shortDescription,
   ogImage: siteImage,
-  twitterCard: `summary_large_image`,
+  twitterCard: 'summary_large_image',
 });
 </script>
 
 <template>
-  <main>
+  <Page>
     <HeroBanner />
-
-    <div class="container flex flex-wrap items-center justify-center my-16 text-center gap-x-8 gap-y-4 brand lg:justify-between">
-      <img src="/images/logoipsum-211.svg" alt="Brand 1" width="132" height="35" />
-      <img src="/images/logoipsum-221.svg" alt="Brand 2" width="119" height="30" />
-      <img src="/images/logoipsum-225.svg" alt="Brand 3" width="49" height="48" />
-      <img src="/images/logoipsum-280.svg" alt="Brand 4" width="78" height="30" />
-      <img src="/images/logoipsum-284.svg" alt="Brand 5" width="70" height="44" />
-      <img src="/images/logoipsum-215.svg" alt="Brand 6" width="132" height="40" />
-    </div>
-
     <section class="container my-16">
       <div class="flex items-end justify-between">
         <h2 class="text-lg font-semibold md:text-2xl">{{ $t('messages.shop.shopByCategory') }}</h2>
@@ -74,15 +90,43 @@ useSeoMeta({
 
     <section class="container my-16" v-if="popularProducts">
       <div class="flex items-end justify-between">
-        <h2 class="text-lg font-semibold md:text-2xl">{{ $t('messages.shop.popularProducts') }}</h2>
+        <h2 class="text-lg font-medium md:text-2xl">{{ $t('messages.shop.popularProducts') }}</h2>
         <NuxtLink class="text-primary" to="/products">{{ $t('messages.general.viewAll') }}</NuxtLink>
       </div>
       <ProductRow :products="popularProducts" class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-8" />
     </section>
-  </main>
+    <Reviews :reviews="reviews || []" />
+
+    <LandingSection>
+      <LandingCTA
+        :ui="{
+          title: 'text-3xl font-heading text-amber-400',
+        }"
+        title="Ready to Get Inked?"
+        description="Book your appointment with Natasha today and start your tattoo journey."
+        :links="[
+          {
+            label: 'Book Now',
+            color: 'white',
+            size: 'lg',
+            to: '/booking',
+          },
+        ]" />
+    </LandingSection>
+  </Page>
 </template>
 
-<style scoped>
+<style>
+#myVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
 .brand img {
   max-height: min(8vw, 120px);
   object-fit: contain;

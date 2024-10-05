@@ -1,3 +1,31 @@
+<script setup lang="ts">
+const { viewer, customer } = useAuth();
+const { t } = useI18n();
+
+const loading = ref<boolean>(false);
+const button = ref<{ text: string; color: string }>({ text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
+
+async function saveChanges(): Promise<void> {
+  loading.value = true;
+  button.value.text = t('messages.account.updating');
+  const shipping = customer.value.shipping;
+  const billing = customer.value.billing;
+
+  try {
+    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value?.id, shipping, billing } });
+    if (updateCustomer) button.value = { text: t('messages.account.updateSuccess'), color: 'bg-green-500' };
+  } catch (error) {
+    button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
+  }
+
+  loading.value = false;
+
+  setTimeout(() => {
+    button.value = { text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' };
+  }, 2000);
+}
+</script>
+
 <template>
   <form class="bg-white rounded-lg shadow" @submit.prevent="saveChanges">
     <div class="grid p-8 gap-6 md:grid-cols-2">
@@ -129,31 +157,3 @@
     </div>
   </form>
 </template>
-
-<script setup lang="ts">
-const { viewer, customer } = useAuth();
-const { t } = useI18n();
-
-const loading = ref<boolean>(false);
-const button = ref<{ text: string; color: string }>({ text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
-
-async function saveChanges(): Promise<void> {
-  loading.value = true;
-  button.value.text = t('messages.account.updating');
-  const shipping = customer.value.shipping;
-  const billing = customer.value.billing;
-
-  try {
-    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value.id, shipping, billing } });
-    if (updateCustomer) button.value = { text: t('messages.account.updateSuccess'), color: 'bg-green-500' };
-  } catch (error) {
-    button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
-  }
-
-  loading.value = false;
-
-  setTimeout(() => {
-    button.value = { text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' };
-  }, 2000);
-}
-</script>

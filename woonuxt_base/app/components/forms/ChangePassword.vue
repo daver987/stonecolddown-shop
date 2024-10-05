@@ -1,9 +1,58 @@
+<script setup lang="ts">
+const { viewer, loginUser } = useAuth();
+const { t } = useI18n();
+
+const password = ref<{ new: string; confirm: string }>({ new: '', confirm: '' });
+const loading = ref<boolean>(false);
+const button = ref<{ text: string; color: string }>({ text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' });
+const errorMessage = ref<string>('');
+
+// Add this line to store the username
+const username = ref(viewer.value?.username || '');
+
+const updatePassword = async () => {
+  errorMessage.value = '';
+  if (password.value.new !== password.value.confirm) {
+    errorMessage.value = t('messages.error.passwordMismatch');
+    return;
+  }
+
+  try {
+    loading.value = true;
+    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value.id, password: password.value.new } });
+    if (updateCustomer) {
+      button.value = { text: t('messages.account.updateSuccess'), color: 'bg-green-500' };
+      const { success, error } = await loginUser({ username: viewer.value.username, password: password.value.new });
+      if (error) {
+        errorMessage.value = error;
+        button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
+      }
+      if (success) {
+        password.value = { new: '', confirm: '' };
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    const gqlError = error?.graphQLErrors?.[0]?.message ?? error?.message;
+    errorMessage.value = gqlError || 'An error occurred. Please try again.';
+    button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
+  }
+
+  loading.value = false;
+
+  setTimeout(() => {
+    button.value = { text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' };
+  }, 2000);
+};
+</script>
+
 <template>
   <form class="bg-white rounded-lg shadow mt-4" @submit.prevent="updatePassword">
     <div class="grid p-8 gap-6 md:grid-cols-2">
       <h3 class="font-semibold text-xl col-span-full">{{ $t('messages.account.changePassword') }}</h3>
 
-      <input type="text" v-model="viewer.username" name="username" autocomplete="username" style="display: none;"/>
+      <!-- Replace the problematic input with this -->
+      <input type="text" v-model="username" name="username" autocomplete="username" style="display: none" />
 
       <div class="w-full">
         <label for="new-password">{{ $t('messages.account.newPassword') }}</label>
@@ -31,48 +80,3 @@
     </div>
   </form>
 </template>
-
-<script setup lang="ts">
-const { viewer, loginUser } = useAuth();
-const { t } = useI18n();
-
-const password = ref<{ new: string; confirm: string }>({ new: '', confirm: '' });
-const loading = ref<boolean>(false);
-const button = ref<{ text: string; color: string }>({ text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' });
-const errorMessage = ref<string>('');
-
-const updatePassword = async () => {
-  errorMessage.value = '';
-  if (password.value.new !== password.value.confirm) {
-    errorMessage.value = t('messages.error.passwordMismatch');
-    return;
-  }
-
-  try {
-    loading.value = true;
-    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value.id, password: password.value.new } });
-    if (updateCustomer) {
-      button.value = { text: t('messages.account.updateSuccess'), color: 'bg-green-500' };
-      const { success, error } = await loginUser({ username: viewer.value.username, password: password.value.new });
-      if (error) {
-        errorMessage.value = error;
-        button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
-      }
-      if (success) {
-        password.value = { new: '', confirm: '' };
-      }
-    }
-  } catch (error) {
-    console.error(error);
-    const gqlError = error?.gqlErrors?.[0]?.message;
-    errorMessage.value = gqlError || 'An error occurred. Please try again.';
-    button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
-  }
-
-  loading.value = false;
-
-  setTimeout(() => {
-    button.value = { text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' };
-  }, 2000);
-};
-</script>

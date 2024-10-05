@@ -49,8 +49,8 @@ const handlePasswordReset = async () => {
     }
 
     router.push('/my-account');
-  } catch (error: any) {
-    errorMessage.value = error.message || t('messages.error.general');
+  } catch (error: unknown) {
+    errorMessage.value = (error as Error).message || t('messages.error.general');
   } finally {
     isPending.value = false;
   }
@@ -64,7 +64,7 @@ useHead({
 <template>
   <div class="max-w-lg mx-auto my-16 min-h-[600px] lg:my-24">
     <div class="flex flex-col items-center">
-      <Logo class="mb-6 scale-125" />
+      <Logo size="lg" text />
       <h1 class="text-xl font-semibold lg:text-3xl">{{ $t('messages.account.resetPassword') }}</h1>
     </div>
 

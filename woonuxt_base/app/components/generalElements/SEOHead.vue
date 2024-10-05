@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Product } from '../../types';
+
 const { frontEndUrl, wooNuxtSEO, isDev, stripHtml } = useHelpers();
 const { path } = useRoute();
 const { info } = defineProps({ info: { type: Object as PropType<Product>, required: true } });
@@ -17,8 +19,8 @@ const getFullImageURL = (url: string) => {
   return `${frontEndUrl}${url}`;
 };
 
-const defaultImage = getFullImageURL(defaultImageSrc);
-const twitterImage = getFullImageURL(twitterImageSrc);
+const defaultImage = getFullImageURL(defaultImageSrc as string);
+const twitterImage = getFullImageURL(twitterImageSrc as string);
 const description = info.shortDescription || info.description ? stripHtml(info.shortDescription || '') : stripHtml(info.description || '');
 
 const facebook = wooNuxtSEO?.find((item) => item.provider === 'facebook') ?? null;

@@ -7,7 +7,7 @@ const activeTab = computed(() => route.query.tab || 'my-details');
 const showLoader = computed(() => !cart.value);
 
 useSeoMeta({
-  title: `My Account`,
+  title: 'My Account',
 });
 </script>
 

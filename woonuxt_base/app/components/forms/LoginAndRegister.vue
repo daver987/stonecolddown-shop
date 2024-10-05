@@ -1,7 +1,123 @@
+<script setup lang="ts">
+import type { CreateAccountInput, RegisterCustomerInput } from '#gql';
+
+const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const { loginUser, isPending, registerUser, sendResetPasswordEmail } = useAuth();
+const userInfo = ref({ email: '', password: '', username: '' });
+const formView = ref('login');
+const message = ref('');
+const errorMessage = ref('');
+
+const updateFormView = () => {
+  if (route.query.action === 'forgotPassword') {
+    formView.value = 'forgotPassword';
+  } else if (route.query.action === 'register') {
+    formView.value = 'register';
+  } else {
+    formView.value = 'login';
+  }
+};
+watch(route, updateFormView, { immediate: true });
+
+const login = async (userInfo: unknown) => {
+  const { success, error } = await loginUser(userInfo as CreateAccountInput);
+  switch (error) {
+    case 'invalid_username':
+      errorMessage.value = t('messages.error.invalidUsername');
+      break;
+    case 'incorrect_password':
+      errorMessage.value = t('messages.error.incorrectPassword');
+      break;
+    default:
+      errorMessage.value = error;
+      break;
+  }
+
+  if (success) {
+    errorMessage.value = '';
+    message.value = t('messages.account.loggingIn');
+  }
+};
+
+const handleFormSubmit = async (userInfo: unknown) => {
+  if (formView.value === 'register') {
+    const { success, error } = await registerUser(userInfo as RegisterCustomerInput);
+    if (success) {
+      errorMessage.value = '';
+      message.value = t('messages.account.accountCreated') + ' ' + t('messages.account.loggingIn');
+      setTimeout(() => {
+        login(userInfo);
+      }, 2000);
+    } else {
+      errorMessage.value = error;
+    }
+  } else if (formView.value === 'forgotPassword') {
+    resetPassword(userInfo as { email: string });
+  } else {
+    login(userInfo);
+  }
+};
+
+const resetPassword = async (userInfo: { email: string }) => {
+  const { success, error } = await sendResetPasswordEmail(userInfo.email);
+  if (success) {
+    errorMessage.value = '';
+    message.value = t('messages.account.ifRegistered');
+  } else {
+    errorMessage.value = error;
+  }
+};
+
+const navigate = (view: string) => {
+  formView.value = view;
+  if (view === 'forgotPassword') {
+    router.push({ query: { action: 'forgotPassword' } });
+  } else if (view === 'register') {
+    router.push({ query: { action: 'register' } });
+  } else {
+    router.push({ query: {} });
+  }
+};
+
+const formTitle = computed(() => {
+  if (formView.value === 'login') {
+    return t('messages.account.loginToAccount');
+  } else if (formView.value === 'register') {
+    return t('messages.account.accountRegister');
+  } else if (formView.value === 'forgotPassword') {
+    return t('messages.account.forgotPassword');
+  }
+});
+
+const buttonText = computed(() => {
+  if (formView.value === 'login') {
+    return t('messages.account.login');
+  } else if (formView.value === 'register') {
+    return t('messages.account.register');
+  } else if (formView.value === 'forgotPassword') {
+    return t('messages.account.sendPasswordResetEmail');
+  }
+});
+
+const emailLabel = computed(() => (formView.value === 'register' ? t('messages.billing.email') : t('messages.account.emailOrUsername')));
+const usernameLabel = computed(() => (formView.value === 'login' ? t('messages.account.emailOrUsername') : t('messages.account.username')));
+const passwordLabel = computed(() => t('messages.account.password'));
+
+const inputPlaceholder = computed(() => {
+  return {
+    email: 'johndoe@email.com',
+    username: formView.value === 'login' ? 'johndoe@email.com' : 'johndoe',
+    password: '********',
+  };
+});
+</script>
+
 <template>
   <div class="max-w-lg mx-auto my-16 min-h-[600px] lg:my-24">
     <div class="flex flex-col items-center">
-      <Logo class="mb-6 scale-125" />
+      <Logo size="lg" text />
       <h1 class="text-xl font-semibold lg:text-3xl">{{ formTitle }}</h1>
       <div v-if="formView === 'login'" class="my-2 text-center">
         {{ $t('messages.account.noAccount') }}
@@ -58,127 +174,26 @@
   </div>
 </template>
 
-<script setup lang="ts">
-const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
-const { loginUser, isPending, registerUser, sendResetPasswordEmail } = useAuth();
-const userInfo = ref({ email: '', password: '', username: '' });
-const formView = ref('login');
-const message = ref('');
-const errorMessage = ref('');
-
-const updateFormView = () => {
-  if (route.query.action === 'forgotPassword') {
-    formView.value = 'forgotPassword';
-  } else if (route.query.action === 'register') {
-    formView.value = 'register';
-  } else {
-    formView.value = 'login';
-  }
-};
-watch(route, updateFormView, { immediate: true });
-
-const login = async (userInfo) => {
-  const { success, error } = await loginUser(userInfo);
-  switch (error) {
-    case 'invalid_username':
-      errorMessage.value = t('messages.error.invalidUsername');
-      break;
-    case 'incorrect_password':
-      errorMessage.value = t('messages.error.incorrectPassword');
-      break;
-    default:
-      errorMessage.value = error;
-      break;
-  }
-
-  if (success) {
-    errorMessage.value = '';
-    message.value = t('messages.account.loggingIn');
-  }
-};
-
-const handleFormSubmit = async (userInfo) => {
-  if (formView.value === 'register') {
-    const { success, error } = await registerUser(userInfo);
-    if (success) {
-      errorMessage.value = '';
-      message.value = t('messages.account.accountCreated') + ' ' + t('messages.account.loggingIn');
-      setTimeout(() => {
-        login(userInfo);
-      }, 2000);
-    } else {
-      errorMessage.value = error;
-    }
-  } else if (formView.value === 'forgotPassword') {
-    resetPassword(userInfo);
-  } else {
-    login(userInfo);
-  }
-};
-
-const resetPassword = async (userInfo) => {
-  const { success, error } = await sendResetPasswordEmail(userInfo.email);
-  if (success) {
-    errorMessage.value = '';
-    message.value = t('messages.account.ifRegistered');
-  } else {
-    errorMessage.value = error;
-  }
-};
-
-const navigate = (view: string) => {
-  formView.value = view;
-  if (view === 'forgotPassword') {
-    router.push({ query: { action: 'forgotPassword' } });
-  } else if (view === 'register') {
-    router.push({ query: { action: 'register' } });
-  } else {
-    router.push({ query: {} });
-  }
-};
-
-const formTitle = computed(() => {
-  if (formView.value === 'login') {
-    return t('messages.account.loginToAccount');
-  } else if (formView.value === 'register') {
-    return t('messages.account.accountRegister');
-  } else if (formView.value === 'forgotPassword') {
-    return t('messages.account.forgotPassword');
-  }
-});
-
-const buttonText = computed(() => {
-  if (formView.value === 'login') {
-    return t('messages.account.login');
-  } else if (formView.value === 'register') {
-    return t('messages.account.register');
-  } else if (formView.value === 'forgotPassword') {
-    return t('messages.account.sendPasswordResetEmail');
-  }
-});
-
-const emailLabel = computed(() => (formView.value === 'register' ? t('messages.billing.email') : t('messages.account.emailOrUsername')));
-const usernameLabel = computed(() => (formView.value === 'login' ? t('messages.account.emailOrUsername') : t('messages.account.username')));
-const passwordLabel = computed(() => t('messages.account.password'));
-
-const inputPlaceholder = computed(() => {
-  return {
-    email: 'johndoe@email.com',
-    username: formView.value === 'login' ? 'johndoe@email.com' : 'johndoe',
-    password: '********',
-  };
-});
-</script>
-
-<style lang="postcss" scoped>
+<style scoped>
 input,
 button {
-  @apply border rounded-lg mb-4 w-full p-3 px-4 bg-white;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: white;
 }
 
 form button {
-  @apply rounded-lg font-bold bg-gray-800 text-white py-3 px-8 hover:bg-gray-800;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  background-color: #1f2937;
+  color: white;
+  padding: 0.75rem 2rem;
+}
+
+form button:hover {
+  background-color: #1f2937;
 }
 </style>

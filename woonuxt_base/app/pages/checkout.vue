@@ -14,7 +14,7 @@ const buttonText = ref<string>(isProcessingOrder.value ? t('messages.general.pro
 const isCheckoutDisabled = computed<boolean>(() => isProcessingOrder.value || isUpdatingCart.value || !orderInput.value.paymentMethod);
 
 const isInvalidEmail = ref<boolean>(false);
-const stripe: Stripe | null = stripeKey ? await loadStripe(stripeKey) : null;
+const stripe: Stripe | null = stripeKey ? await loadStripe(stripeKey as string) : null;
 const elements = ref();
 const isPaid = ref<boolean>(false);
 

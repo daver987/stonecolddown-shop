@@ -1,67 +1,162 @@
 <script setup lang="ts">
-const { wooNuxtVersionInfo } = useHelpers();
-const { wishlistLink } = useAuth();
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
+
+const SubscribeSchema = z.object({
+  email: z.string().email(),
+});
+
+type Subscribe = z.infer<typeof SubscribeSchema>;
+
+const subscribeState = reactive({
+  email: undefined,
+});
+const loading = ref(false);
+const isDisabled = ref(false);
+
+const toast = useToast();
+const subscribeToNewsletter = (data: FormSubmitEvent<Subscribe>) => {
+  loading.value = true;
+  isDisabled.value = true;
+  console.log('Subscribe to newsletter', data);
+  setTimeout(() => {
+    loading.value = false;
+    subscribeState.email = undefined;
+    toast.add({ title: 'Thank you for subscribing!' });
+    isDisabled.value = false;
+  }, 2000);
+};
+
+const footerLinks = [
+  {
+    label: 'Resources',
+    children: [
+      {
+        label: 'About',
+        to: '/about',
+      },
+      {
+        label: 'Portfolio',
+        to: '/portfolio',
+      },
+      {
+        label: 'Contact',
+        to: '/contact',
+      },
+    ],
+  },
+  {
+    label: 'Tattoo',
+    children: [
+      {
+        label: 'Custom',
+        to: '/tattoos',
+      },
+      {
+        label: 'Flash Designs',
+        to: '/about',
+      },
+      {
+        label: 'Collections',
+        to: '/portfolio',
+      },
+      {
+        label: 'Portfolio',
+        to: '/portfolio',
+      },
+    ],
+  },
+  {
+    label: 'Shop',
+    children: [
+      {
+        label: 'Tattoo Flash Designs',
+        to: '/flash-designs',
+      },
+      {
+        label: 'Merch',
+        to: '/products',
+      },
+      {
+        label: 'Collections',
+        to: '/collections',
+      },
+    ],
+  },
+];
 </script>
 
 <template>
-  <footer class="bg-white order-last">
-    <div class="container flex flex-wrap justify-between gap-12 my-24 md:gap-24">
-      <div class="mr-auto">
-        <Logo />
-        <WebsiteShortDescription />
-        <LangSwitcher class="mt-8" />
-      </div>
-      <div class="w-3/7 lg:w-auto">
-        <div class="mb-1 font-semibold">Information</div>
-        <div class="text-sm">
-          <a class="py-1.5 block" href="https://github.com/scottyzen/woonuxt?tab=readme-ov-file#next-generation-front-end-for-woocommerce" target="_blank">About</a>
-          <a href="/" class="py-1.5 block">Careers</a>
-          <a href="/" class="py-1.5 block">Press</a>
-          <a href="https://woonuxt.com/faq" class="py-1.5 block" rel="noreferrer" target="_blank">FAQ's</a>
-        </div>
-      </div>
-      <div class="w-3/7 lg:w-auto">
-        <div class="mb-1 font-semibold">Products</div>
-        <div class="text-sm">
-          <NuxtLink to="/products" class="py-1.5 block">{{ $t('messages.shop.newArrivals') }}</NuxtLink>
-          <NuxtLink to="/products?filter=sale[true]" class="py-1.5 block">On sale</NuxtLink>
-          <NuxtLink to="/products?orderby=rating&order=ASC&filter=rating[1]" class="py-1.5 block">Top rated</NuxtLink>
-          <a href="/" class="py-1.5 block">{{ $t('messages.shop.giftCards') }}</a>
-        </div>
-      </div>
-      <div class="w-3/7 lg:w-auto">
-        <div class="mb-1 font-semibold">{{ $t('messages.general.customerService') }}</div>
-        <div class="text-sm">
-          <NuxtLink to="/contact" class="py-1.5 block">Contact Us</NuxtLink>
-          <a href="/" class="py-1.5 block">Shipping & Returns</a>
-          <a href="/" class="py-1.5 block">Privacy Policy</a>
-          <a href="/" class="py-1.5 block">Terms & Conditions</a>
-        </div>
-      </div>
-      <div class="w-3/7 lg:w-auto">
-        <div class="mb-1 font-semibold">{{ $t('messages.account.myAccount') }}</div>
-        <div class="text-sm">
-          <NuxtLink to="/my-account/" class="py-1.5 block">{{ $t('messages.account.myAccount') }}</NuxtLink>
-          <NuxtLink to="/my-account/?tab=orders" class="py-1.5 block">{{ $t('messages.shop.orderHistory') }}</NuxtLink>
-          <NuxtLink :to="wishlistLink" class="py-1.5 block">{{ $t('messages.shop.wishlist') }}</NuxtLink>
-          <a href="/" class="py-1.5 block">{{ $t('messages.general.newsletter') }}</a>
-        </div>
-      </div>
-    </div>
-    <div class="container border-t flex items-center justify-center mb-4">
-      <div class="copywrite">
-        <p class="py-4 text-xs text-center">
-          <a href="https://woonuxt.com" :title="`WooNuxt v${wooNuxtVersionInfo}`">{{ `WooNuxt v${wooNuxtVersionInfo}` }}</a> - by
-          <a href="https://scottyzen.com" title="Scott Kennedy - Web Developer" target="_blank">Scott Kennedy</a>
-        </p>
-      </div>
-      <SocialIcons class="ml-auto" />
-    </div>
-  </footer>
+  <Footer class="bg-black">
+    <template #top>
+      <FooterColumns :links="footerLinks">
+        <template #right>
+          <div class="space-y-2">
+            <Logo size="md" text />
+            <UForm :schema="SubscribeSchema" @submit="subscribeToNewsletter" :state="subscribeState">
+              <UFormGroup name="email" label="Subscribe to my newsletter" size="lg">
+                <UInput v-model="subscribeState.email" type="email" :ui="{ icon: { trailing: { pointer: '' } } }" :disabled="isDisabled">
+                  <template #trailing>
+                    <UButton
+                      :loading="loading"
+                      type="submit"
+                      size="2xs"
+                      label="Subscribe"
+                      :ui="{
+                        rounded: 'rounded-md',
+                        base: 'text-amber-500 hover:text-amber-600',
+                      }" />
+                  </template>
+                </UInput>
+              </UFormGroup>
+            </UForm>
+          </div>
+        </template>
+      </FooterColumns>
+    </template>
+    <template #center>
+      <p class="text-xs text-gray-500 font-light">© {{ new Date().getFullYear() }} Stone Cold Down by Natasha Smith. All Rights Reserved.</p>
+    </template>
+  </Footer>
 </template>
 
-<style scoped lang="postcss">
-a {
-  @apply hover:underline;
+<style>
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: transform 0.3s ease-in-out;
+}
+
+.subheader {
+  transition: transform 0.3s ease-in-out;
+}
+
+.header-main {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: margin-top 0.3s ease-in-out;
+}
+
+.subheader-hidden .subheader {
+  transform: translateY(-100%);
+}
+
+.subheader-hidden .header-main {
+  margin-top: -40px;
+}
+
+main {
+  padding-top: 120px;
+  transition: padding-top 0.3s ease-in-out;
+}
+
+.subheader-hidden + main {
+  padding-top: 80px;
 }
 </style>

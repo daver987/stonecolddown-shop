@@ -16,7 +16,7 @@ const isGuest = computed(() => !customer.value?.email);
 const isSummaryPage = computed<boolean>(() => name === 'order-summary');
 const isCheckoutPage = computed<boolean>(() => name === 'order-received');
 const orderIsNotCompleted = computed<boolean>(() => order.value?.status !== OrderStatusEnum.COMPLETED);
-const hasDiscount = computed<boolean>(() => !!parseFloat(order.value?.rawDiscountTotal || '0'));
+const hasDiscount = computed<boolean>(() => !!Number.parseFloat(order.value?.rawDiscountTotal || '0'));
 const downloadableItems = computed(() => order.value?.downloadableItems?.nodes || []);
 
 onBeforeMount(() => {
@@ -50,8 +50,11 @@ async function getOrder() {
     } else {
       errorMessage.value = 'Could not find order';
     }
-  } catch (err: any) {
-    errorMessage.value = err?.gqlErrors?.[0].message || 'Could not find order';
+  } catch (err: unknown) {
+    errorMessage.value =
+      typeof err === 'object' && err !== null && 'gqlErrors' in err
+        ? (err as { gqlErrors: { message: string }[] }).gqlErrors[0]?.message || 'Could not find order'
+        : 'Could not find order';
   }
   isLoaded.value = true;
 }

@@ -1,9 +1,16 @@
 export default defineNuxtConfig({
-
+  future: {
+    compatibilityVersion: 4,
+  },
   // Get all the pages, components, composables and plugins from the parent theme
   extends: ['./woonuxt_base'],
 
+  modules: ['@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt'],
   components: [{ path: './components', pathPrefix: false }],
+  css: ['~/assets/css/main.css'],
+  colorMode: {
+    preference: 'dark',
+  },
 
   /**
    * Depending on your servers capabilities, you may need to adjust the following settings.
@@ -19,5 +26,33 @@ export default defineNuxtConfig({
       interval: 1000,
       failOnError: false,
     },
+    experimental: {
+      asyncContext: true,
+    },
   },
-});
+
+  app: {
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in',
+    },
+    layoutTransition: {
+      name: 'layout',
+      mode: 'out-in',
+    },
+  },
+
+  fonts: {
+    defaults: {
+      weights: ['300', '400', '500', '600'],
+    },
+    families: [{ name: 'Lato', provider: 'google' }],
+  },
+
+  tailwindcss: { viewer: false },
+  compatibilityDate: '2024-07-04',
+
+  devtools: {
+    enabled: true,
+  },
+})

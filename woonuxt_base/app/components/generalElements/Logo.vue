@@ -1,18 +1,35 @@
 <script setup lang="ts">
 const { siteName } = useAppConfig();
-const runtimeConfig = useRuntimeConfig();
-const img = useImage();
+const { size = 'md', text = false } = defineProps<{
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  text?: boolean;
+}>();
 
-const logoUrl = runtimeConfig?.public?.LOGO ? img(runtimeConfig?.public?.LOGO) : null;
-const faviconUrl = '/logo.svg';
+const sizeClasses = {
+  sm: 'w-16 h-16',
+  md: 'w-24 h-24',
+  lg: 'w-32 h-32',
+  xl: 'w-40 h-40',
+};
+
+const textClasses = {
+  sm: 'text-xl',
+  md: 'text-2xl',
+  lg: 'text-3xl',
+  xl: 'text-3xl',
+};
+
+const logoId = useId();
 </script>
 
 <template>
-  <NuxtLink to="/">
-    <img v-if="logoUrl" :src="logoUrl" alt="Logo" class="object-contain h-10" />
-    <div v-else class="flex items-center gap-2 text-lg font-bold">
-      <img :src="faviconUrl" alt="Logo" width="32" height="32" />
-      <span>{{ siteName }}</span>
+  <NuxtLink :id="logoId" to="/" class="no-underline">
+    <div v-if="!text" :class="sizeClasses[size]">
+      <NuxtImg src="/images/scd_logo.jpg" alt="Stone Cold Down" />
     </div>
+    <div v-if="text">
+      <span class="font-heading no-underline text-primary" :class="textClasses[size]">Stone Cold Down</span>
+    </div>
+    <span class="sr-only">{{ siteName }}</span>
   </NuxtLink>
 </template>

@@ -86,3 +86,217 @@ interface WooNuxtFilter {
   openByDefault: boolean;
   terms: Terms;
 }
+
+import type { Link as ULink, Avatar, Badge, Chip, Command, Tooltip } from '#ui/types';
+
+type UserStatus = 'subscribed' | 'unsubscribed' | 'bounced';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  avatar?: Avatar;
+  status: UserStatus;
+  location: string;
+}
+
+interface Mail {
+  id: number;
+  unread?: boolean;
+  from: User;
+  subject: string;
+  body: string;
+  date: string;
+}
+
+interface Member {
+  name: string;
+  username: string;
+  role: 'member' | 'owner';
+  avatar: Avatar;
+}
+
+interface Notification {
+  id: number;
+  unread?: boolean;
+  sender: User;
+  body: string;
+  date: string;
+}
+
+type Period = 'daily' | 'weekly' | 'monthly';
+
+interface Range {
+  start: Date;
+  end: Date;
+}
+
+interface Link extends ULink {
+  label: string;
+  class?: string;
+  click?: (...args: unknown[]) => void;
+}
+
+interface AsideLink extends Link {
+  icon?: string;
+  iconClass?: string;
+}
+
+interface HeaderPopoverLink extends Link {
+  description?: string;
+  icon?: string;
+  iconClass?: string;
+}
+
+interface HeaderLink extends Link {
+  children?: HeaderPopoverLink[];
+}
+
+interface FooterLink extends Link {}
+
+interface PageLink extends Link {
+  icon?: string;
+  iconClass?: string;
+  avatar?: Avatar;
+  avatarClass?: string;
+}
+
+interface NavigationLink extends Link {
+  icon?: string;
+  iconClass?: string;
+  badge?: string | Badge;
+}
+
+interface NavigationTree extends NavigationLink {
+  children?: NavigationTree[];
+}
+
+interface NavigationGroup {
+  type?: 'link' | 'accordion';
+  defaultOpen?: boolean;
+  children: NavigationTree[];
+}
+
+interface ContentSearchLink extends Link, Omit<Command, 'id'> {}
+
+interface DashboardSidebarLink extends Link {
+  labelClass?: string;
+  icon?: string;
+  iconClass?: string;
+  avatar?: Avatar;
+  avatarClass?: string;
+  chip?: string | Chip;
+  chipClass?: string;
+  badge?: string | number | Badge;
+  tooltip?: Tooltip;
+  defaultOpen?: boolean;
+  // Only applicable to links with children
+  draggable?: boolean;
+  collapsible?: boolean;
+  children?: DashboardSidebarLink[];
+}
+
+interface Link extends ULink {
+  label: string;
+  class?: string;
+  click?: (...args: unknown[]) => void;
+}
+
+interface AsideLink extends Link {
+  icon?: string;
+  iconClass?: string;
+}
+
+interface HeaderPopoverLink extends Link {
+  description?: string;
+  icon?: string;
+  iconClass?: string;
+}
+
+interface HeaderLink extends Link {
+  children?: HeaderPopoverLink[];
+}
+
+interface FooterLink extends Link {}
+
+interface PageLink extends Link {
+  icon?: string;
+  iconClass?: string;
+  avatar?: Avatar;
+  avatarClass?: string;
+}
+
+interface NavigationLink extends Link {
+  icon?: string;
+  iconClass?: string;
+  badge?: string | Badge;
+}
+
+interface NavigationTree extends NavigationLink {
+  children?: NavigationTree[];
+}
+
+interface NavigationGroup {
+  type?: 'link' | 'accordion';
+  defaultOpen?: boolean;
+  children: NavigationTree[];
+}
+
+interface ContentSearchLink extends Link, Omit<Command, 'id'> {}
+
+interface DashboardSidebarLink extends Link {
+  labelClass?: string;
+  icon?: string;
+  iconClass?: string;
+  avatar?: Avatar;
+  avatarClass?: string;
+  chip?: string | Chip;
+  chipClass?: string;
+  badge?: string | number | Badge;
+  tooltip?: Tooltip;
+  defaultOpen?: boolean;
+  // Only applicable to links with children
+  draggable?: boolean;
+  collapsible?: boolean;
+  children?: DashboardSidebarLink[];
+}
+
+type Review = {
+  id: string;
+  icon: string;
+  quote: string;
+  author: {
+    name: string;
+    description: string;
+    avatar: {
+      src: string;
+      loading: string;
+    };
+  };
+  card: boolean;
+  width: string;
+};
+
+interface FlashDesign {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  categoryId: string;
+  collectionId?: string;
+}
+
+interface FlashDesignData {
+  title: string;
+  description: string;
+  category: string;
+  keywords: string[];
+  src: string;
+}
+type ImageType = 'Portfolio' | 'outlines' | 'digital-creations' | 'ballpoint' | 'natasha';
+
+interface ImageObject {
+  id: string;
+  url: string;
+}

@@ -14,15 +14,16 @@ const decrementQuantity = () => quantity.value--;
 watch(
   quantity,
   debounce(() => {
-    if (quantity.value !== "") {
+    if (quantity.value !== '') {
       updateItemQuantity(item.key, quantity.value);
     }
   }, 250),
 );
 
 const onFocusOut = () => {
-  if (quantity.value === "") { // If the quantity is empty, set it to the cart item quantity
-    const cartItem = cart.value?.contents?.nodes?.find(node => node.key === item.key);
+  if (quantity.value === '') {
+    // If the quantity is empty, set it to the cart item quantity
+    const cartItem = cart.value?.contents?.nodes?.find((node) => node.key === item.key);
     if (cartItem) {
       quantity.value = cartItem.quantity;
     }

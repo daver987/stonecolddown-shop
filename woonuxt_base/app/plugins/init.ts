@@ -12,9 +12,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     async function initStore() {
       if (initialised) {
         // We only want to execute this code block once, so we return if initialised is truthy and remove the event listeners
-        eventsToFireOn.forEach((event) => {
+        for (const event of eventsToFireOn) {
           window.removeEventListener(event, initStore);
-        });
+        }
         return;
       }
 
@@ -23,9 +23,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       const { refreshCart } = useCart();
       const success: boolean = await refreshCart();
 
-      useGqlError((err: any) => {
+      useGqlError((err: unknown) => {
         const serverErrors = ['The iss do not match with this server', 'Invalid session token'];
-        if (serverErrors.includes(err?.gqlErrors?.[0]?.message)) {
+        const errorMessage = (err as { gqlErrors?: { message: string }[] })?.gqlErrors?.[0]?.message;
+        if (errorMessage && serverErrors.includes(errorMessage)) {
           clearAllCookies();
           clearAllLocalStorage();
           window.location.reload();
@@ -64,9 +65,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     if (shouldInit) {
       initStore();
     } else {
-      eventsToFireOn.forEach((event) => {
+      for (const event of eventsToFireOn) {
         window.addEventListener(event, initStore, { once: true });
-      });
+      }
     }
   }
 });

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { FALLBACK_IMG } = useHelpers();
-const props = defineProps({
+defineProps({
   node: { type: Object, required: true },
   imageLoading: { type: String as PropType<'lazy' | 'eager'>, default: 'lazy' },
 });
