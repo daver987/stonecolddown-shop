@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   // Get all the pages, components, composables and plugins from the parent theme
   extends: ['./woonuxt_base'],
 
-  modules: ['@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt'],
+  modules: ['@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt', '@nuxtjs/cloudinary'],
   components: [{ path: './components', pathPrefix: false }],
   css: ['~/assets/css/main.css'],
   colorMode: {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { OrderStatusEnum } from '#woo';
+import type { Order } from '../types';
 
 const { query, params, name } = useRoute();
 const { customer } = useAuth();

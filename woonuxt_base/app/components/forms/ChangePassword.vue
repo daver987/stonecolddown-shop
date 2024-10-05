@@ -6,8 +6,6 @@ const password = ref<{ new: string; confirm: string }>({ new: '', confirm: '' })
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({ text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' });
 const errorMessage = ref<string>('');
-
-// Add this line to store the username
 const username = ref(viewer.value?.username || '');
 
 const updatePassword = async () => {
@@ -33,7 +31,8 @@ const updatePassword = async () => {
     }
   } catch (error) {
     console.error(error);
-    const gqlError = error?.graphQLErrors?.[0]?.message ?? error?.message;
+    // @ts-ignore
+    const gqlError = error?.graphQLErrors?.[0]?.message ?? error?.message ?? error?.toString();
     errorMessage.value = gqlError || 'An error occurred. Please try again.';
     button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
   }

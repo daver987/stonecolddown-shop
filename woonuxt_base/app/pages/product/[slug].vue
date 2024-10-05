@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { StockStatusEnum, ProductTypesEnum, type AddToCartInput } from '#woo';
+import type { Product, Variation, VariationAttribute } from '../../types';
 
 const route = useRoute();
 const { storeSettings } = useAppConfig();
@@ -52,11 +53,8 @@ const updateSelectedVariations = (variations: VariationAttribute[]): void => {
   attrValues.value = variations.map((el) => ({ attributeName: el.name, attributeValue: el.value }));
   const clonedVariations = JSON.parse(JSON.stringify(variations));
   const getActiveVariation = product.value.variations?.nodes.filter((variation: any) => {
-    // If there is any variation of type ANY set the value to ''
     if (variation.attributes) {
-      // Set the value of the variation of type ANY to ''
       indexOfTypeAny.value.forEach((index) => (clonedVariations[index].value = ''));
-
       return arraysEqual(formatArray(variation.attributes.nodes), formatArray(clonedVariations));
     }
   });
@@ -78,7 +76,7 @@ const disabledAddToCart = computed(() => {
 </script>
 
 <template>
-  <main class="container relative py-6 xl:max-w-7xl">
+  <UContainer class="py-6">
     <div v-if="product">
       <SEOHead :info="product" />
       <Breadcrumb :product class="mb-6" v-if="storeSettings.showBreadcrumbOnSingleProduct" />
@@ -96,7 +94,7 @@ const disabledAddToCart = computed(() => {
         <div class="lg:max-w-md xl:max-w-lg md:py-2 w-full">
           <div class="flex justify-between mb-4">
             <div class="flex-1">
-              <h1 class="flex flex-wrap items-center gap-2 mb-2 text-2xl font-sesmibold">
+              <h1 class="flex flex-wrap items-center gap-2 mb-2 text-2xl font-semibold">
                 {{ type.name }}
                 <LazyWPAdminLink :link="`/wp-admin/post.php?post=${product.databaseId}&action=edit`">Edit</LazyWPAdminLink>
               </h1>
@@ -105,58 +103,70 @@ const disabledAddToCart = computed(() => {
             <ProductPrice class="text-xl" :sale-price="type.salePrice" :regular-price="type.regularPrice" />
           </div>
 
-          <div class="grid gap-2 my-8 text-sm empty:hidden">
+          <UDivider class="my-4" />
+
+          <div class="grid gap-2 my-4 text-sm empty:hidden">
             <div v-if="!isExternalProduct" class="flex items-center gap-2">
-              <span class="text-gray-400">{{ $t('messages.shop.availability') }}: </span>
+              <span class="text-gray-500 dark:text-gray-400">{{ $t('messages.shop.availability') }}: </span>
               <StockStatus :stockStatus @updated="mergeLiveStockStatus" />
             </div>
             <div class="flex items-center gap-2" v-if="storeSettings.showSKU && product.sku">
-              <span class="text-gray-400">{{ $t('messages.shop.sku') }}: </span>
+              <span class="text-gray-500 dark:text-gray-400">{{ $t('messages.shop.sku') }}: </span>
               <span>{{ product.sku || 'N/A' }}</span>
             </div>
           </div>
 
-          <div class="mb-8 font-light prose" v-html="product.shortDescription || product.description" />
+          <div class="mb-8 font-light prose dark:prose-invert" v-html="product.shortDescription || product.description" />
 
-          <hr />
+          <UDivider class="my-4" />
 
           <form @submit.prevent="addToCart(selectProductInput)">
             <AttributeSelections
               v-if="isVariableProduct && product.attributes && product.variations"
               class="mt-4 mb-8"
-              :attributes="product.attributes.nodes"
-              :defaultAttributes="product.defaultAttributes"
-              :variations="product.variations.nodes"
+              :attributes="product.attributes?.nodes as VariationAttribute[]"
+              :defaultAttributes="{ nodes: product.defaultAttributes as unknown as VariationAttribute[] }"
+              :variations="{ nodes: product.variations?.nodes as Variation[] }"
               @attrs-changed="updateSelectedVariations" />
             <div
               v-if="isVariableProduct || isSimpleProduct"
-              class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 bg-white md:static md:bg-transparent bg-opacity-90 md:p-0">
-              <input
+              class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 bg-white dark:bg-gray-800 md:static md:bg-transparent bg-opacity-90 md:p-0">
+              <UInput
                 v-model="quantity"
                 type="number"
                 min="1"
                 aria-label="Quantity"
-                class="bg-white border rounded-lg flex text-left p-2.5 w-20 gap-4 items-center justify-center focus:outline-none" />
-              <AddToCartButton class="flex-1 w-full md:max-w-xs" :disabled="disabledAddToCart" :class="{ loading: isUpdatingCart }" />
+                class="w-20"
+              />
+              <UButton
+                class="flex-1 w-full md:max-w-xs"
+                :disabled="disabledAddToCart"
+                :loading="isUpdatingCart"
+                type="submit"
+                label="Add to Cart"
+                block
+              />
             </div>
-            <a
+            <UButton
               v-if="isExternalProduct && product.externalUrl"
               :href="product.externalUrl"
               target="_blank"
-              class="rounded-lg flex font-bold bg-gray-800 text-white text-center min-w-[150px] p-2.5 gap-4 items-center justify-center focus:outline-none">
+              block
+            >
               {{ product?.buttonText || 'View product' }}
-            </a>
+            </UButton>
           </form>
 
           <div v-if="storeSettings.showProductCategoriesOnSingleProduct && product.productCategories">
-            <div class="grid gap-2 my-8 text-sm">
+            <UDivider class="my-4" />
+            <div class="grid gap-2 my-4 text-sm">
               <div class="flex items-center gap-2">
-                <span class="text-gray-400">{{ $t('messages.shop.category', 2) }}:</span>
+                <span class="text-gray-500 dark:text-gray-400">{{ $t('messages.shop.category', 2) }}:</span>
                 <div class="product-categories">
                   <NuxtLink
                     v-for="category in product.productCategories.nodes"
-                    :key="category.slug"
-                    :to="`/product-category/${decodeURIComponent(category.slug)}`"
+                    :key="category.slug ?? ''"
+                    :to="`/product-category/${decodeURIComponent(category.slug ?? '')}`"
                     class="hover:text-primary"
                     :title="category.name"
                     >{{ category.name }}<span class="comma">, </span>
@@ -164,8 +174,9 @@ const disabledAddToCart = computed(() => {
                 </div>
               </div>
             </div>
-            <hr />
           </div>
+
+          <UDivider class="my-4" />
 
           <div class="flex flex-wrap gap-4">
             <WishlistButton :product />
@@ -181,7 +192,7 @@ const disabledAddToCart = computed(() => {
         <ProductRow :products="product.related.nodes" class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5" />
       </div>
     </div>
-  </main>
+  </UContainer>
 </template>
 
 <style scoped>

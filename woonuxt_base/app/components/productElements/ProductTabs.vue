@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Product } from '../../types';
+
 const { product } = defineProps({
   product: { type: Object as PropType<Product>, required: true },
 });
@@ -19,19 +21,23 @@ const show = ref(initialTab);
       </button>
     </nav>
     <div class="tab-contents">
-      <div v-if="show === 0 && product.description" class="font-light mt-8 prose" v-html="product.description" />
+      <div v-if="show === 0 && product.description" class="font-light mt-8 prose dark:prose-invert" v-html="product.description" />
       <ProductReviews v-if="show === 1" :product="product" />
     </div>
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .tabs button {
-  @apply border-transparent border-b-2 text-lg pb-8;
+  border-color: transparent;
+  border-bottom-width: 2px;
+  font-size: 1.125rem;
+  padding-bottom: 2rem;
   margin-bottom: -1px;
 }
 
 .tabs button.active {
-  @apply border-primary text-primary;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 </style>

@@ -175,7 +175,7 @@ useSeoMeta({
   </div>
 </template>
 
-<style lang="postcss">
+<style scoped>
 .checkout-form input[type='text'],
 .checkout-form input[type='email'],
 .checkout-form input[type='tel'],
@@ -183,16 +183,25 @@ useSeoMeta({
 .checkout-form textarea,
 .checkout-form select,
 .checkout-form .StripeElement {
-  @apply bg-white border rounded-md outline-none border-gray-300 shadow-sm w-full py-2 px-4;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding: 0.5rem 1rem;
 }
 
 .checkout-form input.has-error,
 .checkout-form textarea.has-error {
-  @apply border-red-500;
+  border-color: #f87171;
 }
 
 .checkout-form label {
-  @apply my-1.5 text-xs text-gray-600 uppercase;
+  margin: 0.375rem 0;
+  font-size: 0.75rem;
+  color: #4b5563;
+  text-transform: uppercase;
 }
 
 .checkout-form .StripeElement {

@@ -2,7 +2,7 @@
 import type { PropType } from 'vue';
 import { twJoin } from 'tailwind-merge';
 import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils';
-import { getSlotChildrenText } from '~/lib/slots';
+import { getSlotChildrenText } from '../../lib/slots';
 import colors from '#tailwind-config/theme/colors';
 import type uiColors from '#ui-colors';
 import type { card as cardConfig } from '#ui/ui.config';

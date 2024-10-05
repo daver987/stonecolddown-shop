@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Product } from '../../types';
+
 const route = useRoute();
 const { storeSettings } = useAppConfig();
 const props = defineProps({
@@ -25,9 +27,9 @@ watch(
 const mainImage = computed<string>(() => props.node?.image?.producCardSourceUrl || props.node?.image?.sourceUrl || '/images/placeholder.jpg');
 const imagetoDisplay = computed<string>(() => {
   if (paColor.value.length) {
-    const activeColorImage = props.node?.variations?.nodes.filter((variation) => {
-      const hasMatchingAttributes = variation.attributes?.nodes.some((attribute) => paColor.value.some((color) => attribute?.value?.includes(color)));
-      const hasMatchingSlug = paColor.value.some((color) => variation.slug?.includes(color));
+    const activeColorImage = props.node?.variations?.nodes.filter((variation: any) => {
+      const hasMatchingAttributes = variation.attributes?.nodes.some((attribute: any) => paColor.value.some((color: any) => attribute?.value?.includes(color)));
+      const hasMatchingSlug = paColor.value.some((color: any) => variation.slug?.includes(color));
       return hasMatchingAttributes || hasMatchingSlug;
     });
     if (activeColorImage?.length) return activeColorImage[0]?.image?.producCardSourceUrl || activeColorImage[0]?.image?.sourceUrl || mainImage.value;
@@ -54,7 +56,7 @@ const imagetoDisplay = computed<string>(() => {
         placeholder-class="blur-xl" />
     </NuxtLink>
     <div class="p-2">
-      <StarRating v-if="storeSettings.showReviews" :rating="node.averageRating" :count="node.reviewCount" />
+      <StarRating v-if="storeSettings.showReviews" :rating="node.averageRating ?? 0" :count="node.reviewCount ?? 0" />
       <NuxtLink v-if="node.slug" :to="`/product/${decodeURIComponent(node.slug)}`" :title="node.name">
         <h2 class="mb-2 font-light leading-tight group-hover:text-primary">{{ node.name }}</h2>
       </NuxtLink>
@@ -62,3 +64,4 @@ const imagetoDisplay = computed<string>(() => {
     </div>
   </div>
 </template>
+  

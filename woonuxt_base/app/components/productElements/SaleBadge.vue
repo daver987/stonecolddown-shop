@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Product } from '../../types';
+
 const { t } = useI18n();
 const { node } = defineProps({
   node: { type: Object as PropType<Product>, required: true },

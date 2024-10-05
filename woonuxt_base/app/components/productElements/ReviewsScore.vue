@@ -143,18 +143,32 @@ async function addComment() {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .disable-star {
-  @apply bg-white shadow-sm text-gray-300 border border-gray-300;
+  background-color: white;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  color: #d1d5db;
+  border: 1px solid #d1d5db;
   transition: 0.15s ease-in-out;
 }
 .checked-star {
-  @apply text-amber-400 bg-amber-50 border border-amber-400;
+  color: #fbbf24;
+  background-color: #fef3c7;
+  border: 1px solid #fbbf24;
   transition: 0.15s ease-in-out;
-  box-shadow: 0 0px 4px 0 rgb(249 191 59 / 21%);
+  box-shadow: 0 0px 4px 0 rgba(249, 191, 59, 0.21);
 }
 .writeReview input,
 .writeReview textarea {
-  @apply bg-white border rounded-md outline-none border-gray-300 shadow-sm w-full py-2 px-4;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 </style>

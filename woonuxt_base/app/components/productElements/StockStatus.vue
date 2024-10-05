@@ -1,14 +1,40 @@
 <script setup lang="ts">
 import { StockStatusEnum } from '#woo';
+const { t } = useI18n();
 
-defineProps({
+const props = defineProps({
   stockStatus: { type: String, required: false },
+});
+
+const statusColor = computed(() => {
+  switch (props.stockStatus) {
+    case StockStatusEnum.IN_STOCK:
+      return 'green';
+    case StockStatusEnum.OUT_OF_STOCK:
+      return 'red';
+    case StockStatusEnum.ON_BACKORDER:
+      return 'yellow';
+    default:
+      return 'gray';
+  }
+});
+
+const statusText = computed(() => {
+  switch (props.stockStatus) {
+    case StockStatusEnum.IN_STOCK:
+      return t('messages.shop.inStock');
+    case StockStatusEnum.OUT_OF_STOCK:
+      return t('messages.shop.outOfStock');
+    case StockStatusEnum.ON_BACKORDER:
+      return t('messages.shop.onBackorder');
+    default:
+      return 'Loading';
+  }
 });
 </script>
 
 <template>
-  <span v-if="stockStatus === StockStatusEnum.IN_STOCK" class="text-green-600">{{ $t('messages.shop.inStock') }}</span>
-  <span v-else-if="stockStatus === StockStatusEnum.OUT_OF_STOCK" class="text-red-600">{{ $t('messages.shop.outOfStock') }}</span>
-  <span v-else-if="stockStatus === StockStatusEnum.ON_BACKORDER" class="text-yellow-600">{{ $t('messages.shop.onBackorder') }}</span>
-  <span v-else class="text-gray-600">Loading</span>
+  <UBadge :color="statusColor" variant="subtle" size="sm">
+    {{ statusText }}
+  </UBadge>
 </template>

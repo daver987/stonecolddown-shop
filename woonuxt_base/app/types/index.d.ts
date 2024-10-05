@@ -152,7 +152,7 @@ interface HeaderLink extends Link {
   children?: HeaderPopoverLink[];
 }
 
-interface FooterLink extends Link {}
+interface FooterLink extends Link { }
 
 interface PageLink extends Link {
   icon?: string;
@@ -177,7 +177,7 @@ interface NavigationGroup {
   children: NavigationTree[];
 }
 
-interface ContentSearchLink extends Link, Omit<Command, 'id'> {}
+interface ContentSearchLink extends Link, Omit<Command, 'id'> { }
 
 interface DashboardSidebarLink extends Link {
   labelClass?: string;
@@ -217,7 +217,7 @@ interface HeaderLink extends Link {
   children?: HeaderPopoverLink[];
 }
 
-interface FooterLink extends Link {}
+interface FooterLink extends Link { }
 
 interface PageLink extends Link {
   icon?: string;
@@ -242,7 +242,7 @@ interface NavigationGroup {
   children: NavigationTree[];
 }
 
-interface ContentSearchLink extends Link, Omit<Command, 'id'> {}
+interface ContentSearchLink extends Link, Omit<Command, 'id'> { }
 
 interface DashboardSidebarLink extends Link {
   labelClass?: string;
@@ -299,4 +299,19 @@ type ImageType = 'Portfolio' | 'outlines' | 'digital-creations' | 'ballpoint' | 
 interface ImageObject {
   id: string;
   url: string;
+}
+
+interface CartItem {
+  key: string;
+  product: {
+    node: SimpleProduct | VariableProduct | ExternalProduct;
+  };
+  variation?: {
+    node: Variation;
+  };
+  quantity: number;
+  subtotal: string;
+  subtotalTax: string;
+  total: string;
+  tax: string;
 }

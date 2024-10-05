@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import type { NavigationGroup, NavigationTree } from '~~/types';
+import type { NavigationTree, NavigationGroup } from '../../types';
 
 const config = {
   wrapper: 'space-y-3',

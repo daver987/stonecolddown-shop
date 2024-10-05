@@ -2,7 +2,7 @@
 import type { PropType } from 'vue';
 import { twJoin } from 'tailwind-merge';
 import type { AccordionItem } from '#ui/types';
-import type { NavigationTree } from '~~/types';
+import type { NavigationTree } from '../../types';
 import type { accordion as accordionConfig } from '#ui/ui.config';
 
 const appConfig = useAppConfig();
@@ -99,11 +99,11 @@ const items = computed(() =>
   <UAccordion v-bind="attrs" :key="route.path" :items="items as AccordionItem[]" :multiple="multiple" :ui="ui">
     <template #default="{ item, open }">
       <ULink :class="[ui.button.base, level > 0 && ui.button.level]" :active-class="ui.button.active" :inactive-class="ui.button.inactive">
-        <UIcon v-if="item.icon" :name="item.icon" :class="ui.button.icon.base" />
+        <Icon v-if="item.icon" :name="item.icon" :class="ui.button.icon.base" />
 
         <span :class="ui.button.label">{{ item.label }}</span>
 
-        <UIcon
+        <Icon
           v-if="!item.disabled"
           :name="ui.button.trailingIcon.name"
           :class="[ui.button.trailingIcon.base, open ? ui.button.trailingIcon.active : ui.button.trailingIcon.inactive]" />

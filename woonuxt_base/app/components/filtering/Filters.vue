@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TaxonomyEnum } from '#woo';
+import type { WooNuxtFilter } from '../../types';
 
 const { isFiltersActive } = useFiltering();
 const { removeBodyClass } = useHelpers();

@@ -33,13 +33,20 @@ const checkboxChanged = () => {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .swatches {
   grid-template-columns: repeat(auto-fit, minmax(24px, 1fr));
 }
 
 .swatches label {
-  @apply rounded-md cursor-pointer shadow-sm m-0 mb-1 w-full block relative;
+  border-radius: 0.375rem; /* rounded-md */
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+  margin: 0;
+  margin-bottom: 0.25rem; /* mb-1 */
+  width: 100%; /* w-full */
+  display: block; /* block */
+  position: relative; /* relative */
   background-color: var(--color, #eee);
   filter: saturate(0.75);
   aspect-ratio: 1/1;

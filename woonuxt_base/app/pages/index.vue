@@ -2,6 +2,7 @@
 import { ProductsOrderByEnum } from '#woo';
 import type { Review } from '../types';
 import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
+import BackgroundCard from '../components/BackgroundCard.vue';
 
 definePageMeta({
   layout: 'default',
@@ -24,6 +25,42 @@ const bio = {
   ],
 };
 
+const aboutImg = {
+  one: 'https://res.cloudinary.com/dks0sw9qh/image/upload/e_grayscale/e_brightness:-60/ar_3:2,c_crop/stonecolddown/Natasha/natasha-36.jpg',
+}
+
+const backgroundCards = [
+  {
+    type: 'background' as 'background' | 'product',
+    image:
+      'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
+    title: 'Tattoos',
+    description:
+      'Whether you know exactly what you want or need some inspiration, Natasha will work with you to create a custom design that perfectly captures your style and personality.',
+    to: '/tattoos',
+    buttonLabel: 'Tell Me Your Idea',
+  },
+  {
+    type: 'background' as 'background' | 'product',
+    image:
+      'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/ballpoint/ballpoint_21',
+    title: 'Flash Tattoo Designs',
+    description:
+      'Check out our flash tattoo designs. These designs are ready to be tattooed and are a great way to get started with your tattoo journey.',
+    to: '/flash-designs',
+    buttonLabel: 'View Flash Designs',
+  },
+  {
+    type: 'background' as 'background' | 'product',
+    image:
+      'https://res-console.cloudinary.com/dks0sw9qh/media_explorer_thumbnails/a2bffa0c5dcff7b8f4473d8d9650cb5f/detailed',
+    title: 'Merchandise',
+    description:
+      'Shop our exclusive merchandise. We have a wide range of product from hats to shirts to mugs and more.',
+    to: '/products',
+    buttonLabel: 'Shop Merch',
+  },
+]
 const { siteName, description, shortDescription, siteImage } = useAppConfig();
 
 const { data: reviews } = await useFetch<Review[]>('/api/reviews');
@@ -47,6 +84,39 @@ useSeoMeta({
 <template>
   <Page>
     <HeroBanner />
+
+    <LandingSection
+      :headline="bio.headline"
+      :title="bio.title"
+      :description="bio.description"
+      :align="bio.align"
+      :links="bio.links"
+      :ui="{
+        title: 'text-3xl font-heading',
+        headline: 'text-lg font-thin text-white',
+        description: 'text-base',
+        links:
+          'bg-transparent text-ballance border-1 border-primary-400 hover:bg-primary/10 hover:text-white hover:border-primary-400 w-16 rounded-none',
+      }"
+    >
+      <NuxtImg
+        class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700"
+        :src="aboutImg.one"
+        alt="Natash Smith"
+      />
+    </LandingSection>
+
+    <LandingSection headline="Collections" title="Ink and Inspiration">
+      <LandingGrid>
+        <BackgroundCard
+          class="col-span-4 row-span-8"
+          v-for="card in backgroundCards"
+          v-bind="card"
+          :key="card.title"
+        />
+      </LandingGrid>
+    </LandingSection>
+
     <section class="container my-16">
       <div class="flex items-end justify-between">
         <h2 class="text-lg font-semibold md:text-2xl">{{ $t('messages.shop.shopByCategory') }}</h2>
@@ -57,36 +127,23 @@ useSeoMeta({
       </div>
     </section>
 
-    <section class="container grid gap-4 my-24 md:grid-cols-2 lg:grid-cols-4">
-      <div class="flex items-center gap-8 p-8 bg-white rounded-lg">
-        <img src="/icons/box.svg" width="60" height="60" alt="Free Shipping" loading="lazy" />
-        <div>
-          <h3 class="text-xl font-semibold">Free Shipping</h3>
-          <p class="text-sm">Free shipping on order over €50</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-8 p-8 bg-white rounded-lg">
-        <img src="/icons/moneyback.svg" width="60" height="60" alt="Money Back" loading="lazy" />
-        <div>
-          <h3 class="text-xl font-semibold">Peace of Mind</h3>
-          <p class="text-sm">30 days money back guarantee</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-8 p-8 bg-white rounded-lg">
-        <img src="/icons/secure.svg" width="60" height="60" alt="Secure Payment" loading="lazy" />
-        <div>
-          <h3 class="text-xl font-semibold">100% Payment Secure</h3>
-          <p class="text-sm">Your payment are safe with us.</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-8 p-8 bg-white rounded-lg">
-        <img src="/icons/support.svg" width="60" height="60" alt="Support 24/7" loading="lazy" />
-        <div>
-          <h3 class="text-xl font-semibold">Support 24/7</h3>
-          <p class="text-sm">24/7 Online support</p>
-        </div>
-      </div>
-    </section>
+    <LandingSection>
+      <LandingCTA
+        :ui="{
+          title: 'text-3xl font-heading text-amber-400',
+        }"
+        title="Book Your Appointment Today"
+        description="Don't wait, book your appointment with Natasha now and get your dream tattoo."
+        :links="[
+          {
+            label: 'Book Now',
+            color: 'white',
+            size: 'lg',
+            to: '/booking',
+          },
+        ]"
+      />
+    </LandingSection>
 
     <section class="container my-16" v-if="popularProducts">
       <div class="flex items-end justify-between">
@@ -111,7 +168,8 @@ useSeoMeta({
             size: 'lg',
             to: '/booking',
           },
-        ]" />
+        ]"
+      />
     </LandingSection>
   </Page>
 </template>
