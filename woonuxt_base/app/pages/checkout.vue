@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { loadStripe } from '@stripe/stripe-js';
 import type { Stripe, StripeElements, CreateSourceData, StripeCardElement } from '@stripe/stripe-js';
+import { useI18n } from 'vue-i18n';
+import { useRoute, useRuntimeConfig } from '#app';
+import { z } from 'zod';
 
 const { t } = useI18n();
 const { query } = useRoute();
@@ -17,6 +20,26 @@ const isInvalidEmail = ref<boolean>(false);
 const stripe: Stripe | null = stripeKey ? await loadStripe(stripeKey as string) : null;
 const elements = ref();
 const isPaid = ref<boolean>(false);
+
+const CheckoutSchema = z.object({
+  email: z.string().email(t('messages.billing.enterValidEmail')),
+  username: z.string().optional(),
+  password: z.string().min(6, t('messages.account.enterPassword')).optional(),
+  createAccount: z.boolean().optional(),
+  shipToDifferentAddress: z.boolean().optional(),
+  customerNote: z.string().optional(),
+});
+
+type Checkout = z.infer<typeof CheckoutSchema>;
+
+const state = ref<Checkout>({
+  email: customer.value.billing?.email || '',
+  username: orderInput.value.username || '',
+  password: orderInput.value.password || '',
+  createAccount: orderInput.value.createAccount || false,
+  shipToDifferentAddress: orderInput.value.shipToDifferentAddress || false,
+  customerNote: orderInput.value.customerNote || '',
+});
 
 onBeforeMount(async () => {
   if (query.cancel_order) window.close();
@@ -68,69 +91,62 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="flex flex-col min-h-[600px]">
+  <div class="flex min-h-[600px] flex-col">
     <template v-if="cart && customer">
-      <div v-if="cart.isEmpty" class="flex flex-col items-center justify-center flex-1 mb-12">
-        <Icon name="ion:cart-outline" size="156" class="opacity-25 mb-5" />
-        <h2 class="text-2xl font-bold mb-2">{{ $t('messages.shop.cartEmpty') }}</h2>
-        <span class="text-gray-400 mb-4">{{ $t('messages.shop.addProductsInYourCart') }}</span>
-        <NuxtLink
+      <div v-if="cart.isEmpty" class="mb-12 flex flex-1 flex-col items-center justify-center">
+        <UIcon name="ion:cart-outline" size="156" class="mb-5 opacity-25" />
+        <h2 class="mb-2 text-2xl font-bold">{{ $t('messages.shop.cartEmpty') }}</h2>
+        <span class="mb-4 text-gray-400">{{ $t('messages.shop.addProductsInYourCart') }}</span>
+        <ULink
           to="/products"
-          class="flex items-center justify-center gap-3 p-2 px-3 mt-4 font-semibold text-center text-white rounded-lg shadow-md bg-primary hover:bg-primary-dark">
+          class="mt-4 flex items-center justify-center gap-3 rounded-lg bg-primary p-2 px-3 text-center font-semibold text-white shadow-md hover:bg-primary-dark">
           {{ $t('messages.shop.browseOurProducts') }}
-        </NuxtLink>
+        </ULink>
       </div>
 
-      <form v-else class="container flex flex-wrap items-start gap-8 my-16 justify-evenly lg:gap-20" @submit.prevent="payNow">
-        <div class="grid w-full max-w-2xl gap-8 checkout-form md:flex-1">
+      <UForm :state="state" :schema="CheckoutSchema" class="container my-16 flex flex-wrap items-start justify-evenly gap-8 lg:gap-20" @submit.prevent="payNow">
+        <div class="checkout-form grid w-full max-w-2xl gap-8 md:flex-1">
           <!-- Customer details -->
-          <div v-if="!viewer && customer.billing">
-            <h2 class="w-full mb-2 text-2xl font-semibold leading-none">Contact Information</h2>
-            <p class="mt-1 text-sm text-gray-500">Already have an account? <a href="/my-account" class="text-primary text-semibold">Log in</a>.</p>
-            <div class="w-full mt-4">
-              <label for="email">{{ $t('messages.billing.email') }}</label>
-              <input
-                v-model="customer.billing.email"
-                placeholder="johndoe@email.com"
+          <div v-if="!viewer && customer.billing" class="space-y-2">
+            <h2 class="mb-2 w-full text-2xl font-semibold leading-none">Contact Information</h2>
+            <p class="mt-1 text-sm text-gray-500">Already have an account? <ULink to="/my-account" class="text-semibold text-primary">Log in</ULink>.</p>
+            <UFormGroup name="email" :label="$t('messages.billing.email')" required>
+              <UInput
+                v-model="state.email"
+                placeholder="example@email.com"
                 autocomplete="email"
                 type="email"
-                name="email"
                 :class="{ 'has-error': isInvalidEmail }"
-                @blur="checkEmailOnBlur(customer.billing.email)"
-                @input="checkEmailOnInput(customer.billing.email)"
-                required />
+                @blur="checkEmailOnBlur(state.email)"
+                @input="checkEmailOnInput(state.email)" />
               <Transition name="scale-y" mode="out-in">
                 <div v-if="isInvalidEmail" class="mt-1 text-sm text-red-500">Invalid email address</div>
               </Transition>
-            </div>
-            <template v-if="orderInput.createAccount">
-              <div class="w-full mt-4">
-                <label for="username">{{ $t('messages.account.username') }}</label>
-                <input v-model="orderInput.username" placeholder="johndoe" autocomplete="username" type="text" name="username" required />
-              </div>
-              <div class="w-full my-2" v-if="orderInput.createAccount">
-                <label for="email">{{ $t('messages.account.password') }}</label>
-                <PasswordInput id="password" class="my-2" v-model="orderInput.password" placeholder="••••••••••" :required="true" />
-              </div>
+            </UFormGroup>
+            <template v-if="state.createAccount">
+              <UFormGroup name="username" :label="$t('messages.account.username')" required>
+                <UInput v-model="state.username" placeholder="johndoe" type="text" />
+              </UFormGroup>
+              <UFormGroup name="password" :label="$t('messages.account.password')" required>
+                <UInput type="password" v-model="state.password" placeholder="••••••••" />
+              </UFormGroup>
             </template>
-            <div v-if="!viewer" class="flex items-center gap-2 my-2">
-              <label for="creat-account">Create an account?</label>
-              <input id="creat-account" v-model="orderInput.createAccount" type="checkbox" name="creat-account" />
-            </div>
+            <UFormGroup>
+              <UCheckbox v-model="state.createAccount" label="Create an account?" />
+            </UFormGroup>
           </div>
 
           <div>
-            <h2 class="w-full mb-3 text-2xl font-semibold">{{ $t('messages.billing.billingDetails') }}</h2>
+            <h2 class="mb-3 w-full text-2xl font-semibold">{{ $t('messages.billing.billingDetails') }}</h2>
             <BillingDetails v-model="customer.billing" />
           </div>
 
-          <label v-if="cart.availableShippingMethods.length > 0" for="shipToDifferentAddress" class="flex items-center gap-2">
-            <span>{{ $t('messages.billing.differentAddress') }}</span>
-            <input id="shipToDifferentAddress" v-model="orderInput.shipToDifferentAddress" type="checkbox" name="shipToDifferentAddress" />
-          </label>
+          <UFormGroup v-if="cart.availableShippingMethods.length > 0" name="shipToDifferentAddress">
+            <UCheckbox v-model="state.shipToDifferentAddress" label="{{ $t('messages.billing.differentAddress') }}" />
+          </UFormGroup>
 
           <Transition name="scale-y" mode="out-in">
-            <div v-if="orderInput.shipToDifferentAddress">
+            <div v-if="state.shipToDifferentAddress">
               <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.general.shippingDetails') }}</h2>
               <ShippingDetails v-model="customer.shipping" />
             </div>
@@ -143,68 +159,29 @@ useSeoMeta({
           </div>
 
           <!-- Pay methods -->
-          <div v-if="paymentGateways?.nodes.length" class="mt-2 col-span-full">
+          <div v-if="paymentGateways?.nodes.length" class="col-span-full mt-2">
             <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.billing.paymentOptions') }}</h2>
             <PaymentOptions v-model="orderInput.paymentMethod" class="mb-4" :paymentGateways />
             <StripeElement v-if="stripe" v-show="orderInput.paymentMethod.id == 'stripe'" :stripe @updateElement="handleStripeElement" />
           </div>
 
           <!-- Order note -->
-          <div>
-            <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.shop.orderNote') }} ({{ $t('messages.general.optional') }})</h2>
-            <textarea
-              id="order-note"
-              v-model="orderInput.customerNote"
-              name="order-note"
-              class="w-full min-h-[100px]"
-              rows="4"
-              :placeholder="$t('messages.shop.orderNotePlaceholder')"></textarea>
-          </div>
+          <UFormGroup name="orderNote" :label="$t('messages.shop.orderNote') + ' (' + $t('messages.general.optional') + ')'">
+            <UTextarea v-model="state.customerNote" name="order-note" :rows="4" :placeholder="$t('messages.shop.orderNotePlaceholder')" size="md" />
+          </UFormGroup>
         </div>
 
         <OrderSummary>
-          <button
-            class="flex items-center justify-center w-full gap-3 p-3 mt-4 font-semibold text-center text-white rounded-lg shadow-md bg-primary hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-gray-400"
-            :disabled="isCheckoutDisabled">
-            {{ buttonText }}<LoadingIcon v-if="isProcessingOrder" color="#fff" size="18" />
-          </button>
+          <UButton class="w-full" :loading="isProcessingOrder" :disabled="isCheckoutDisabled" :label="buttonText" color="primary" size="lg" />
         </OrderSummary>
-      </form>
+      </UForm>
     </template>
     <LoadingIcon v-else class="m-auto" />
   </div>
 </template>
 
 <style scoped>
-.checkout-form input[type='text'],
-.checkout-form input[type='email'],
-.checkout-form input[type='tel'],
-.checkout-form input[type='password'],
-.checkout-form textarea,
-.checkout-form select,
-.checkout-form .StripeElement {
-  background-color: white;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  outline: none;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  width: 100%;
-  padding: 0.5rem 1rem;
-}
-
-.checkout-form input.has-error,
-.checkout-form textarea.has-error {
+.checkout-form .has-error {
   border-color: #f87171;
-}
-
-.checkout-form label {
-  margin: 0.375rem 0;
-  font-size: 0.75rem;
-  color: #4b5563;
-  text-transform: uppercase;
-}
-
-.checkout-form .StripeElement {
-  padding: 1rem 0.75rem;
 }
 </style>

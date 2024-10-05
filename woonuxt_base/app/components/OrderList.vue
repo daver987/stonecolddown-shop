@@ -19,17 +19,16 @@ const goToOrder = (orderNumber: string): void => {
 <template>
   <UCard class="min-h-[250px]">
     <template v-if="orders && orders.length">
-      <UTable :rows="orders" :columns="[
-        { key: 'orderNumber', label: $t('messages.shop.order') },
-        { key: 'date', label: $t('messages.general.date') },
-        { key: 'status', label: $t('messages.general.status') },
-        { key: 'total', label: $t('messages.shop.total') },
-      ]">
+      <UTable
+        :rows="orders"
+        :columns="[
+          { key: 'orderNumber', label: $t('messages.shop.order') },
+          { key: 'date', label: $t('messages.general.date') },
+          { key: 'status', label: $t('messages.general.status') },
+          { key: 'total', label: $t('messages.shop.total') },
+        ]">
         <template #orderNumber-data="{ row }">
-          <UButton
-            variant="link"
-            @click="goToOrder(row.orderNumber)"
-          >
+          <UButton variant="link" @click="goToOrder(row.orderNumber)">
             {{ row.orderNumber }}
           </UButton>
         </template>
@@ -44,20 +43,11 @@ const goToOrder = (orderNumber: string): void => {
         </template>
       </UTable>
       <div class="text-center flex justify-center w-full mt-8">
-        <UButton
-          icon="i-heroicons-arrow-path"
-          variant="ghost"
-          color="gray"
-          @click="refresh"
-        >
-          Refresh list
-        </UButton>
+        <UButton icon="i-heroicons-arrow-path" variant="ghost" color="gray" @click="refresh"> Refresh list </UButton>
       </div>
     </template>
     <template v-else-if="orders && orders.length === 0">
-      <div class="min-h-[250px] flex items-center justify-center text-gray-500 dark:text-gray-400 text-lg">
-        No orders found.
-      </div>
+      <div class="min-h-[250px] flex items-center justify-center text-gray-500 dark:text-gray-400 text-lg">No orders found.</div>
     </template>
     <template v-else>
       <div class="min-h-[250px] flex items-center justify-center">

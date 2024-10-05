@@ -30,20 +30,37 @@ const setActiveOption = async (id) => {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .shipping-options {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
 
-  .option {
-    @apply bg-white border rounded-lg text-gray-600 cursor-pointer flex flex-1 text-sm py-3 px-4 gap-2 items-center hover:border-purple-300;
+.option {
+  background-color: white;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  color: #4a5568;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+  align-items: center;
+}
 
-    &.active-option {
-      @apply border-primary cursor-default border-opacity-50 shadow-sm pointer-events-none;
+.option:hover {
+  border-color: #9f7aea;
+}
 
-      & .checkmark {
-        @apply opacity-100;
-      }
-    }
-  }
+.option.active-option {
+  border-color: #3182ce;
+  cursor: default;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
+.option.active-option .checkmark {
+  opacity: 1;
 }
 </style>

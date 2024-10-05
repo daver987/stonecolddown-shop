@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { PaymentGateway, PaymentGateways } from '../../types';
+
 const props = defineProps<{
   modelValue: string | object;
   paymentGateways: PaymentGateways;
@@ -39,16 +41,34 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .option {
-  @apply bg-white border rounded-lg text-gray-600 cursor-pointer flex flex-1 text-sm py-3 px-4 gap-2 items-center hover:border-purple-300;
+  background-color: white;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  color: #4b5563;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+  align-items: center;
+  transition: border-color 0.3s;
+}
 
-  &.active-option {
-    @apply border-primary cursor-default border-opacity-50 shadow-sm pointer-events-none;
+.option:hover {
+  border-color: #d8b4fe;
+}
 
-    & .checkmark {
-      @apply opacity-100;
-    }
-  }
+.option.active-option {
+  border-color: #3b82f6;
+  cursor: default;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
+.option.active-option .checkmark {
+  opacity: 1;
 }
 </style>

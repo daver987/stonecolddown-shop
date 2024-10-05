@@ -1,15 +1,7 @@
 {
-    "title": "Elegant Femme Fatale",
-    "description": "This fine line black and grey tattoo flash features a striking femme fatale with voluminous hair and intricate details. The artwork captures a sense of mystery and allure, perfect for those seeking a bold and elegant tattoo design.",
-    "category": "Ladies",
-    "keywords": [
-        "femme fatale",
-        "fine line tattoo",
-        "black and grey",
-        "elegant",
-        "mystery",
-        "intricate design",
-        "tattoo flash"
-    ],
-    "src": "flash_girls_05"
+  "title": "Elegant Femme Fatale",
+  "description": "This fine line black and grey tattoo flash features a striking femme fatale with voluminous hair and intricate details. The artwork captures a sense of mystery and allure, perfect for those seeking a bold and elegant tattoo design.",
+  "category": "Ladies",
+  "keywords": ["femme fatale", "fine line tattoo", "black and grey", "elegant", "mystery", "intricate design", "tattoo flash"],
+  "src": "flash_girls_05"
 }

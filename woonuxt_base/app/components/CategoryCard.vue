@@ -30,7 +30,7 @@ const imgHeight = Math.round(imgWidth * 1.125);
   </NuxtLink>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .item {
   scroll-snap-align: start;
   scroll-snap-stop: always;

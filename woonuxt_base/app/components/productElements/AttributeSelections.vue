@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { VariationAttributeFragment } from '#gql';
+import type { VariationAttribute } from '../../types';
+
 interface Props {
   attributes: any[];
   defaultAttributes?: { nodes: VariationAttribute[] };
@@ -56,7 +59,7 @@ onBeforeMount(() => {
       <div v-if="attr.scope == 'LOCAL'" class="grid gap-2">
         <div class="text-sm">
           {{ attr.label }}
-          <span v-if="activeVariations.length && activeVariations[i]" class="text-gray-400">: {{ getSelectedName(attr, activeVariations[i]) }}</span>
+          <span v-if="activeVariations.length && activeVariations[i]" class="text-gray-400">: {{ getSelectedName(attr, activeVariations[i] ?? {}) }}</span>
         </div>
         <div class="flex gap-2">
           <span v-for="(option, index) in attr.options" :key="index">
@@ -81,7 +84,7 @@ onBeforeMount(() => {
       <div v-else-if="attr.name == 'pa_color' || attr.name == 'color'" class="grid gap-2">
         <div class="text-sm">
           {{ $t('messages.general.color') }}
-          <span v-if="activeVariations.length" class="text-gray-400">{{ getSelectedName(attr, activeVariations[i]) }}</span>
+          <span v-if="activeVariations.length && activeVariations[i]" class="text-gray-400">{{ getSelectedName(attr, activeVariations[i]) }}</span>
         </div>
         <div class="flex gap-2">
           <span v-for="(term, termIndex) in attr.terms.nodes" :key="termIndex">
@@ -107,7 +110,8 @@ onBeforeMount(() => {
       <!-- DROPDOWN -->
       <div v-else-if="attr.terms.nodes && attr.terms.nodes?.length > 8" class="grid gap-2">
         <div class="text-sm">
-          {{ attr.label }} <span v-if="activeVariations.length" class="text-gray-400">{{ getSelectedName(attr, activeVariations[i]) }}</span>
+          {{ attr.label }}
+          <span v-if="activeVariations.length" class="text-gray-400">{{ getSelectedName(attr, activeVariations[i] as VariationAttributeFragment) }}</span>
         </div>
         <select :id="attr.name" :ref="attr.name" :name="attr.name" required class="border-white shadow" @change="updateAttrs">
           <option disabled hidden>{{ $t('messages.general.choose') }} {{ decodeURIComponent(attr.label) }}</option>
@@ -118,7 +122,8 @@ onBeforeMount(() => {
       <!-- CHECKBOXES -->
       <div v-else class="grid gap-2">
         <div class="text-sm">
-          {{ attr.label }} <span v-if="activeVariations.length" class="text-gray-400">: {{ getSelectedName(attr, activeVariations[i]) }}</span>
+          {{ attr.label }}
+          <span v-if="activeVariations.length" class="text-gray-400">: {{ getSelectedName(attr, activeVariations[i] as VariationAttributeFragment) }}</span>
         </div>
         <div class="flex gap-2">
           <span v-for="(term, index) in attr.terms.nodes" :key="index">
@@ -142,46 +147,76 @@ onBeforeMount(() => {
   </div>
 </template>
 
-<style lang="postcss">
+<style>
 .radio-button {
-  @apply border-transparent border-white rounded-lg cursor-pointer outline bg-gray-50 border-2 text-sm text-center outline-2 outline-gray-100 py-1.5 px-3 transition-all text-gray-800 inline-block hover:outline-gray-500;
+  border-color: transparent;
+  border-width: 2px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  outline: 2px solid;
+  outline-color: #f3f4f6;
+  background-color: #f9fafb;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.375rem 0.75rem;
+  transition: all 0.2s;
+  color: #1f2937;
+  display: inline-block;
+}
+.radio-button:hover {
+  outline-color: #6b7280;
 }
 
 .color-button {
-  @apply border-transparent border-white cursor-pointer outline bg-gray-50 border-2 rounded-2xl text-sm text-center outline-2 outline-gray-100 transition-all text-gray-800 inline-block hover:outline-gray-500;
+  border-color: transparent;
+  border-width: 2px;
+  border-radius: 1rem;
+  cursor: pointer;
+  outline: 2px solid;
+  outline-color: #f3f4f6;
+  background-color: #f9fafb;
+  font-size: 0.875rem;
+  text-align: center;
+  transition: all 0.2s;
+  color: #1f2937;
+  display: inline-block;
   width: 2rem;
   height: 2rem;
 }
+.color-button:hover {
+  outline-color: #6b7280;
+}
 
 .color-green {
-  @apply bg-green-500;
+  background-color: #10b981;
 }
 
 .color-blue {
-  @apply bg-blue-500;
+  background-color: #3b82f6;
 }
 
 .color-red {
-  @apply bg-red-500;
+  background-color: #ef4444;
 }
 
 .color-yellow {
-  @apply bg-yellow-500;
+  background-color: #f59e0b;
 }
 
 .color-orange {
-  @apply bg-orange-500;
+  background-color: #f97316;
 }
 
 .color-purple {
-  @apply bg-purple-500;
+  background-color: #8b5cf6;
 }
 
 .color-black {
-  @apply bg-black;
+  background-color: #000000;
 }
 
 input[type='radio']:checked ~ span {
-  @apply outline outline-2 outline-gray-500;
+  outline: 2px solid;
+  outline-color: #6b7280;
 }
 </style>

@@ -64,4 +64,3 @@ const imagetoDisplay = computed<string>(() => {
     </div>
   </div>
 </template>
-  

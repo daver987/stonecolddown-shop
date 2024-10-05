@@ -131,28 +131,10 @@ const disabledAddToCart = computed(() => {
             <div
               v-if="isVariableProduct || isSimpleProduct"
               class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 bg-white dark:bg-gray-800 md:static md:bg-transparent bg-opacity-90 md:p-0">
-              <UInput
-                v-model="quantity"
-                type="number"
-                min="1"
-                aria-label="Quantity"
-                class="w-20"
-              />
-              <UButton
-                class="flex-1 w-full md:max-w-xs"
-                :disabled="disabledAddToCart"
-                :loading="isUpdatingCart"
-                type="submit"
-                label="Add to Cart"
-                block
-              />
+              <UInput v-model="quantity" type="number" min="1" aria-label="Quantity" class="w-20" />
+              <UButton class="flex-1 w-full md:max-w-xs" :disabled="disabledAddToCart" :loading="isUpdatingCart" type="submit" label="Add to Cart" block />
             </div>
-            <UButton
-              v-if="isExternalProduct && product.externalUrl"
-              :href="product.externalUrl"
-              target="_blank"
-              block
-            >
+            <UButton v-if="isExternalProduct && product.externalUrl" :href="product.externalUrl" target="_blank" block>
               {{ product?.buttonText || 'View product' }}
             </UButton>
           </form>

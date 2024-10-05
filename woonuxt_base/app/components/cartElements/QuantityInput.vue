@@ -5,7 +5,7 @@ const { updateItemQuantity, isUpdatingCart, cart } = useCart();
 const { debounce } = useHelpers();
 
 const props = defineProps({
-  item: { type: Object as PropType<any>, required: true }
+  item: { type: Object as PropType<any>, required: true },
 });
 
 const productType = computed(() => (props.item.variation ? props.item.variation?.node : props.item.product?.node));
@@ -42,8 +42,7 @@ const onFocusOut = () => {
       variant="outline"
       :disabled="isUpdatingCart || quantity <= 0"
       @click="decrementQuantity"
-      aria-label="Decrease Quantity"
-    />
+      aria-label="Decrease Quantity" />
     <UInput
       v-model.number="quantity"
       type="number"
@@ -51,16 +50,14 @@ const onFocusOut = () => {
       :max="productType.stockQuantity"
       aria-label="Quantity"
       @focusout="onFocusOut"
-      class="text-center"
-    />
+      class="text-center" />
     <UButton
       icon="i-heroicons-plus"
       color="gray"
       variant="outline"
       :disabled="isUpdatingCart || hasNoMoreStock"
       @click="incrementQuantity"
-      aria-label="Increase Quantity"
-    />
+      aria-label="Increase Quantity" />
   </UInputGroup>
 </template>
 

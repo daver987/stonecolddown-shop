@@ -1,3 +1,8 @@
+export type GeoLocation = {
+  name: string;
+  code: string;
+};
+
 export const countries: GeoLocation[] = [
   { name: 'Afghanistan', code: 'AF' },
   { name: 'Åland Islands', code: 'AX' },

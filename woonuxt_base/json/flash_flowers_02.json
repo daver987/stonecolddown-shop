@@ -1,16 +1,7 @@
 {
-    "title": "Elegant Fine Line Rose",
-    "description": "This tattoo flash features a beautifully detailed rose in fine line black and grey style. The intricate shading and delicate lines capture the elegance and timeless beauty of the rose, making it a perfect choice for those seeking a classic and sophisticated tattoo design.",
-    "category": "Floral",
-    "keywords": [
-        "rose tattoo",
-        "fine line",
-        "black and grey",
-        "floral tattoo",
-        "elegant",
-        "tattoo flash",
-        "detailed design",
-        "classic tattoo"
-    ],
-    "src": "flash_flowers_02"
+  "title": "Elegant Fine Line Rose",
+  "description": "This tattoo flash features a beautifully detailed rose in fine line black and grey style. The intricate shading and delicate lines capture the elegance and timeless beauty of the rose, making it a perfect choice for those seeking a classic and sophisticated tattoo design.",
+  "category": "Floral",
+  "keywords": ["rose tattoo", "fine line", "black and grey", "floral tattoo", "elegant", "tattoo flash", "detailed design", "classic tattoo"],
+  "src": "flash_flowers_02"
 }

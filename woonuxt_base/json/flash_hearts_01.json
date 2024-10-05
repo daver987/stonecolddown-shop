@@ -1,18 +1,7 @@
 {
-    "title": "Butterfly Heart with Flames",
-    "description": "This fine line black and grey tattoo flash features a heart with a butterfly design at its center. Flames rise from the top of the heart, adding a dynamic and fiery element. The design is completed with delicate stars and teardrops, creating a mystical and emotional composition.",
-    "category": "Hearts",
-    "keywords": [
-        "tattoo flash",
-        "fine line",
-        "black and grey",
-        "heart",
-        "butterfly",
-        "flames",
-        "stars",
-        "teardrops",
-        "mystical",
-        "emotional"
-    ],
-    "src": "flash_hearts_01"
+  "title": "Butterfly Heart with Flames",
+  "description": "This fine line black and grey tattoo flash features a heart with a butterfly design at its center. Flames rise from the top of the heart, adding a dynamic and fiery element. The design is completed with delicate stars and teardrops, creating a mystical and emotional composition.",
+  "category": "Hearts",
+  "keywords": ["tattoo flash", "fine line", "black and grey", "heart", "butterfly", "flames", "stars", "teardrops", "mystical", "emotional"],
+  "src": "flash_hearts_01"
 }

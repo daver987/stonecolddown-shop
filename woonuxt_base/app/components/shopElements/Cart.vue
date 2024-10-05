@@ -1,42 +1,49 @@
 <script setup lang="ts">
 const { cart, toggleCart, isUpdatingCart } = useCart();
+const { t } = useI18n();
+
+const cartItemCount = computed(() => cart.value?.contents?.itemCount || 0);
+const isCartEmpty = computed(() => cart.value?.isEmpty);
 </script>
 
 <template>
-  <div class="fixed top-0 bottom-0 right-0 z-50 flex flex-col w-11/12 max-w-lg overflow-x-hidden bg-white shadow-lg">
-    <Icon name="ion:close-outline" class="absolute p-1 rounded-lg shadow-lg top-6 left-6 md:left-8 cursor-pointer" size="34" @click="toggleCart(false)" />
-    <EmptyCart v-if="cart && !cart.isEmpty" class="rounded-lg shadow-lg p-1.5 hover:bg-red-400 hover:text-white" />
-
-    <div class="mt-8 text-center">
-      {{ $t('messages.shop.cart') }}
-      <span v-if="cart?.contents?.productCount"> ({{ cart?.contents?.productCount }}) </span>
-    </div>
-
-    <ClientOnly>
-      <template v-if="cart && !cart.isEmpty">
-        <ul class="flex flex-col flex-1 gap-4 p-6 overflow-y-scroll md:p-8">
-          <CartCard v-for="item in cart.contents?.nodes" :key="item.key" :item />
-        </ul>
-        <div class="px-8 mb-8">
-          <NuxtLink
-            class="block p-3 text-lg text-center text-white bg-gray-800 rounded-lg shadow-md justify-evenly hover:bg-gray-900"
-            to="/checkout"
-            @click.prevent="toggleCart()">
-            <span class="mx-2">{{ $t('messages.shop.checkout') }}</span>
-            <span v-html="cart.total" />
-          </NuxtLink>
+  <USlideover :modelValue="true">
+    <UCard class="flex h-full flex-col">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold">
+            {{ t('messages.shop.cart') }}
+            <span v-if="cartItemCount > 0">({{ cartItemCount }})</span>
+          </h3>
+          <UButton icon="i-heroicons-x-mark" color="gray" variant="ghost" @click="toggleCart(false)" aria-label="Close cart" />
         </div>
       </template>
-      <!-- Empty Cart Message -->
-      <EmptyCartMessage v-else-if="cart && cart.isEmpty" />
-      <!-- Cart Loading -->
-      <div v-else class="flex flex-col items-center justify-center flex-1 mb-20">
-        <LoadingIcon />
-      </div>
-    </ClientOnly>
-    <!-- Cart Loading Overlay -->
-    <div v-if="isUpdatingCart" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-25">
-      <LoadingIcon />
-    </div>
-  </div>
+
+      <ClientOnly>
+        <template v-if="cart && !isCartEmpty">
+          <div class="flex-1 overflow-y-auto">
+            <ul class="space-y-4 p-4">
+              <CartCard v-for="item in cart.contents?.nodes" :key="item.key" :item="item" />
+            </ul>
+          </div>
+          <div class="p-4">
+            <UButton to="/checkout" color="primary" block @click="toggleCart()">
+              {{ t('messages.shop.checkout') }}
+              <template #trailing>
+                <span v-html="cart.total" />
+              </template>
+            </UButton>
+          </div>
+        </template>
+        <EmptyCartMessage v-else-if="isCartEmpty" class="flex flex-1 items-center justify-center" />
+        <div v-else class="flex flex-1 items-center justify-center">
+          <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
+        </div>
+      </ClientOnly>
+    </UCard>
+
+    <UOverlay v-if="isUpdatingCart" class="bg-white/50 dark:bg-gray-900/50">
+      <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
+    </UOverlay>
+  </USlideover>
 </template>

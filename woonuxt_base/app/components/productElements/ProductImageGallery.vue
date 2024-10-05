@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Product } from '../../types';
+
 const { FALLBACK_IMG } = useHelpers();
 
 const props = defineProps({

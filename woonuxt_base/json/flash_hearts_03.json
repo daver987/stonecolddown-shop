@@ -1,15 +1,7 @@
 {
-    "title": "Butterfly Heart",
-    "description": "This fine line black and grey tattoo flash features a delicate butterfly resting on a heart-shaped design. The intricate details of the butterfly's wings are beautifully contrasted against the bold lines of the heart, creating a harmonious blend of elegance and strength.",
-    "category": "Hearts",
-    "keywords": [
-        "butterfly tattoo",
-        "heart design",
-        "fine line tattoo",
-        "black and grey",
-        "tattoo flash",
-        "elegant tattoo",
-        "intricate design"
-    ],
-    "src": "flash_hearts_03"
+  "title": "Butterfly Heart",
+  "description": "This fine line black and grey tattoo flash features a delicate butterfly resting on a heart-shaped design. The intricate details of the butterfly's wings are beautifully contrasted against the bold lines of the heart, creating a harmonious blend of elegance and strength.",
+  "category": "Hearts",
+  "keywords": ["butterfly tattoo", "heart design", "fine line tattoo", "black and grey", "tattoo flash", "elegant tattoo", "intricate design"],
+  "src": "flash_hearts_03"
 }

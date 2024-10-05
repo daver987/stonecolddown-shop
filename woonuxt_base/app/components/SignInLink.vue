@@ -7,7 +7,7 @@ const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
   <NuxtLink to="/my-account" :title="linkTitle" class="hidden sm:inline-flex aspect-square items-center">
     <Transition name="pop-in" mode="out-in">
       <span v-if="avatar" class="relative avatar">
-        <img
+        <NuxtImg
           :src="avatar"
           class="rounded-full transform scale-125 shadow-md overflow-hidden border border-white my-auto"
           width="22"
@@ -28,7 +28,7 @@ const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
   </NuxtLink>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .pop-in-enter-active,
 .pop-in-leave-active {
   transition: transform 0.3s;
@@ -39,18 +39,34 @@ const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
   transform: scale(0);
 }
 
-.avatar {
-  .account-dropdown {
-    @apply absolute gap-2 top-6 -right-2  z-50 p-2 bg-white border border-gray-200 rounded-lg shadow-lg text-sm text-gray-700 hidden;
+.avatar .account-dropdown {
+  position: absolute;
+  gap: 0.5rem;
+  top: 1.5rem;
+  right: -0.5rem;
+  z-index: 50;
+  padding: 0.5rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 0.875rem;
+  color: #4b5563;
+  display: none;
+}
 
-    a,
-    button {
-      @apply flex gap-2 items-center p-2 rounded whitespace-nowrap min-w-[200px];
-    }
-  }
+.avatar .account-dropdown a,
+.avatar .account-dropdown button {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  min-width: 200px;
+}
 
-  &:hover .account-dropdown {
-    @apply grid;
-  }
+.avatar:hover .account-dropdown {
+  display: grid;
 }
 </style>

@@ -27,13 +27,12 @@ const bio = {
 
 const aboutImg = {
   one: 'https://res.cloudinary.com/dks0sw9qh/image/upload/e_grayscale/e_brightness:-60/ar_3:2,c_crop/stonecolddown/Natasha/natasha-36.jpg',
-}
+};
 
 const backgroundCards = [
   {
     type: 'background' as 'background' | 'product',
-    image:
-      'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
+    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
     title: 'Tattoos',
     description:
       'Whether you know exactly what you want or need some inspiration, Natasha will work with you to create a custom design that perfectly captures your style and personality.',
@@ -42,25 +41,21 @@ const backgroundCards = [
   },
   {
     type: 'background' as 'background' | 'product',
-    image:
-      'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/ballpoint/ballpoint_21',
+    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/ballpoint/ballpoint_21',
     title: 'Flash Tattoo Designs',
-    description:
-      'Check out our flash tattoo designs. These designs are ready to be tattooed and are a great way to get started with your tattoo journey.',
+    description: 'Check out our flash tattoo designs. These designs are ready to be tattooed and are a great way to get started with your tattoo journey.',
     to: '/flash-designs',
     buttonLabel: 'View Flash Designs',
   },
   {
     type: 'background' as 'background' | 'product',
-    image:
-      'https://res-console.cloudinary.com/dks0sw9qh/media_explorer_thumbnails/a2bffa0c5dcff7b8f4473d8d9650cb5f/detailed',
+    image: 'https://res-console.cloudinary.com/dks0sw9qh/media_explorer_thumbnails/a2bffa0c5dcff7b8f4473d8d9650cb5f/detailed',
     title: 'Merchandise',
-    description:
-      'Shop our exclusive merchandise. We have a wide range of product from hats to shirts to mugs and more.',
+    description: 'Shop our exclusive merchandise. We have a wide range of product from hats to shirts to mugs and more.',
     to: '/products',
     buttonLabel: 'Shop Merch',
   },
-]
+];
 const { siteName, description, shortDescription, siteImage } = useAppConfig();
 
 const { data: reviews } = await useFetch<Review[]>('/api/reviews');
@@ -95,25 +90,14 @@ useSeoMeta({
         title: 'text-3xl font-heading',
         headline: 'text-lg font-thin text-white',
         description: 'text-base',
-        links:
-          'bg-transparent text-ballance border-1 border-primary-400 hover:bg-primary/10 hover:text-white hover:border-primary-400 w-16 rounded-none',
-      }"
-    >
-      <NuxtImg
-        class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700"
-        :src="aboutImg.one"
-        alt="Natash Smith"
-      />
+        links: 'bg-transparent text-ballance border-1 border-primary-400 hover:bg-primary/10 hover:text-white hover:border-primary-400 w-16 rounded-none',
+      }">
+      <NuxtImg class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700" :src="aboutImg.one" alt="Natash Smith" />
     </LandingSection>
 
     <LandingSection headline="Collections" title="Ink and Inspiration">
       <LandingGrid>
-        <BackgroundCard
-          class="col-span-4 row-span-8"
-          v-for="card in backgroundCards"
-          v-bind="card"
-          :key="card.title"
-        />
+        <BackgroundCard class="col-span-4 row-span-8" v-for="card in backgroundCards" v-bind="card" :key="card.title" />
       </LandingGrid>
     </LandingSection>
 
@@ -141,8 +125,7 @@ useSeoMeta({
             size: 'lg',
             to: '/booking',
           },
-        ]"
-      />
+        ]" />
     </LandingSection>
 
     <section class="container my-16" v-if="popularProducts">
@@ -168,8 +151,7 @@ useSeoMeta({
             size: 'lg',
             to: '/booking',
           },
-        ]"
-      />
+        ]" />
     </LandingSection>
   </Page>
 </template>

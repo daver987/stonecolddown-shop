@@ -1,25 +1,14 @@
-<script setup>
-const props = defineProps({
-  modelValue: { type: String, default: '' },
-});
-
+<script setup lang="ts">
 const { getAllowedCountries, countriesToShow } = useCountry();
-const emit = defineEmits(['update:modelValue']);
 
-onMounted(() => {
-  getAllowedCountries();
+const selected = defineModel<string>();
+
+onMounted(async () => {
+  await getAllowedCountries();
 });
-
-function select(evt) {
-  emit('update:modelValue', evt.target.value);
-}
+const countriesArray = computed(() => countriesToShow.value.map((country) => country.name));
 </script>
 
 <template>
-  <select :value="modelValue" @change="select" required class="h-[42px]">
-    <option value="" disabled>Select a country</option>
-    <option v-for="country in countriesToShow" :key="country.code" :value="country.code">
-      {{ country.name }}
-    </option>
-  </select>
+  <USelectMenu :options="countriesArray" v-model="selected" placeholder="Select a country" required />
 </template>

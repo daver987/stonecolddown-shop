@@ -1,47 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 interface Props {
-  type: 'background' | 'product'
-  image: string
-  title: string
-  description: string
-  price?: string
-  sku?: string
-  to?: string
-  buttonLabel?: string
+  type: 'background' | 'product';
+  image: string;
+  title: string;
+  description: string;
+  price?: string;
+  sku?: string;
+  to?: string;
+  buttonLabel?: string;
 }
 
-const props = defineProps<Props>()
-const showModal = ref(false)
+const props = defineProps<Props>();
+const showModal = ref(false);
 
 const openModal = () => {
   if (props.type === 'product') {
-    showModal.value = true
+    showModal.value = true;
   }
-}
+};
 </script>
 
 <template>
   <div class="relative overflow-hidden rounded-none shadow-md">
     <!-- Background Image Card -->
-    <div
-      class="bg-cover bg-center h-96"
-      v-if="type === 'background'"
-      :style="`background-image: url(${image})`"
-    >
-      <div
-        class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-white p-4"
-      >
+    <div class="bg-cover bg-center h-96" v-if="type === 'background'" :style="`background-image: url(${image})`">
+      <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-white p-4">
         <h3 class="text-4xl font-heading mb-2">{{ title }}</h3>
         <p class="text-sm mb-4 text-balance text-center">{{ description }}</p>
-        <UButton
-          v-if="to"
-          :to="to"
-          color="white"
-          variant="outline"
-          :label="buttonLabel"
-        />
+        <UButton v-if="to" :to="to" color="white" variant="outline" :label="buttonLabel" />
       </div>
     </div>
 
@@ -53,9 +41,7 @@ const openModal = () => {
         <p class="text-sm text-gray-600">{{ description }}</p>
         <p class="text-lg font-bold mt-2">{{ price }}</p>
       </div>
-      <div
-        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-      >
+      <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
         <UButton color="white" @click="openModal">Quick View</UButton>
       </div>
     </div>
@@ -73,11 +59,7 @@ const openModal = () => {
             <p class="text-lg font-bold mb-4">{{ price }}</p>
             <p class="text-sm text-gray-500 mb-4">SKU: {{ sku }}</p>
             <UButton block color="primary" label="Add to Cart" />
-            <NuxtLink
-              class="block text-center mt-4 text-primary-600 hover:underline"
-              :to="to"
-              >View Full Details
-            </NuxtLink>
+            <NuxtLink class="block text-center mt-4 text-primary-600 hover:underline" :to="to">View Full Details </NuxtLink>
           </div>
         </div>
       </UCard>

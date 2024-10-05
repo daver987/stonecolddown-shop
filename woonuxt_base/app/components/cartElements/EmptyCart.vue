@@ -3,5 +3,5 @@ const { emptyCart } = useCart();
 </script>
 
 <template>
-  <UButton icon="i-heroicons-trash" size="sm" color="primary" variant="solid" class="cursor-pointer top-6 right-6 md:right-8 absolute"  @click="emptyCart"/>
+  <UButton icon="i-heroicons-trash" size="sm" color="primary" variant="solid" class="cursor-pointer top-6 right-6 md:right-8 absolute" @click="emptyCart" />
 </template>

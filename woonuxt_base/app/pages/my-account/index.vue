@@ -72,20 +72,27 @@ useSeoMeta({
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 nav a {
-  @apply rounded-md;
+  border-radius: 0.375rem;
+}
 
-  &.active,
-  &:focus,
-  &:hover {
-    @apply bg-white shadow;
-  }
+nav a.active,
+nav a:focus,
+nav a:hover {
+  background-color: white;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
 
-  & svg {
-    @media (max-width: 640px) {
-      display: none !important;
-    }
+nav a svg {
+  display: none !important;
+}
+
+@media (min-width: 641px) {
+  nav a svg {
+    display: inline !important;
   }
 }
 </style>

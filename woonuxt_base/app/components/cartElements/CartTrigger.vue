@@ -4,21 +4,9 @@ const { toggleCart, cart } = useCart();
 
 <template>
   <UTooltip text="Cart">
-    <UButton
-      icon="i-heroicons-shopping-cart"
-      color="gray"
-      variant="ghost"
-      @click="toggleCart"
-      class="relative rounded-md"
-    >
+    <UButton icon="i-heroicons-shopping-cart" color="gray" variant="ghost" @click="toggleCart" class="relative rounded-md">
       <ClientOnly>
-        <UBadge
-          v-if="cart?.contents?.itemCount > 0"
-          :value="cart.contents.itemCount"
-          size="xs"
-          color="primary"
-          class="absolute -top-1 -right-1"
-        />
+        <UBadge v-if="cart?.contents?.itemCount > 0" :value="cart.contents.itemCount" size="xs" color="primary" class="absolute -top-1 -right-1" />
       </ClientOnly>
     </UButton>
   </UTooltip>

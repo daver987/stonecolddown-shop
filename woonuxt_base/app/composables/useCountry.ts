@@ -1,5 +1,5 @@
 import type { CountriesEnum } from '#gql/default';
-import { countries } from '#constants';
+import { countries, type GeoLocation } from '#constants';
 
 export const useCountry = () => {
   // State to store allowed countries

@@ -14,13 +14,7 @@ watch(cart, (val) => {
 </script>
 
 <template>
-  <UButton
-    block
-    type="submit"
-    :class="{ disabled: disabled }"
-    :disabled="disabled"
-    :loading="isLoading"
-    @click="isLoading = true">
+  <UButton block type="submit" :class="{ disabled: disabled }" :disabled="disabled" :loading="isLoading" @click="isLoading = true">
     <span>{{ addToCartButtonText }}</span>
   </UButton>
 </template>

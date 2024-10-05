@@ -27,9 +27,17 @@ const textToDisplay = computed(() => {
   <span v-if="showSaleBadge" class="red-badge">{{ textToDisplay }}</span>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .red-badge {
-  @apply rounded-md bg-red-400 text-xs text-white tracking-tight px-1.5 leading-6 z-10;
+  border-radius: 0.375rem;
+  background-color: #f87171;
+  font-size: 0.75rem;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+  line-height: 1.5rem;
+  z-index: 10;
   background: #000 linear-gradient(0deg, #f87171, #f87171);
 }
 </style>

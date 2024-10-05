@@ -3,49 +3,21 @@ const route = useRoute();
 const { productsPerPage } = useHelpers();
 const { products } = useProducts();
 
-// TODO: Refactor all this logic. It's a mess.
+const page = ref<number>(route.params.pageNumber ? parseInt(route.params.pageNumber as string, 10) : 1);
+const numberOfPages = computed<number>(() => Math.ceil(products.value.length / productsPerPage) || 1);
+
 const currentQuery = computed(() => {
-  const query = route.query;
-  const queryKeys = Object.keys(query);
-  let currentQuery = '';
-  if (queryKeys.length > 0) {
-    queryKeys.forEach((key, index) => {
-      currentQuery += index === 0 ? `${key}=${query[key]}` : `&${key}=${query[key]}`;
-    });
-  }
-  return decodeURIComponent(currentQuery);
+  return new URLSearchParams(route.query as Record<string, string>).toString();
 });
 
-const page = ref(route.params.pageNumber ? parseInt(route.params.pageNumber as string) : 1);
-const numberOfPages = computed<number>(() => Math.ceil(products.value.length / productsPerPage || 1));
-
-const prevSrc = (pageNumber: number) => {
-  if (currentQuery.value === '') {
-    return decodeURIComponent(`/products/page/${pageNumber > 1 ? pageNumber - 1 : pageNumber}`);
-  } else {
-    return decodeURIComponent(
-      pageNumber > 1 ? `/products/page/${pageNumber - 1}/?${currentQuery.value}` : `/products/page/${pageNumber}/?${currentQuery.value}`,
-    );
-  }
+const buildPageUrl = (pageNumber: number): string => {
+  const basePath = `/products/page/${pageNumber}`;
+  return currentQuery.value ? `${basePath}?${currentQuery.value}` : basePath;
 };
 
-const nextSrc = (pageNumber: number) => {
-  if (currentQuery.value === '') {
-    return decodeURIComponent(`/products/page/${pageNumber < numberOfPages.value ? pageNumber + 1 : pageNumber}`);
-  } else {
-    return decodeURIComponent(
-      pageNumber < numberOfPages.value ? `/products/page/${pageNumber + 1}/?${currentQuery.value}` : `/products/page/${pageNumber}/?${currentQuery.value}`,
-    );
-  }
-};
-
-const numberSrc = (pageNumber: number) => {
-  if (currentQuery.value === '') {
-    return decodeURIComponent(`/products/page/${pageNumber}`);
-  } else {
-    return decodeURIComponent(`/products/page/${pageNumber}/?${currentQuery.value}`);
-  }
-};
+const prevSrc = computed(() => buildPageUrl(Math.max(page.value - 1, 1)));
+const nextSrc = computed(() => buildPageUrl(Math.min(page.value + 1, numberOfPages.value)));
+const numberSrc = (pageNumber: number): string => buildPageUrl(pageNumber);
 </script>
 
 <template>
@@ -53,13 +25,7 @@ const numberSrc = (pageNumber: number) => {
     <!-- Pagination -->
     <nav v-if="numberOfPages && numberOfPages > 1" class="inline-flex self-end -space-x-px rounded-md shadow-sm isolate" aria-label="Pagination">
       <!-- PREV -->
-      <NuxtLink
-        :to="prevSrc(page)"
-        class="prev"
-        :disabled="page == 1"
-        :class="{ 'cursor-not-allowed': page == 1 }"
-        :aria-disabled="page == 1"
-        aria-label="Previous">
+      <NuxtLink :to="prevSrc" class="prev" :disabled="page == 1" :class="{ 'cursor-not-allowed': page == 1 }" :aria-disabled="page == 1" aria-label="Previous">
         <Icon name="ion:chevron-back-outline" size="20" class="w-5 h-5" />
       </NuxtLink>
 
@@ -75,7 +41,7 @@ const numberSrc = (pageNumber: number) => {
 
       <!-- NEXT -->
       <NuxtLink
-        :to="nextSrc(page)"
+        :to="nextSrc"
         class="next"
         :disabled="page === numberOfPages"
         :class="{ 'cursor-not-allowed': page === numberOfPages }"
@@ -87,26 +53,54 @@ const numberSrc = (pageNumber: number) => {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .prev,
 .next,
 .page-number {
-  @apply bg-white border font-medium border-gray-300 text-sm p-2 text-gray-500 relative inline-flex items-center hover:bg-gray-50 focus:z-10;
+  background-color: white;
+  border: 1px solid;
+  font-weight: 500;
+  border-color: #d1d5db;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  color: #6b7280;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.prev:hover,
+.next:hover,
+.page-number:hover {
+  background-color: #f9fafb;
+}
+
+.prev:focus,
+.next:focus,
+.page-number:focus {
+  z-index: 10;
 }
 
 .prev {
-  @apply rounded-l-md;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
 }
 
 .next {
-  @apply rounded-r-md;
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
 }
 
 .page-number {
-  @apply px-3;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .page-number[aria-current='page'] {
-  @apply bg-primary border-primary border bg-opacity-10 text-primary z-10;
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  color: #3b82f6;
+  z-index: 10;
 }
 </style>

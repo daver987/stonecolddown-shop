@@ -5,7 +5,7 @@ const { setProducts, updateProductList } = useProducts();
 const { isQueryEmpty } = useHelpers();
 const { storeSettings } = useAppConfig();
 const route = useRoute();
-const slug = route.params.slug;
+const { slug } = route.params;
 
 const { data } = await useAsyncGql('getProducts', { slug });
 const productsInCategory = (data.value?.products?.nodes || []) as Product[];

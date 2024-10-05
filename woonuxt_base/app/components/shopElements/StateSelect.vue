@@ -1,19 +1,13 @@
-<script setup>
-const props = defineProps({
-  modelValue: { type: String, default: '' },
-  countryCode: { type: String, default: '' },
-});
+<script setup lang="ts">
+import type { CountriesEnum } from '#gql/default';
 
 const { getStatesForCountry, countryStatesDict } = useCountry();
-const emit = defineEmits(['update:modelValue']);
-
-function select(evt) {
-  emit('update:modelValue', evt.target.value);
-}
+const stateName = defineModel<string>('stateName');
+const countryCode = defineModel<string>('countryCode');
 
 async function updateState() {
-  if (props.countryCode && props.countryCode.length > 0) {
-    await getStatesForCountry(props.countryCode);
+  if (countryCode.value) {
+    await getStatesForCountry(countryCode.value as CountriesEnum);
   }
 }
 
@@ -22,19 +16,20 @@ onMounted(() => {
 });
 
 watch(
-  () => props.countryCode,
+  () => countryCode,
   () => {
     updateState();
-  },
+  }
 );
 </script>
 
 <template>
-  <select @change="select" v-if="countryStatesDict[props.countryCode]?.length" class="h-[42px]">
-    <option value="" :selected="!props.modelValue">Select a state</option>
-    <option v-for="state in countryStatesDict[props.countryCode]" :key="state.code" :value="state.code" :selected="state.code === props.modelValue">
-      {{ state.name }}
-    </option>
-  </select>
-  <input v-else type="text" @change="select" placeholder="State" />
+  <div>
+    <USelectMenu
+      v-if="countryStatesDict[countryCode as string]?.length"
+      :options="countryStatesDict[countryCode as string]!.map((state) => state.name)"
+      v-model="stateName"
+      placeholder="Select a state" />
+    <UInput v-else type="text" v-model="stateName" placeholder="Select a state" />
+  </div>
 </template>
