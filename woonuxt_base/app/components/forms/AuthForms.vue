@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
 import LoginForm from './LoginForm.vue';
 import RegisterForm from './RegisterForm.vue';
 import ForgotPasswordForm from './ForgotPasswordForm.vue';

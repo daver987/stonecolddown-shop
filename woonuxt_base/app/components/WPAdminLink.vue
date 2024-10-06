@@ -28,12 +28,24 @@ const linkStartsWithWpAdmin = link?.startsWith('/wp-admin') || false;
   </DevOnly>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .wp-admin-link {
-  @apply inline-flex items-center bg-yellow-400 leading-tight py-1 px-2 rounded gap-1 text-xs text-yellow-900 border-b border-yellow-500 uppercase transition-all duration-100 ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  background-color: #facc15;
+  line-height: 1.25;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #854d0e;
+  border-bottom: 1px solid #f59e0b;
+  text-transform: uppercase;
+  transition: all 0.1s ease-in-out;
+}
 
-  &:hover {
-    @apply bg-yellow-500 border-yellow-600 border-b;
-  }
+.wp-admin-link:hover {
+  background-color: #f59e0b;
+  border-bottom-color: #d97706;
 }
 </style>
