@@ -6,62 +6,57 @@ const route = useRoute();
 const activeTab = computed(() => route.query.tab || 'my-details');
 const showLoader = computed(() => !cart.value);
 
-useSeoMeta({
+definePageMeta({
   title: 'My Account',
 });
+
+const menuItems = [
+  { name: 'my-details', label: 'My Details', icon: 'i-heroicons-user-circle' },
+  { name: 'orders', label: 'Orders', icon: 'i-heroicons-shopping-bag' },
+  { name: 'downloads', label: 'Downloads', icon: 'i-heroicons-cloud-arrow-down' },
+  { name: 'wishlist', label: 'Wishlist', icon: 'i-heroicons-heart' },
+];
 </script>
 
 <template>
-  <div class="container min-h-[600px]">
-    <div v-if="showLoader" class="flex flex-col min-h-[500px]">
-      <LoadingIcon class="m-auto" />
+  <div class="container min-h-[600px] pt-4">
+    <div v-if="showLoader" class="flex min-h-[500px] flex-col">
+      <UIcon name="i-heroicons-arrow-path" class="m-auto animate-spin" />
     </div>
     <template v-else>
-      <LazyLoginAndRegister v-if="!viewer" />
-      <div v-else class="flex flex-col items-start justify-between w-full lg:gap-12 mb-24 lg:flex-row">
-        <div class="mt-2 lg:sticky top-16 w-full lg:max-w-[260px]">
-          <section class="my-8 flex gap-4 items-start justify-center w-full">
-            <img v-if="avatar" :src="avatar" class="rounded-full aspect-square border border-white" alt="user-image" width="48" height="48" />
-            <div class="flex-1 text-balance leading-tight w-full text-ellipsis overflow-hidden">
-              <div class="text-lg font-semibold">Welcome, {{ viewer?.firstName }}</div>
-              <span v-if="viewer?.email" class="text-gray-400 font-light" :title="viewer?.email">{{ viewer?.email }}</span>
+      <LoginAndRegister v-if="!viewer" />
+      <div v-else class="mb-24 flex w-full flex-col items-start justify-between lg:flex-row lg:gap-8">
+        <UCard class="top-20 mt-2 w-full lg:sticky lg:max-w-[260px]">
+          <template #header>
+            <div class="flex items-center gap-4">
+              <UAvatar v-if="avatar" :src="avatar" alt="User Avatar" />
+              <div class="flex-1 overflow-hidden">
+                <p class="text-lg font-semibold truncate">Welcome, {{ viewer?.firstName }}</p>
+                <p v-if="viewer?.email" class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ viewer?.email }}</p>
+              </div>
             </div>
-            <button class="flex text-gray-700 items-center flex-col p-2 px-4 rounded-lg hover:bg-white hover:text-red-700 lg:hidden" @click="logoutUser">
-              <LoadingIcon v-if="isPending" size="22" />
-              <Icon v-else name="ion:log-out-outline" size="22" />
-              <small>{{ $t('messages.account.logout') }}</small>
-            </button>
-          </section>
-          <hr class="my-8" />
-          <nav class="flex text-gray-700 lg:grid flex-wrap w-full gap-1.5 my-8 min-w-[240px] lg:w-auto items-start">
-            <NuxtLink to="/my-account?tab=my-details" class="flex items-center gap-4 p-2 px-4" :class="{ active: activeTab == 'my-details' }">
-              <Icon name="ion:information-circle-outline" size="22" />
-              {{ $t('messages.general.myDetails') }}
-            </NuxtLink>
-            <NuxtLink to="/my-account?tab=orders" class="flex items-center gap-4 p-2 px-4" :class="{ active: activeTab == 'orders' }">
-              <Icon name="ion:bag-check-outline" size="22" />
-              {{ $t('messages.shop.order', 2) }}
-            </NuxtLink>
-            <NuxtLink to="/my-account?tab=downloads" class="flex items-center gap-4 p-2 px-4" :class="{ active: activeTab == 'downloads' }">
-              <Icon name="ion:cloud-download-outline" size="22" />
-              {{ $t('messages.general.downloads') }}
-            </NuxtLink>
-            <NuxtLink to="/my-account?tab=wishlist" class="flex items-center gap-4 p-2 px-4" :class="{ active: activeTab == 'wishlist' }">
-              <Icon name="ion:heart-outline" size="22" />
-              Wishlist
-            </NuxtLink>
-          </nav>
-          <template class="hidden lg:block">
-            <hr class="my-8" />
-            <button class="flex text-gray-700 items-center gap-4 p-2 px-4 w-full rounded-lg hover:bg-white hover:text-red-700" @click="logoutUser">
-              <LoadingIcon v-if="isPending" size="22" />
-              <Icon v-else name="ion:log-out-outline" size="22" />
-              {{ $t('messages.account.logout') }}
-            </button>
           </template>
-        </div>
 
-        <main class="flex-1 w-full lg:my-8 rounded-lg max-w-screen-lg lg:sticky top-24">
+          <nav class="flex flex-col space-y-2">
+            <UButton
+              v-for="item in menuItems"
+              :key="item.name"
+              :to="`/my-account?tab=${item.name}`"
+              :icon="item.icon"
+              :label="item.label"
+              :color="activeTab === item.name ? 'primary' : 'gray'"
+              variant="ghost"
+              class="justify-start" />
+          </nav>
+
+          <template #footer>
+            <UButton block color="red" variant="soft" icon="i-heroicons-arrow-right-on-rectangle" :loading="isPending" @click="logoutUser">
+              {{ $t('messages.account.logout') }}
+            </UButton>
+          </template>
+        </UCard>
+
+        <main class="w-full max-w-screen-lg flex-1 rounded-lg md:-mt-28">
           <AccountMyDetails v-if="activeTab === 'my-details'" :user="viewer" />
           <OrderList v-else-if="activeTab === 'orders'" />
           <DownloadList v-else-if="activeTab === 'downloads'" />
@@ -71,28 +66,3 @@ useSeoMeta({
     </template>
   </div>
 </template>
-
-<style scoped>
-nav a {
-  border-radius: 0.375rem;
-}
-
-nav a.active,
-nav a:focus,
-nav a:hover {
-  background-color: white;
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-nav a svg {
-  display: none !important;
-}
-
-@media (min-width: 641px) {
-  nav a svg {
-    display: inline !important;
-  }
-}
-</style>

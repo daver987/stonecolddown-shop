@@ -1,8 +1,13 @@
 <script setup lang="ts">
 const { siteName } = useAppConfig();
-const { size = 'md', text = false } = defineProps<{
+const {
+  size = 'md',
+  text = false,
+  color = 'white',
+} = defineProps<{
   size?: 'sm' | 'md' | 'lg' | 'xl';
   text?: boolean;
+  color?: string;
 }>();
 
 const sizeClasses = {
@@ -28,7 +33,7 @@ const logoId = useId();
       <NuxtImg src="/images/scd_logo.jpg" alt="Stone Cold Down" />
     </div>
     <div v-if="text">
-      <span class="font-heading no-underline text-primary" :class="textClasses[size]">Stone Cold Down</span>
+      <span class="font-heading no-underline" :class="[textClasses[size], `text-${color}`]"> Stone Cold Down </span>
     </div>
     <span class="sr-only">{{ siteName }}</span>
   </NuxtLink>

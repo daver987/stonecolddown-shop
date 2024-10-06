@@ -34,7 +34,7 @@ watch(
   (newVal) => {
     emit('update:modelValue', newVal);
   },
-  { deep: true }
+  { deep: true },
 );
 
 function onSubmit(event: FormSubmitEvent<BillingDetails>) {

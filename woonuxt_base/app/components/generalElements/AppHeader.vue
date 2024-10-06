@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { isShowingSearch } = useSearching();
 const headerId = useId();
 
 const links = [
@@ -50,12 +49,12 @@ const aboveHeaderLinksRight = [
   {
     label: 'Sign In',
     icon: 'i-heroicons-arrow-right-on-rectangle',
-    to: '/sign-in',
+    to: '/my-account',
   },
   {
     label: 'Create an Account',
     icon: 'i-heroicons-user',
-    to: '/sign-up',
+    to: '/my-account?action=register',
   },
 ];
 
@@ -83,18 +82,18 @@ onMounted(() => {
 
 <template>
   <div class="header-wrapper" :id="headerId" :class="{ 'subheader-hidden': !isSubheaderVisible }">
-    <div class="subheader flex justify-between items-center bg-black border-b border-white/10 border-b-1 w-full py-1.5 px-4 sm:px-6 lg:px-8" v-if="isAboveMd">
-      <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3">
-        <div class="col-span-1 text-black hidden lg:block">The left side</div>
-        <div class="col-span-1 flex items-center justify-center py-1 gap-2">
-          <span class="text-white text-xs font-light uppercase"> I am currently booking </span>
+    <div class="subheader border-b-1 flex w-full items-center justify-between border-b border-white/10 bg-black px-4 py-1.5 sm:px-6 lg:px-8" v-if="isAboveMd">
+      <div class="mx-auto grid w-full grid-cols-1 lg:grid-cols-3">
+        <div class="col-span-1 hidden text-black lg:block">The left side</div>
+        <div class="col-span-1 flex items-center justify-center gap-2 py-1">
+          <span class="text-xs font-light uppercase text-white"> I am currently booking </span>
           <HeaderLinks
             :ui="{
               base: 'text-primary text-xs underline hover:text-amber-600 uppercase',
             }"
             :links="aboveHeaderLinksCenter" />
         </div>
-        <div class="col-span-1 flex items-center justify-center py-1 lg:justify-end gap-2">
+        <div class="col-span-1 flex items-center justify-center gap-2 py-1 lg:justify-end">
           <HeaderLinks :ui="{ base: 'uppercase font-light text-xs' }" :links="aboveHeaderLinksRight" />
         </div>
       </div>
@@ -102,14 +101,14 @@ onMounted(() => {
     <Header class="header-main">
       <template #logo>
         <MenuTrigger class="lg:hidden" />
-        <Logo :size="isAboveMd ? 'xl' : 'sm'" text />
+        <Logo :size="isAboveMd ? 'xl' : 'lg'" text />
       </template>
       <template #center>
         <HeaderLinks v-if="isAboveMd" :links="links" />
       </template>
       <template #right>
-        <div class="flex justify-end items-center md:w-[160px] flex-1 ml-auto gap-4 md:gap-6">
-          <div class="flex gap-4 items-center">
+        <div class="ml-auto flex flex-1 items-center justify-end gap-4 md:w-[160px] md:gap-6">
+          <div class="flex items-center gap-4">
             <SignInLink />
             <CartTrigger />
           </div>

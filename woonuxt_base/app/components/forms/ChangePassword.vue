@@ -1,32 +1,46 @@
 <script setup lang="ts">
+import { z } from 'zod';
+import type { FormSubmitEvent, ButtonColor } from '#ui/types';
+import { useI18n } from 'vue-i18n';
+
 const { viewer, loginUser } = useAuth();
 const { t } = useI18n();
 
-const password = ref<{ new: string; confirm: string }>({ new: '', confirm: '' });
+const schema = z
+  .object({
+    newPassword: z.string().min(8, t('messages.error.passwordMinLength')),
+    confirmPassword: z.string().min(8, t('messages.error.passwordMinLength')),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: t('messages.error.passwordMismatch'),
+    path: ['confirmPassword'],
+  });
+
+const state = reactive({
+  newPassword: '',
+  confirmPassword: '',
+});
+
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({ text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' });
 const errorMessage = ref<string>('');
-const username = ref(viewer.value?.username || '');
 
-const updatePassword = async () => {
+async function onSubmit(event: FormSubmitEvent<typeof schema>) {
   errorMessage.value = '';
-  if (password.value.new !== password.value.confirm) {
-    errorMessage.value = t('messages.error.passwordMismatch');
-    return;
-  }
+  loading.value = true;
 
   try {
-    loading.value = true;
-    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value.id, password: password.value.new } });
+    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value.id, password: state.newPassword } });
     if (updateCustomer) {
       button.value = { text: t('messages.account.updateSuccess'), color: 'bg-green-500' };
-      const { success, error } = await loginUser({ username: viewer.value.username, password: password.value.new });
+      const { success, error } = await loginUser({ username: viewer.value.username, password: state.newPassword });
       if (error) {
         errorMessage.value = error;
         button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
       }
       if (success) {
-        password.value = { new: '', confirm: '' };
+        state.newPassword = '';
+        state.confirmPassword = '';
       }
     }
   } catch (error) {
@@ -42,40 +56,25 @@ const updatePassword = async () => {
   setTimeout(() => {
     button.value = { text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' };
   }, 2000);
-};
+}
 </script>
 
 <template>
-  <form class="bg-white rounded-lg shadow mt-4" @submit.prevent="updatePassword">
-    <div class="grid p-8 gap-6 md:grid-cols-2">
-      <h3 class="font-semibold text-xl col-span-full">{{ $t('messages.account.changePassword') }}</h3>
+  <UCard>
+    <template #header>
+      <h3 class="text-xl font-semibold">{{ $t('messages.account.changePassword') }}</h3>
+    </template>
+    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+      <div class="grid gap-4 md:grid-cols-2">
+        <UFormGroup :label="$t('messages.account.newPassword')" name="newPassword" required>
+          <UInput v-model="state.newPassword" type="password" placeholder="••••••••" />
+        </UFormGroup>
 
-      <!-- Replace the problematic input with this -->
-      <input type="text" v-model="username" name="username" autocomplete="username" style="display: none" />
-
-      <div class="w-full">
-        <label for="new-password">{{ $t('messages.account.newPassword') }}</label>
-        <PasswordInput id="new-password" v-model="password.new" placeholder="••••••••••" type="text" required />
+        <UFormGroup :label="$t('messages.account.confirmNewPassword')" name="confirmPassword" required>
+          <UInput v-model="state.confirmPassword" type="password" placeholder="••••••••" />
+        </UFormGroup>
       </div>
-
-      <div class="w-full">
-        <label for="new-password-confirm">{{ $t('messages.account.confirmNewPassword') }}</label>
-        <PasswordInput id="new-password-confirm" v-model="password.confirm" placeholder="••••••••••" type="text" required />
-      </div>
-
-      <Transition name="scale-y" mode="out-in">
-        <div v-if="errorMessage" class="w-full text-sm text-red-500" v-html="errorMessage"></div>
-      </Transition>
-    </div>
-
-    <div class="bg-white backdrop-blur-sm bg-opacity-75 border-t col-span-full p-4 sticky bottom-0 rounded-b-lg">
-      <button
-        class="rounded-md flex font-semibold ml-auto text-white py-2 px-4 gap-4 items-center disabled:bg-gray-400 disabled:cursor-not-allowed"
-        :class="button.color"
-        :disabled="loading">
-        <LoadingIcon v-if="loading" color="#fff" size="20" />
-        <span>{{ button.text }}</span>
-      </button>
-    </div>
-  </form>
+      <UButton color="primary" :loading="loading" :label="button.text" block type="submit" />
+    </UForm>
+  </UCard>
 </template>

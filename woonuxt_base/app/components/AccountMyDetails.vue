@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-8 account-form">
+  <div class="account-form grid gap-8">
     <PersonalInformation />
     <BillingAndShipping />
     <ChangePassword />
@@ -31,7 +31,7 @@
   .account-form textarea,
   .account-form .StripeElement,
   .account-form select {
-    background-color: #f9fafb; /* md:bg-gray-50 */
+    background-color: #f9fafb;
   }
 }
 

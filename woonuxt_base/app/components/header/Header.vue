@@ -90,11 +90,11 @@ provideUseId(() => useId() as string);
     <UContainer :class="ui.container">
       <div :class="ui.left">
         <slot name="left">
-          <NuxtLink :to="to" :aria-label="ariaLabel" :class="ui.logo">
+          <div :class="ui.logo">
             <slot name="logo">
               {{ title || 'Stone Cold Down' }}
             </slot>
-          </NuxtLink>
+          </div>
         </slot>
       </div>
 

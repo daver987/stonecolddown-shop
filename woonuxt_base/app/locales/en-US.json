@@ -149,6 +149,7 @@
       "countryCode": "Country Code",
       "phone": "Phone",
       "email": "Email",
+      "company": "Company",
       "paymentOptions": "Payment Options",
       "creditCard": "Credit Card",
       "cashOnDelivery": "Cash on Delivery",

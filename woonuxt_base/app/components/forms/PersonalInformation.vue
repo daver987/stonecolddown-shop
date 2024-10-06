@@ -1,63 +1,86 @@
 <script setup lang="ts">
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
+
 const { viewer, customer } = useAuth();
 const { t } = useI18n();
 
 const loading = ref<boolean>(false);
-const button = ref<{ text: string; color: string }>({ text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
+const buttonState = ref<{ text: string; color: 'primary' | 'green' | 'red' }>({ text: t('messages.account.updateDetails'), color: 'primary' });
 
-async function saveChanges() {
+const schema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Invalid email'),
+});
+
+type Schema = z.output<typeof schema>;
+
+const state = reactive({
+  firstName: customer.value?.firstName || '',
+  lastName: customer.value?.lastName || '',
+  email: customer.value?.email || '',
+});
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true;
-  button.value.text = t('messages.account.updating');
-  const firstName = customer.value.firstName;
-  const lastName = customer.value.lastName;
+  buttonState.value = { text: t('messages.account.updating'), color: 'primary' };
+
   try {
-    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value?.id, firstName, lastName } });
-    if (updateCustomer) button.value = { text: t('messages.account.updateSuccess'), color: 'bg-green-500' };
+    const { updateCustomer } = await GqlUpdateCustomer({
+      input: {
+        id: viewer.value?.id,
+        firstName: event.data.firstName,
+        lastName: event.data.lastName,
+        email: event.data.email,
+      },
+    });
+
+    if (updateCustomer) {
+      buttonState.value = { text: t('messages.account.updateSuccess'), color: 'green' };
+    }
   } catch (error) {
-    button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
+    buttonState.value = { text: t('messages.account.failed'), color: 'red' };
   }
 
   loading.value = false;
 
   setTimeout(() => {
-    button.value = { text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' };
+    buttonState.value = { text: t('messages.account.updateDetails'), color: 'primary' };
   }, 2000);
 }
 </script>
 
 <template>
-  <form v-if="customer" class="bg-white rounded-lg shadow" @submit.prevent="saveChanges">
-    <div class="grid gap-6 p-8 md:grid-cols-2">
-      <h3 class="text-xl font-semibold col-span-full">{{ $t('messages.account.personalInfo') }}</h3>
+  <UCard v-if="customer">
+    <template #header>
+      <h3 class="text-xl font-semibold">{{ $t('messages.account.personalInfo') }}</h3>
+    </template>
 
-      <div class="w-full">
-        <label for="first-name">{{ $t('messages.billing.firstName') }}</label>
-        <input id="first-name" v-model="customer.firstName" placeholder="John" autocomplete="given-name" type="text" />
-      </div>
+    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+      <div class="grid grid-cols-1 gap-x-4 md:grid-cols-2">
+        <UFormGroup :label="$t('messages.billing.firstName')" name="firstName">
+          <UInput v-model="state.firstName" autocomplete="given-name" />
+        </UFormGroup>
 
-      <div class="w-full">
-        <label for="last-name">{{ $t('messages.billing.lastName') }}</label>
-        <input id="last-name" v-model="customer.lastName" placeholder="Doe" autocomplete="family-name" type="text" />
+        <UFormGroup :label="$t('messages.billing.lastName')" name="lastName">
+          <UInput v-model="state.lastName" autocomplete="family-name" />
+        </UFormGroup>
       </div>
+      <div class="grid grid-cols-1 gap-x-4 md:grid-cols-2">
+        <UFormGroup :label="$t('messages.account.username')" name="username">
+          <UInput :model-value="customer.username" autocomplete="username" readonly />
+        </UFormGroup>
 
-      <div class="w-full">
-        <label for="username">{{ $t('messages.account.username') }} ({{ $t('messages.general.readOnly') }})</label>
-        <input id="username" v-model="customer.username" placeholder="johndoe" autocomplete="username" type="text" readonly />
+        <UFormGroup :label="$t('messages.billing.email')" name="email">
+          <UInput v-model="state.email" autocomplete="email" type="email" />
+        </UFormGroup>
       </div>
-
-      <div class="w-full">
-        <label for="email">{{ $t('messages.billing.email') }}</label>
-        <input id="email" v-model="customer.email" placeholder="johndoe@email.com" autocomplete="email" type="email" />
+      <div class="flex justify-end">
+        <UButton type="submit" :loading="loading" :color="buttonState.color" :disabled="loading">
+          {{ buttonState.text }}
+        </UButton>
       </div>
-    </div>
-    <div class="bg-white backdrop-blur-sm bg-opacity-75 border-t col-span-full p-4 sticky bottom-0 rounded-b-lg">
-      <button
-        class="rounded-md flex font-semibold ml-auto text-white py-2 px-4 gap-4 items-center disabled:bg-gray-400 disabled:cursor-not-allowed"
-        :class="button.color"
-        :disabled="loading">
-        <LoadingIcon v-if="loading" color="#fff" size="20" />
-        <span>{{ button.text }}</span>
-      </button>
-    </div>
-  </form>
+    </UForm>
+  </UCard>
 </template>

@@ -3,13 +3,13 @@ import { z } from 'zod';
 import type { FormSubmitEvent } from '#ui/types';
 
 const ContactSchema = z.object({
-  full_name: z.string().nonempty('Full Name is required'),
+  full_name: z.string().min(1, 'Full name is required'),
   email_address: z.string().email('Invalid email address'),
   phone_number: z
     .string()
     .regex(/^\\+?[1-9]\\d{1,14}$/, 'Invalid phone number')
-    .nonempty('Phone Number is required'),
-  message: z.string().max(500, 'Message must be less than 500 characters').nonempty('Message is required'),
+    .min(1, 'Phone number is required'),
+  message: z.string().max(500, 'Message must be less than 500 characters').min(10, 'Message must be at least 10 characters'),
   reference_images: z.array(z.instanceof(File)).optional(),
 });
 
@@ -50,7 +50,7 @@ const handleFileInput = (files: FileList | null) => {
 
 <template>
   <UForm :schema="ContactSchema" @submit="onSubmit" :state="contactState">
-    <div class="grid grid-cols-2 w-full max-w-xl gap-x-4">
+    <div class="grid w-full max-w-xl grid-cols-2 gap-x-4">
       <UFormGroup name="full_name" label="Full Name" help="Please enter your full name" class="col-span-2 space-y-4">
         <UInput v-model="contactState.full_name" type="text" placeholder="Full Name" :disabled="isDisabled" />
       </UFormGroup>

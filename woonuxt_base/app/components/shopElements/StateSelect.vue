@@ -19,7 +19,7 @@ watch(
   () => countryCode,
   () => {
     updateState();
-  }
+  },
 );
 </script>
 

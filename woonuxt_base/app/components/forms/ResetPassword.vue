@@ -1,12 +1,28 @@
 <script setup lang="ts">
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
+import { useI18n } from 'vue-i18n';
+
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const { viewer, resetPasswordWithKey, loginUser } = useAuth();
 
-const password = ref('');
-const confirmPassword = ref('');
-const errorMessage = ref('');
+const schema = z
+  .object({
+    newPassword: z.string().min(8, t('messages.error.passwordMinLength')),
+    confirmPassword: z.string().min(8, t('messages.error.passwordMinLength')),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: t('messages.error.passwordMismatch'),
+    path: ['confirmPassword'],
+  });
+
+const state = reactive({
+  newPassword: '',
+  confirmPassword: '',
+});
+
 const isPending = ref(false);
 const isInvalidLink = ref(false);
 
@@ -14,20 +30,15 @@ if (!route.query.key && !route.query.login) {
   router.push('/my-account?action=forgotPassword');
 }
 
-const handlePasswordReset = async () => {
+async function onSubmit(event: FormSubmitEvent<typeof schema>) {
+  isPending.value = true;
+  isInvalidLink.value = false;
+
   try {
-    errorMessage.value = '';
-    isInvalidLink.value = false;
-    isPending.value = true;
-
-    if (password.value !== confirmPassword.value) {
-      throw new Error(t('messages.error.passwordMismatch'));
-    }
-
     const userInfo = {
       key: route.query.key as string,
       login: route.query.login as string,
-      password: password.value,
+      password: state.newPassword,
     };
 
     if (!userInfo.key || !userInfo.login) {
@@ -50,11 +61,11 @@ const handlePasswordReset = async () => {
 
     router.push('/my-account');
   } catch (error: unknown) {
-    errorMessage.value = (error as Error).message || t('messages.error.general');
+    console.error((error as Error).message || t('messages.error.general'));
   } finally {
     isPending.value = false;
   }
-};
+}
 
 useHead({
   title: t('messages.account.resetPassword'),
@@ -62,56 +73,33 @@ useHead({
 </script>
 
 <template>
-  <div class="max-w-lg mx-auto my-16 min-h-[600px] lg:my-24">
+  <div class="mx-auto my-16 min-h-[600px] max-w-lg lg:my-24">
     <div class="flex flex-col items-center">
-      <Logo size="lg" text />
+      <Logo size="xl" text />
       <h1 class="text-xl font-semibold lg:text-3xl">{{ $t('messages.account.resetPassword') }}</h1>
     </div>
 
-    <form class="mt-6 flex flex-col" @submit.prevent="handlePasswordReset">
-      <label for="password" class="mb-4">
-        {{ $t('messages.account.newPassword') }} <span class="text-red-500">*</span><br />
-        <PasswordInput id="password" className=" border rounded-lg w-full p-3 px-4 bg-white" v-model="password" placeholder="New Password" :required="true" />
-      </label>
+    <UForm :schema="schema" :state="state" class="mt-6 flex flex-col" @submit="onSubmit">
+      <UFormGroup :label="$t('messages.account.newPassword')" name="newPassword" required>
+        <UInput size="sm" v-model="state.newPassword" type="password" placeholder="New Password" />
+      </UFormGroup>
 
-      <label for="confirmPassword" class="mb-4">
-        {{ $t('messages.account.confirmNewPassword') }} <span class="text-red-500">*</span><br />
-        <PasswordInput
-          id="confirmPassword"
-          className="border rounded-lg w-full p-3 px-4 bg-white"
-          v-model="confirmPassword"
-          placeholder="Confirm Password"
-          :required="true" />
-      </label>
+      <UFormGroup :label="$t('messages.account.confirmNewPassword')" name="confirmPassword" required>
+        <UInput size="sm" v-model="state.confirmPassword" type="password" placeholder="Confirm Password" />
+      </UFormGroup>
 
       <Transition name="scale-y" mode="out-in">
-        <div v-if="errorMessage" class="text-sm mb-4">
-          <span class="text-red-500" v-html="errorMessage"></span>
-          <NuxtLink v-if="isInvalidLink" class="underline cursor-pointer pl-1" to="/my-account?action=forgotPassword">{{
-            $t('messages.account.requestNewLink')
-          }}</NuxtLink>
+        <div v-if="isInvalidLink" class="mb-4 text-sm">
+          <span class="text-red-500">{{ $t('messages.error.invalidPasswordResetLink') }}</span>
+          <NuxtLink class="cursor-pointer pl-1 underline" to="/my-account?action=forgotPassword">{{ $t('messages.account.requestNewLink') }}</NuxtLink>
         </div>
       </Transition>
 
-      <button class="flex items-center justify-center gap-4 mt-4 text-lg">
-        <LoadingIcon v-if="isPending" stroke="4" size="16" color="#fff" />
-        <span>{{ $t('messages.account.resetPassword') }}</span>
-      </button>
-    </form>
+      <UButton class="mt-4" :label="$t('messages.account.resetPassword')" :loading="isPending" color="primary" variant="solid" />
+    </UForm>
 
-    <div class="my-8 text-center cursor-pointer">
+    <div class="my-8 cursor-pointer text-center">
       <NuxtLink to="/my-account">{{ $t('messages.account.backToLogin') }}</NuxtLink>
     </div>
   </div>
 </template>
-
-<style lang="postcss" scoped>
-input,
-button {
-  @apply border rounded-lg mb-4 w-full p-3 px-4 bg-white;
-}
-
-form button {
-  @apply rounded-lg font-bold bg-gray-800 text-white py-3 px-8 hover:bg-gray-800;
-}
-</style>

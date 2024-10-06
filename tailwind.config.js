@@ -12,6 +12,11 @@ export default {
     './pages/**/*.{vue,js,ts,jsx,tsx}',
     './app/**/*.{vue,js,ts,jsx,tsx}',
   ],
+  container: {
+    center: true,
+    padding: '1rem',
+    maxWidth: '1400px',
+  },
   theme: {
     extend: {
       fontFamily: {
