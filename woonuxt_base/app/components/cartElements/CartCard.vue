@@ -45,10 +45,8 @@ const moveToWishList = () => {
         </div>
         <div class="inline-flex gap-2 flex-col items-end">
           <QuantityInput :item="item" />
-          <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 flex leading-none items-center">
-            <UButton v-if="storeSettings.showMoveToWishlist" variant="ghost" color="gray" size="xs" class="mr-2" @click="moveToWishList">
-              Move to Wishlist
-            </UButton>
+          <div class="flex gap-2">
+            <UButton v-if="storeSettings.showMoveToWishlist" label="Move to Wishlist" variant="ghost" size="xs" @click="moveToWishList" />
             <UButton icon="i-heroicons-trash" color="gray" variant="ghost" size="xs" @click="removeItem" aria-label="Remove Item" />
           </div>
         </div>

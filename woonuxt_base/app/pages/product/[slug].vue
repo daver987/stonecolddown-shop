@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import { z } from 'zod';
 import { StockStatusEnum, ProductTypesEnum, type AddToCartInput } from '#woo';
 import type { Product, Variation, VariationAttribute } from '../../types';
+import type { FormSubmitEvent } from '#ui/types';
 
 const route = useRoute();
 const { storeSettings } = useAppConfig();
@@ -73,6 +75,42 @@ const disabledAddToCart = computed(() => {
   if (isSimpleProduct.value) return !type.value || stockStatus.value === StockStatusEnum.OUT_OF_STOCK || isUpdatingCart.value;
   return !type.value || stockStatus.value === StockStatusEnum.OUT_OF_STOCK || !activeVariation.value || isUpdatingCart.value;
 });
+
+const schema = z.object({
+  quantity: z.number().min(1, 'Quantity must be at least 1'),
+  productId: z.number().positive('Invalid product ID'),
+  variationId: z.number().optional(),
+  variation: z
+    .array(
+      z.object({
+        attributeName: z.string(),
+        attributeValue: z.string(),
+      }),
+    )
+    .nullable(),
+});
+
+type Schema = z.output<typeof schema>;
+
+const state = reactive({
+  quantity: 1,
+  productId: product.value?.databaseId,
+  variationId: null,
+  variation: null,
+});
+
+const updateState = (): void => {
+  state.productId = type.value?.databaseId ?? 0;
+  //@ts-ignore
+  state.variationId = activeVariation.value?.databaseId ?? 0;
+  state.variation = activeVariation.value ? attrValues.value : null;
+};
+
+watch([() => type.value, activeVariation], updateState);
+
+const onSubmit = async (event: FormSubmitEvent<Schema>) => {
+  await addToCart(event.data);
+};
 </script>
 
 <template>
@@ -87,8 +125,8 @@ const disabledAddToCart = computed(() => {
           class="relative flex-1"
           :main-image="product.image"
           :gallery="product.galleryImages!"
-          :node="type"
-          :activeVariation="activeVariation || {}" />
+          :node="product"
+          :activeVariation="(activeVariation || {}) as Product" />
         <NuxtImg v-else class="relative flex-1 skeleton" src="/images/placeholder.jpg" :alt="product?.name || 'Product'" />
 
         <div class="lg:max-w-md xl:max-w-lg md:py-2 w-full">
@@ -120,7 +158,7 @@ const disabledAddToCart = computed(() => {
 
           <UDivider class="my-4" />
 
-          <form @submit.prevent="addToCart(selectProductInput)">
+          <UForm :schema="schema" :state="state" @submit="onSubmit">
             <AttributeSelections
               v-if="isVariableProduct && product.attributes && product.variations"
               class="mt-4 mb-8"
@@ -131,13 +169,13 @@ const disabledAddToCart = computed(() => {
             <div
               v-if="isVariableProduct || isSimpleProduct"
               class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 bg-white dark:bg-gray-800 md:static md:bg-transparent bg-opacity-90 md:p-0">
-              <UInput v-model="quantity" type="number" min="1" aria-label="Quantity" class="w-20" />
+              <UInput v-model="state.quantity" type="number" min="1" aria-label="Quantity" class="w-20" />
               <UButton class="flex-1 w-full md:max-w-xs" :disabled="disabledAddToCart" :loading="isUpdatingCart" type="submit" label="Add to Cart" block />
             </div>
             <UButton v-if="isExternalProduct && product.externalUrl" :href="product.externalUrl" target="_blank" block>
               {{ product?.buttonText || 'View product' }}
             </UButton>
-          </form>
+          </UForm>
 
           <div v-if="storeSettings.showProductCategoriesOnSingleProduct && product.productCategories">
             <UDivider class="my-4" />
