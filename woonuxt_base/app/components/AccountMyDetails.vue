@@ -38,7 +38,6 @@
 .account-form label {
   font-size: 0.75rem;
   margin-bottom: 0.25rem;
-  color: #4b5563;
   display: inline-block;
   text-transform: uppercase;
 }

@@ -28,11 +28,13 @@ export default defineAppConfig({
             check: 'i-heroicons-check-circle-20-solid',
         },
         button: {
-            rounded: 'rounded-none',
-            base: 'uppercase font-light text-xs',
+            base: 'uppercase font-medium text-xs',
         },
         container: {
             padding: 'px-2 sm:px-4 lg:px-6',
+        },
+        formGroup: {
+            help: 'mt-0 text-xs text-gray-500 dark:text-gray-400',
         },
         avatar: {
             background: 'bg-primary-500/10 dark:bg-primary-400/10',

@@ -23,7 +23,6 @@ const productImage = computed(() => props.product.image?.cartSourceUrl || props.
       <UButton
         v-if="product.databaseId"
         icon="i-heroicons-x-mark"
-        color="gray"
         variant="ghost"
         size="sm"
         @click="removeFromWishlist(product.databaseId)"

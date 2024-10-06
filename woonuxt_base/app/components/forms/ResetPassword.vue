@@ -59,7 +59,7 @@ async function onSubmit(event: FormSubmitEvent<typeof schema>) {
       }
     }
 
-    router.push('/my-account');
+    await navigateTo('/my-account');
   } catch (error: unknown) {
     console.error((error as Error).message || t('messages.error.general'));
   } finally {

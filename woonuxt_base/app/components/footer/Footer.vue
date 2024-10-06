@@ -55,7 +55,7 @@ const { ui, attrs } = useUI('footer', toRef(props, 'ui') as Ref<Partial<typeof c
 
         <div :class="ui.bottom.center">
           <slot name="center">
-            <UFooterLinks :links="links" />
+            <FooterLinks :links="links" />
           </slot>
         </div>
 

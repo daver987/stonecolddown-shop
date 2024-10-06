@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     },
   },
 
-  plugins: [resolve('./app/plugins/init.ts')],
+  plugins: [resolve('./app/plugins/init.ts'), resolve('./app/plugins/presets.ts'), resolve('./app/plugins/variables.ts')],
 
   components: [{ path: resolve('./app/components'), pathPrefix: false }],
 
@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   'graphql-client': {
     clients: {
       default: {
-        host: process.env.GQL_HOST || 'http://localhost:4000/graphql',
+        host: process.env.GQL_HOST || 'http://localhost:3000/graphql',
         corsOptions: { mode: 'cors', credentials: 'include' },
       },
     },
@@ -43,7 +43,7 @@ export default defineNuxtConfig({
 
   alias: {
     '#constants': resolve('./app/constants'),
-    '#woo': '../.nuxt/gql/default',
+    '#woo': './../.nuxt/gql/default',
   },
 
   hooks: {

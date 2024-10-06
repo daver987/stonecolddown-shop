@@ -81,44 +81,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="header-wrapper" :id="headerId" :class="{ 'subheader-hidden': !isSubheaderVisible }">
-    <div class="subheader border-b-1 flex w-full items-center justify-between border-b border-white/10 bg-black px-4 py-1.5 sm:px-6 lg:px-8" v-if="isAboveMd">
-      <div class="mx-auto grid w-full grid-cols-1 lg:grid-cols-3">
-        <div class="col-span-1 hidden text-black lg:block">The left side</div>
-        <div class="col-span-1 flex items-center justify-center gap-2 py-1">
-          <span class="text-xs font-light uppercase text-white"> I am currently booking </span>
-          <HeaderLinks
-            :ui="{
-              base: 'text-primary text-xs underline hover:text-amber-600 uppercase',
-            }"
-            :links="aboveHeaderLinksCenter" />
-        </div>
-        <div class="col-span-1 flex items-center justify-center gap-2 py-1 lg:justify-end">
-          <HeaderLinks :ui="{ base: 'uppercase font-light text-xs' }" :links="aboveHeaderLinksRight" />
-        </div>
-      </div>
-    </div>
-    <Header class="header-main">
-      <template #logo>
-        <MenuTrigger class="lg:hidden" />
-        <Logo :size="isAboveMd ? 'xl' : 'lg'" text />
-      </template>
-      <template #center>
-        <HeaderLinks v-if="isAboveMd" :links="links" />
-      </template>
-      <template #right>
-        <div class="ml-auto flex flex-1 items-center justify-end gap-4 md:w-[160px] md:gap-6">
-          <div class="flex items-center gap-4">
-            <SignInLink />
-            <CartTrigger />
+  <ClientOnly>
+    <div class="header-wrapper" :class="{ 'subheader-hidden': !isSubheaderVisible }">
+      <div class="subheader border-b-1 flex w-full items-center justify-between border-b border-white/10 bg-black px-4 py-1.5 sm:px-6 lg:px-8" v-if="isAboveMd">
+        <div class="mx-auto grid w-full grid-cols-1 lg:grid-cols-3">
+          <div class="col-span-1 hidden text-black lg:block">The left side</div>
+          <div class="col-span-1 flex items-center justify-center gap-2 py-1">
+            <span class="text-xs font-light uppercase text-white"> I am currently booking </span>
+            <HeaderLinks
+              :ui="{
+                base: 'text-primary text-xs underline hover:text-amber-600 uppercase',
+              }"
+              :links="aboveHeaderLinksCenter" />
+          </div>
+          <div class="col-span-1 flex items-center justify-center gap-2 py-1 lg:justify-end">
+            <HeaderLinks :ui="{ base: 'uppercase font-light text-xs' }" :links="aboveHeaderLinksRight" />
           </div>
         </div>
-      </template>
-      <template #panel>
-        <UNavigationTree :links="links" />
-      </template>
-    </Header>
-  </div>
+      </div>
+      <Header class="header-main">
+        <template #logo>
+          <MenuTrigger class="lg:hidden" />
+          <Logo :size="isAboveMd ? 'xl' : 'lg'" text />
+        </template>
+        <template #center>
+          <HeaderLinks v-if="isAboveMd" :links="links" />
+        </template>
+        <template #right>
+          <div class="ml-auto flex flex-1 items-center justify-end gap-4 md:w-[160px] md:gap-6">
+            <div class="flex items-center gap-4">
+              <SignInLink />
+              <CartTrigger />
+            </div>
+          </div>
+        </template>
+        <template #panel>
+          <NavigationTree :links="links" />
+        </template>
+      </Header>
+    </div>
+  </ClientOnly>
 </template>
 
 <style>

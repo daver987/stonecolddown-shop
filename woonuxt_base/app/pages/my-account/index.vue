@@ -24,7 +24,7 @@ const menuItems = [
       <UIcon name="i-heroicons-arrow-path" class="m-auto animate-spin" />
     </div>
     <template v-else>
-      <LoginAndRegister v-if="!viewer" />
+      <AuthForms v-if="!viewer" />
       <div v-else class="mb-24 flex w-full flex-col items-start justify-between lg:flex-row lg:gap-8">
         <UCard class="top-20 mt-2 w-full lg:sticky lg:max-w-[260px]">
           <template #header>

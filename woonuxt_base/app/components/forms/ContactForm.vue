@@ -30,7 +30,6 @@ const toast = useToast();
 const onSubmit = (data: FormSubmitEvent<ContactForm>) => {
   loading.value = true;
   isDisabled.value = true;
-  console.log('Form submitted', data);
   setTimeout(() => {
     loading.value = false;
     isDisabled.value = false;
@@ -43,46 +42,44 @@ const onSubmit = (data: FormSubmitEvent<ContactForm>) => {
   }, 1000);
 };
 
-const handleFileInput = (files: FileList | null) => {
-  contactState.reference_images = files ? Array.from(files) : undefined;
+const fileNames = computed(() => contactState.reference_images?.map((file) => file.name).join(', ') || '');
+
+const handleFileInput = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  contactState.reference_images = target.files ? Array.from(target.files) : [];
 };
 </script>
 
 <template>
   <UForm :schema="ContactSchema" @submit="onSubmit" :state="contactState">
-    <div class="grid w-full max-w-xl grid-cols-2 gap-x-4">
-      <UFormGroup name="full_name" label="Full Name" help="Please enter your full name" class="col-span-2 space-y-4">
-        <UInput v-model="contactState.full_name" type="text" placeholder="Full Name" :disabled="isDisabled" />
-      </UFormGroup>
-
-      <UFormGroup name="email_address" label="Email Address" help="Please enter a valid email address" class="col-span-1">
-        <UInput v-model="contactState.email_address" type="email" placeholder="Email Address" :disabled="isDisabled" />
-      </UFormGroup>
-
-      <UFormGroup name="phone_number" label="Phone Number" help="Please enter your phone number" class="col-span-1">
-        <UInput v-model="contactState.phone_number" type="tel" placeholder="Phone Number" :disabled="isDisabled" />
-      </UFormGroup>
-
-      <UFormGroup name="message" label="Your Message" help="Please provide any details or questions you have." class="col-span-2">
-        <UTextarea v-model="contactState.message" :rows="5" placeholder="Your Message" :disabled="isDisabled" />
-      </UFormGroup>
-
-      <UFormGroup
-        name="reference_images"
-        label="Reference Images"
-        help="Upload images that inspire your tattoo design. You can upload multiple files."
-        class="col-span-2">
-        <UInput
-          :model-value="contactState.reference_images?.map((file) => file.name).join(', ')"
-          @update:model-value="handleFileInput"
-          type="file"
-          accept=".jpg,.jpeg,.png,.gif"
-          multiple
-          :disabled="isDisabled" />
-      </UFormGroup>
-
+    <div class="grid w-full max-w-2xl grid-cols-2 gap-x-4 space-y-2">
       <div class="col-span-2">
-        <UButton :loading="loading" type="submit" label="Send Inquiry" :disabled="isDisabled" />
+        <UFormGroup name="full_name" label="Full Name" help="Please enter your full name">
+          <UInput v-model="contactState.full_name" type="text" placeholder="Full Name" :disabled="isDisabled" />
+        </UFormGroup>
+      </div>
+      <div class="col-span-2 md:col-span-1">
+        <UFormGroup name="email_address" label="Email Address" help="Please enter a valid email address">
+          <UInput v-model="contactState.email_address" type="email" placeholder="Email Address" />
+        </UFormGroup>
+      </div>
+      <div class="col-span-2 md:col-span-1">
+        <UFormGroup name="phone_number" label="Phone Number" help="Please enter your phone number">
+          <UInput v-model="contactState.phone_number" type="tel" placeholder="Phone Number" />
+        </UFormGroup>
+      </div>
+      <div class="col-span-2">
+        <UFormGroup name="reference_images" label="Reference Images" help="Upload images that inspire your tattoo design. You can upload multiple files.">
+          <UInput multiple :model-value="fileNames" @input="handleFileInput" type="file" accept=".jpg,.jpeg,.png,.gif" icon="i-heroicons-folder" />
+        </UFormGroup>
+      </div>
+      <div class="col-span-2">
+        <UFormGroup name="message" label="Your Message" help="Please provide any details or questions you have.">
+          <UTextarea v-model="contactState.message" :rows="5" placeholder="Your Message" />
+        </UFormGroup>
+      </div>
+      <div class="col-span-2 mt-2">
+        <UButton :loading="loading" type="submit" label="Send Inquiry" />
       </div>
     </div>
   </UForm>

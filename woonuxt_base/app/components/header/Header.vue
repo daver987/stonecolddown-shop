@@ -153,7 +153,7 @@ provideUseId(() => useId() as string);
           </div>
           <div :class="ui.panel.body">
             <slot name="panel">
-              <UAsideLinks :links="links" />
+              <AsideLinks :links="links" />
             </slot>
           </div>
         </DialogPanel>

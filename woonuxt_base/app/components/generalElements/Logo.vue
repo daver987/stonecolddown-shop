@@ -28,13 +28,15 @@ const logoId = useId();
 </script>
 
 <template>
-  <NuxtLink :id="logoId" to="/" class="no-underline">
-    <div v-if="!text" :class="sizeClasses[size]">
-      <NuxtImg src="/images/scd_logo.jpg" alt="Stone Cold Down" />
-    </div>
-    <div v-if="text">
-      <span class="font-heading no-underline" :class="[textClasses[size], `text-${color}`]"> Stone Cold Down </span>
-    </div>
-    <span class="sr-only">{{ siteName }}</span>
-  </NuxtLink>
+  <ClientOnly>
+    <NuxtLink :id="useId()" to="/" class="no-underline">
+      <div v-if="!text" :class="sizeClasses[size]">
+        <NuxtImg src="/images/scd_logo.jpg" alt="Stone Cold Down" />
+      </div>
+      <div v-if="text">
+        <span class="font-heading no-underline" :class="[textClasses[size], `text-${color}`]"> Stone Cold Down </span>
+      </div>
+      <span class="sr-only">{{ siteName }}</span>
+    </NuxtLink>
+  </ClientOnly>
 </template>
