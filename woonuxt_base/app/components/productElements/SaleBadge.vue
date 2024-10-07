@@ -24,20 +24,5 @@ const textToDisplay = computed(() => {
 </script>
 
 <template>
-  <span v-if="showSaleBadge" class="red-badge">{{ textToDisplay }}</span>
+  <UBadge v-if="showSaleBadge" color="red" variant="solid" size="sm">{{ textToDisplay }}</UBadge>
 </template>
-
-<style scoped>
-.red-badge {
-  border-radius: 0.375rem;
-  background-color: #f87171;
-  font-size: 0.75rem;
-  color: #ffffff;
-  letter-spacing: -0.015em;
-  padding-left: 0.375rem;
-  padding-right: 0.375rem;
-  line-height: 1.5rem;
-  z-index: 10;
-  background: #000 linear-gradient(0deg, #f87171, #f87171);
-}
-</style>

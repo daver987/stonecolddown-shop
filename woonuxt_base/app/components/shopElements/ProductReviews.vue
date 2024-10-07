@@ -6,7 +6,7 @@ const props = defineProps({
 
 <template>
   <div class="flex flex-wrap gap-32 items-start">
-    <div class="flex max-w-sm gap-4 prose">
+    <div class="flex max-w-sm gap-4 prose dark:prose-invert">
       <ReviewsScore v-if="product.reviews" :reviews="product.reviews" :productId="product.databaseId" />
     </div>
     <div class="divide-y flex-1" v-if="product.reviews?.edges && product.reviews.edges.length">
@@ -16,7 +16,7 @@ const props = defineProps({
           <div class="grid gap-1">
             <div class="text-sm">
               <span class="font-semibold">{{ review.node.author.node.name }}</span>
-              <span class="italic text-gray-400">
+              <span class="italic">
                 – {{ new Date(review.node.date).toLocaleString($t('messages.general.langCode'), { month: 'long', day: 'numeric', year: 'numeric' }) }}</span
               >
             </div>

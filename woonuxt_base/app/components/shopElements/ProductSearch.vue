@@ -32,10 +32,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
   <UForm :schema="schema" :state="state" @submit="onSubmit">
     <UFormGroup name="searchQuery" class="relative">
       <UButtonGroup>
-        <template #prefix>
-          <Icon name="ion:search-outline" />
-        </template>
-        <UInput v-model="state.searchQuery" :placeholder="$t('messages.shop.searchProducts')" class="pl-10" />
+        <UInput prefix-icon="ion:search-outline" v-model="state.searchQuery" :placeholder="$t('messages.shop.searchProducts')" class="pl-10" />
         <template #suffix v-if="state.searchQuery">
           <UButton color="gray" variant="ghost" icon="i-ion-close-outline" @click="reset" :aria-label="$t('messages.general.clear')" />
         </template>

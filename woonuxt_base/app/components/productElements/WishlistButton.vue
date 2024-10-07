@@ -11,7 +11,5 @@ const toggleWishlist = () => (isWishlisted.value && props.product.databaseId ? r
 </script>
 
 <template>
-  <UButton :icon="isWishlisted ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'" color="gray" variant="ghost" @click="toggleWishlist" class="mt-4">
-    {{ isWishlisted ? $t('messages.shop.wishlistRemove') : $t('messages.shop.wishlistAdd') }}
-  </UButton>
+  <UButton :icon="isWishlisted ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'" color="gray" :label="isWishlisted ? $t('messages.shop.wishlistRemove') : $t('messages.shop.wishlistAdd')" variant="ghost" @click="toggleWishlist" class="mt-4"/>
 </template>
