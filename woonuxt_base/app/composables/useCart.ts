@@ -1,4 +1,5 @@
 import type { AddToCartInput } from '#gql';
+import type { Cart, PaymentGateways, SimpleProduct } from '../types';
 
 /**
  * @name useCart

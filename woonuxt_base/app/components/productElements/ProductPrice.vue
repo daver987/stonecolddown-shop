@@ -4,7 +4,10 @@ interface ProductPriceProps {
   salePrice?: string | null;
 }
 
-const { regularPrice, salePrice } = defineProps<ProductPriceProps>();
+const props = defineProps<ProductPriceProps>();
+
+const regularPrice = computed(() => props.regularPrice);
+const salePrice = computed(() => props.salePrice);
 </script>
 
 <template>

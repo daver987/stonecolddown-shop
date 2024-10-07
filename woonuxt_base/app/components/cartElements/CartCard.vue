@@ -29,28 +29,27 @@ const moveToWishList = () => {
 </script>
 
 <template>
-  <SwipeCard @remove="removeItem">
-    <UCard v-if="productType" class="p-4">
-      <div class="flex items-center gap-3 group">
-        <NuxtLink :to="productSlug">
-          <UAvatar :src="imgSrc" :alt="productType.image?.altText || productType.name" size="lg" class="rounded-md" />
-        </NuxtLink>
-        <div class="flex-1">
-          <div class="flex gap-x-2 gap-y-1 flex-wrap items-center">
-            <NuxtLink class="text-base font-medium" :to="productSlug">{{ productType.name }}</NuxtLink>
-            <UBadge v-if="productType.salePrice" color="green" variant="subtle" size="xs"> Save {{ salePercentage }} </UBadge>
-            <UBadge v-if="isLowStock" color="orange" variant="subtle" size="xs"> Low Stock </UBadge>
-          </div>
-          <ProductPrice class="mt-1 text-sm" :sale-price="productType.salePrice" :regular-price="productType.regularPrice" />
+  <li class="flex py-6" v-if="productType">
+    <div class="flex-shrink-0">
+      <NuxtImg :src="imgSrc" :alt="productType.image?.altText || productType.name" class="h-16 w-16 rounded-md object-cover object-center sm:h-32 sm:w-32" />
+    </div>
+    <div class="flex flex-1 flex-col sm:ml-6">
+      <div>
+        <div class="flex justify-between">
+          <h4 class="text-sm">
+            <NuxtLink :to="productSlug" class="font-medium text-balance text-base">{{ productType.name }}</NuxtLink>
+          </h4>
+          <ProductPrice class="text-base ml-2 text-primary" :sale-price="productType.salePrice" :regular-price="productType.regularPrice" />
         </div>
-        <div class="inline-flex gap-2 flex-col items-end">
+        <p class="mt-1 text-sm text-gray-500">{{ productType.color }}</p>
+        <p class="mt-1 text-sm text-gray-500">{{ productType.size }}</p>
+      </div>
+      <div class="mt-4 flex flex-1 items-end justify-between mb-2 w-full">
+        <div class="flex justify-between items-center w-full">
           <QuantityInput :item="item" />
-          <div class="flex gap-2">
-            <UButton v-if="storeSettings.showMoveToWishlist" label="Move to Wishlist" variant="ghost" size="xs" @click="moveToWishList" />
-            <UButton icon="i-heroicons-trash" color="gray" variant="ghost" size="xs" @click="removeItem" aria-label="Remove Item" />
-          </div>
+          <UButton icon="i-heroicons-trash" color="red" variant="ghost" size="2xs" @click="removeItem" aria-label="Remove Item" />
         </div>
       </div>
-    </UCard>
-  </SwipeCard>
+    </div>
+  </li>
 </template>

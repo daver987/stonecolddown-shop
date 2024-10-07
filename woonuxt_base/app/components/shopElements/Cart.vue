@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { cart, toggleCart, isUpdatingCart } = useCart();
+const { cart, toggleCart, isUpdatingCart, isShowingCart } = useCart();
 const { t } = useI18n();
 
 const cartItemCount = computed(() => cart.value?.contents?.itemCount || 0);
@@ -7,7 +7,7 @@ const isCartEmpty = computed(() => cart.value?.isEmpty);
 </script>
 
 <template>
-  <USlideover :modelValue="true">
+  <USlideover v-model="isShowingCart">
     <UCard class="flex h-full flex-col">
       <template #header>
         <div class="flex items-center justify-between">
@@ -22,12 +22,12 @@ const isCartEmpty = computed(() => cart.value?.isEmpty);
       <ClientOnly>
         <template v-if="cart && !isCartEmpty">
           <div class="flex-1 overflow-y-auto">
-            <ul class="space-y-4 p-4">
+            <ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200/10">
               <CartCard v-for="item in cart.contents?.nodes" :key="item.key" :item="item" />
             </ul>
           </div>
           <div class="p-4">
-            <UButton to="/checkout" color="primary" block @click="toggleCart()">
+            <UButton to="/checkout" color="primary" block @click="toggleCart(false)">
               {{ t('messages.shop.checkout') }}
               <template #trailing>
                 <span v-html="cart.total" />
@@ -37,13 +37,13 @@ const isCartEmpty = computed(() => cart.value?.isEmpty);
         </template>
         <EmptyCartMessage v-else-if="isCartEmpty" class="flex flex-1 items-center justify-center" />
         <div v-else class="flex flex-1 items-center justify-center">
-          <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
+          <Icon name="i-heroicons-arrow-path" class="animate-spin" size="24" />
         </div>
       </ClientOnly>
     </UCard>
 
-    <UOverlay v-if="isUpdatingCart" class="bg-white/50 dark:bg-gray-900/50">
-      <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
-    </UOverlay>
+    <div v-if="isUpdatingCart" class="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-900 bg-opacity-20">
+      <Icon name="i-heroicons-arrow-path" class="animate-spin" size="24" />
+    </div>
   </USlideover>
 </template>

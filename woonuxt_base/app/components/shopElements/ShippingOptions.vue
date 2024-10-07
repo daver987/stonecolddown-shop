@@ -25,7 +25,7 @@ const setActiveOption = async (id) => {
         <div class="font-semibold text-gray-600">{{ currencySymbol }}{{ option.cost }}</div>
       </div>
 
-      <icon name="ion:checkmark-circle" size="20" class="ml-auto text-primary checkmark opacity-0" />
+      <Icon name="ion:checkmark-circle" size="20" class="ml-auto text-primary checkmark opacity-0" />
     </div>
   </div>
 </template>

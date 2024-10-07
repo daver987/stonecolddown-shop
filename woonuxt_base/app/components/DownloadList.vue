@@ -16,10 +16,7 @@ const refresh = () => {
     <div v-if="downloads && downloads.length" class="w-full">
       <DownloadableItems :downloadableItems="downloads" />
       <div class="text-center flex justify-center w-full mt-8">
-        <button type="button" @click="refresh" class="flex items-center gap-1 text-sm leading-none hover:bg-gray-50 p-2 rounded">
-          <span>Refresh list</span>
-          <Icon name="ion:refresh-outline" />
-        </button>
+        <UButton type="button" @click="refresh" icon="i-ion-refresh-outline" label="Refresh list" />
       </div>
     </div>
     <div v-else-if="downloads && downloads.length === 0" class="min-h-[250px] flex items-center justify-center text-gray-500 text-lg">No downloads found.</div>

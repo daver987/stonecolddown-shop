@@ -33,21 +33,37 @@ const props = defineProps({
   </table>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 tbody tr:nth-child(odd) {
   background-color: #fafafa;
 }
 
 thead tr {
-  @apply text-xs sm:text-base;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  thead tr {
+    font-size: 1rem;
+  }
 }
 
 tbody tr {
-  @apply text-xs sm:text-sm text-gray-500;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+@media (min-width: 640px) {
+  tbody tr {
+    font-size: 0.875rem;
+  }
 }
 
 td,
 th {
-  @apply py-2 px-3;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 </style>

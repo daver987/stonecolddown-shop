@@ -166,12 +166,10 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
               :defaultAttributes="{ nodes: product.defaultAttributes as unknown as VariationAttribute[] }"
               :variations="{ nodes: product.variations?.nodes as Variation[] }"
               @attrs-changed="updateSelectedVariations" />
-            <div
-              v-if="isVariableProduct || isSimpleProduct"
-              class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 bg-white dark:bg-gray-800 md:static md:bg-transparent bg-opacity-90 md:p-0">
-              <UInput v-model="state.quantity" type="number" min="1" aria-label="Quantity" class="w-20" />
-              <UButton class="flex-1 w-full md:max-w-xs" :disabled="disabledAddToCart" :loading="isUpdatingCart" type="submit" label="Add to Cart" block />
-            </div>
+            <UButtonGroup v-if="isVariableProduct || isSimpleProduct">
+              <UInput v-model="state.quantity" type="number" min="1" aria-label="Quantity" />
+              <UButton :loading="isUpdatingCart" type="submit" label="Add to Cart" />
+            </UButtonGroup>
             <UButton v-if="isExternalProduct && product.externalUrl" :href="product.externalUrl" target="_blank" block>
               {{ product?.buttonText || 'View product' }}
             </UButton>

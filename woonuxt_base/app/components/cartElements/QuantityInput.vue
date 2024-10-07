@@ -26,37 +26,47 @@ watch(
 
 const onFocusOut = () => {
   if (quantity.value === '') {
-    const cartItem = cart.value?.contents?.nodes?.find((node: CartItem) => node.key === props.item.key);
+    const cartItem = cart.value?.contents?.nodes?.find((node) => node.key === props.item.key);
     if (cartItem) {
       quantity.value = cartItem.quantity;
     }
   }
 };
+
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const value = target.value.replace(/[^0-9]/g, '');
+  quantity.value = value ? parseInt(value, 10) : 0;
+};
 </script>
 
 <template>
-  <UInputGroup class="w-24">
+  <UButtonGroup>
     <UButton
       icon="i-heroicons-minus"
-      color="gray"
-      variant="outline"
+      size="2xs"
+      variant="ghost"
+      color="white"
       :disabled="isUpdatingCart || quantity <= 0"
       @click="decrementQuantity"
       aria-label="Decrease Quantity" />
     <UInput
-      v-model.number="quantity"
-      type="number"
-      :min="0"
-      :max="productType.stockQuantity"
+      :model-value="quantity"
+      type="text"
+      size="2xs"
+      class="w-8"
+      inputmode="numeric"
+      pattern="[0-9]*"
       aria-label="Quantity"
-      @focusout="onFocusOut"
-      class="text-center" />
+      @input="onInput"
+      @focusout="onFocusOut" />
     <UButton
       icon="i-heroicons-plus"
-      color="gray"
-      variant="outline"
+      size="2xs"
+      color="white"
+      variant="ghost"
       :disabled="isUpdatingCart || hasNoMoreStock"
       @click="incrementQuantity"
       aria-label="Increase Quantity" />
-  </UInputGroup>
+  </UButtonGroup>
 </template>

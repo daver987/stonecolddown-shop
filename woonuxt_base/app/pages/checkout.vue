@@ -141,8 +141,8 @@ useSeoMeta({
             <BillingDetails v-model="customer.billing" />
           </div>
 
-          <UFormGroup v-if="cart.availableShippingMethods.length > 0" name="shipToDifferentAddress">
-            <UCheckbox v-model="state.shipToDifferentAddress" label="{{ $t('messages.billing.differentAddress') }}" />
+          <UFormGroup v-if="cart?.availableShippingMethods!.length > 0" name="shipToDifferentAddress">
+            <UCheckbox v-model="state.shipToDifferentAddress" :label="$t('messages.billing.differentAddress')" />
           </UFormGroup>
 
           <Transition name="scale-y" mode="out-in">
@@ -153,9 +153,9 @@ useSeoMeta({
           </Transition>
 
           <!-- Shipping methods -->
-          <div v-if="cart.availableShippingMethods.length">
+          <div v-if="cart?.availableShippingMethods?.length">
             <h3 class="mb-4 text-xl font-semibold">{{ $t('messages.general.shippingSelect') }}</h3>
-            <ShippingOptions :options="cart.availableShippingMethods[0].rates" :active-option="cart.chosenShippingMethods[0]" />
+            <ShippingOptions :options="cart?.availableShippingMethods?.[0]?.rates || []" :active-option="cart?.chosenShippingMethods?.[0] ?? undefined" />
           </div>
 
           <!-- Pay methods -->
@@ -172,7 +172,7 @@ useSeoMeta({
         </div>
 
         <OrderSummary>
-          <UButton class="w-full" :loading="isProcessingOrder" :disabled="isCheckoutDisabled" :label="buttonText" color="primary" size="lg" />
+          <UButton block :loading="isProcessingOrder" :disabled="isCheckoutDisabled" :label="buttonText" color="primary" size="lg" />
         </OrderSummary>
       </UForm>
     </template>

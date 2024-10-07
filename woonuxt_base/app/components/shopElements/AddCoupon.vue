@@ -1,14 +1,26 @@
 <script setup lang="ts">
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
+
 const { cart, isUpdatingCoupon, applyCoupon, removeCoupon } = useCart();
-const couponCode = ref<string>('');
 const errorMessage = ref<string>('');
 
-async function submitCoupon(): Promise<void> {
-  const { message } = await applyCoupon(couponCode.value);
+const schema = z.object({
+  couponCode: z.string().min(1, 'Coupon code is required'),
+});
+
+type Schema = z.output<typeof schema>;
+
+const state = reactive({
+  couponCode: '',
+});
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  const { message } = await applyCoupon(event.data.couponCode);
   if (message) {
     errorMessage.value = message;
   } else {
-    couponCode.value = '';
+    state.couponCode = '';
     errorMessage.value = '';
   }
 }
@@ -16,35 +28,31 @@ async function submitCoupon(): Promise<void> {
 
 <template>
   <div>
-    <form class="flex gap-1" @submit.prevent="submitCoupon">
-      <input
-        id="couponCode"
-        v-model="couponCode"
-        type="text"
-        :placeholder="$t('messages.shop.couponCode')"
-        class="w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm outline-none"
-        required />
-      <button
-        class="flex items-center justify-center px-4 py-2 text-white bg-gray-800 border rounded-md shadow-sm outline-none min-w-20"
-        :disabled="isUpdatingCoupon">
-        <LoadingIcon v-if="isUpdatingCoupon" color="#fff" size="16" />
-        <span v-else>{{ $t('messages.general.apply') }}</span>
-      </button>
-    </form>
-    <Transition name="scale-y" mode="out-in">
-      <div v-if="errorMessage" class="mt-2 text-xs text-red-600" v-html="errorMessage"></div>
-    </Transition>
-    <Transition name="scale-y" mode="out-in">
+    <UForm :schema="schema" :state="state" @submit="onSubmit">
+      <UFormGroup name="couponCode">
+        <UButtonGroup>
+          <UInput size="lg" v-model="state.couponCode" :placeholder="$t('messages.shop.couponCode')" class="flex-grow md:w-[450px]" />
+          <UButton type="submit" color="gray" :loading="isUpdatingCoupon" size="lg">
+            {{ $t('messages.general.apply') }}
+          </UButton>
+        </UButtonGroup>
+      </UFormGroup>
+    </UForm>
+
+    <transition name="fade" mode="out-in">
+      <p v-if="errorMessage" class="mt-2 text-xs text-red-600" v-html="errorMessage"></p>
+    </transition>
+
+    <transition name="fade" mode="out-in">
       <div v-if="cart && cart.appliedCoupons" class="text-xs font-semibold uppercase flex flex-wrap gap-2">
         <div v-for="(coupon, index) in cart.appliedCoupons" :key="coupon?.code || index" class="flex flex-wrap mt-2 flex-2">
-          <div
-            v-if="coupon?.code"
-            class="bg-primary border-primary border rounded-md flex bg-opacity-5 border-opacity-10 text-primary leading-none p-1.5 gap-1 items-center">
-            <span v-html="coupon.code" />
-            <Icon name="ion:close" class="rounded-full cursor-pointer hover:bg-primary hover:text-white" @click="removeCoupon(coupon.code)" />
-          </div>
+          <UBadge v-if="coupon?.code" :label="coupon.code" color="primary" variant="subtle" class="p-1.5">
+            <template #end>
+              <UButton color="primary" variant="ghost" icon="i-ion-close" size="2xs" @click="removeCoupon(coupon.code)" />
+            </template>
+          </UBadge>
         </div>
       </div>
-    </Transition>
+    </transition>
   </div>
 </template>

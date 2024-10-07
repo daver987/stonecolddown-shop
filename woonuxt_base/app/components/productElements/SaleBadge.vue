@@ -12,7 +12,7 @@ const salePercentage = computed((): string => {
   if (!node?.rawSalePrice || !node?.rawRegularPrice) return '';
   const salePrice = parseFloat(node?.rawSalePrice);
   const regularPrice = parseFloat(node?.rawRegularPrice);
-  return Math.round(((salePrice - regularPrice) / regularPrice) * 100) + ` %`;
+  return `${Math.round(((salePrice - regularPrice) / regularPrice) * 100)} %`;
 });
 
 const showSaleBadge = computed(() => node.rawSalePrice && storeSettings.saleBadge !== 'hidden');

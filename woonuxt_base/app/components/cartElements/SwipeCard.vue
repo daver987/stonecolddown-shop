@@ -3,7 +3,7 @@ import { useSwipe } from '@vueuse/core';
 const emit = defineEmits(['remove']);
 
 const isAlive = ref(true);
-const el = ref(null);
+const el = useTemplateRef('el');
 const { isSwiping, lengthX } = useSwipe(el, {
   passive: true,
   onSwipeEnd() {
@@ -16,7 +16,7 @@ const { isSwiping, lengthX } = useSwipe(el, {
 </script>
 
 <template>
-  <div v-if="isAlive" class="rounded-lg flex h-16 w-full overflow-hidden relative items-center">
+  <UCard v-if="isAlive" class="flex h-16 w-full overflow-hidden relative items-center">
     <Icon
       name="i-heroicons-trash"
       class="transform transition-all right-0 w-6 scale-0 absolute"
@@ -28,7 +28,7 @@ const { isSwiping, lengthX } = useSwipe(el, {
       :style="{ transform: isSwiping ? `translateX(-${lengthX}px)` : `none` }">
       <slot />
     </div>
-  </div>
+  </UCard>
 </template>
 
 <style scoped>

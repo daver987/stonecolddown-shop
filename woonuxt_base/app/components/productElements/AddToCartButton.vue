@@ -13,5 +13,5 @@ watch(cart, (val) => {
 </script>
 
 <template>
-  <UButton :label="addToCartButtonText" block type="submit" :class="{ disabled: disabled }" :loading="isLoading" @click="isLoading = true" />
+  <UButton :label="addToCartButtonText" block type="submit" :loading="isLoading" @click="isLoading = true" />
 </template>

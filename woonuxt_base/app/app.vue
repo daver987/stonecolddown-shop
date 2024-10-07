@@ -9,7 +9,6 @@ const colorMode = useColorMode();
 colorMode.forced = true;
 colorMode.preference = 'dark';
 
-const color = computed(() => (colorMode.value === 'dark' ? '#111827' : 'white'));
 const route = useRoute();
 const { isShowingCart, toggleCart } = useCart();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
@@ -21,7 +20,11 @@ const closeCartAndMenu = () => {
 };
 
 watch([isShowingCart, isShowingMobileMenu], () => {
-  isShowingCart.value || isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
+  if (isShowingCart.value || isShowingMobileMenu.value) {
+    addBodyClass('overflow-hidden');
+  } else {
+    removeBodyClass('overflow-hidden');
+  }
 });
 
 watch(
@@ -39,21 +42,15 @@ useHead({
     <NuxtLoadingIndicator color="#987f57" />
     <AppHeader />
 
-    <Transition name="slide-from-right">
-      <LazyCart v-if="isShowingCart" />
-    </Transition>
+    <LazyCart v-if="isShowingCart" />
 
-    <Transition name="slide-from-left">
-      <MobileMenu v-if="isShowingMobileMenu" />
-    </Transition>
+    <MobileMenu v-if="isShowingMobileMenu" />
 
     <Main>
       <NuxtPage />
     </Main>
 
-    <Transition name="fade">
-      <div v-if="isShowingCart || isShowingMobileMenu" class="bg-black opacity-25 inset-0 z-40 fixed" @click="closeCartAndMenu" />
-    </Transition>
+    <div v-if="isShowingCart || isShowingMobileMenu" class="bg-black opacity-25 inset-0 z-40 fixed" @click="closeCartAndMenu" />
 
     <AppFooter />
     <UNotifications />
