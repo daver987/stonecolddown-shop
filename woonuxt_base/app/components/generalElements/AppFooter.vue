@@ -29,40 +29,15 @@ const subscribeToNewsletter = (data: FormSubmitEvent<Subscribe>) => {
 
 const footerLinks = [
   {
-    label: 'Resources',
+    label: 'Tattoos',
     children: [
       {
-        label: 'About',
-        to: '/about',
-      },
-      {
-        label: 'Portfolio',
-        to: '/portfolio',
-      },
-      {
-        label: 'Contact',
-        to: '/contact',
-      },
-    ],
-  },
-  {
-    label: 'Tattoo',
-    children: [
-      {
-        label: 'Custom',
+        label: 'Custom Tattoos',
         to: '/tattoos',
       },
       {
         label: 'Flash Designs',
-        to: '/about',
-      },
-      {
-        label: 'Collections',
-        to: '/portfolio',
-      },
-      {
-        label: 'Portfolio',
-        to: '/portfolio',
+        to: '/product-category/flash-designs',
       },
     ],
   },
@@ -70,16 +45,37 @@ const footerLinks = [
     label: 'Shop',
     children: [
       {
-        label: 'Tattoo Flash Designs',
-        to: '/flash-designs',
+        label: 'Prints',
+        to: '/product-category/prints',
       },
       {
         label: 'Merch',
-        to: '/products',
+        to: '/product-category/merch',
       },
       {
-        label: 'Collections',
-        to: '/collections',
+        label: 'All Products',
+        to: '/products',
+      },
+    ],
+  },
+  {
+    label: 'Information',
+    children: [
+      {
+        label: 'Portfolio',
+        to: '/portfolio',
+      },
+      {
+        label: 'About',
+        to: '/about',
+      },
+      {
+        label: 'Contact',
+        to: '/contact',
+      },
+      {
+        label: 'My Account',
+        to: '/my-account',
       },
     ],
   },

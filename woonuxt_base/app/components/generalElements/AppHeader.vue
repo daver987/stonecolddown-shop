@@ -1,32 +1,20 @@
 <script setup lang="ts">
-const headerId = useId();
-
 const links = [
   {
     label: 'Tattoos',
     icon: 'i-heroicons-pencil-square',
     children: [
       {
-        label: "Custom Tattoo's",
+        label: 'Custom Tattoos',
         to: '/tattoos',
         description: 'Bring your custom ideas to life',
       },
       {
-        label: 'Tattoo Flash Design',
-        to: '/flash-designs',
-        description: 'Checkout predrawn flash designs',
-      },
-      {
-        label: 'Tattoo Collections',
-        to: '/collections',
-        description: 'Groups of tattoos with a specific theme',
+        label: 'Flash Designs',
+        to: '/product-category/flash-designs',
+        description: 'Pre-drawn tattoo designs',
       },
     ],
-  },
-  {
-    label: 'About',
-    icon: 'i-heroicons-user',
-    to: '/about',
   },
   {
     label: 'Portfolio',
@@ -36,7 +24,28 @@ const links = [
   {
     label: 'Shop',
     icon: 'i-heroicons-shopping-cart',
-    to: '/products',
+    children: [
+      {
+        label: 'Prints',
+        to: '/product-category/prints',
+        description: 'Art prints for your walls',
+      },
+      {
+        label: 'Merch',
+        to: '/product-category/merch',
+        description: 'Branded merchandise',
+      },
+      {
+        label: 'All Products',
+        to: '/products',
+        description: 'Browse all items in the store',
+      },
+    ],
+  },
+  {
+    label: 'About',
+    icon: 'i-heroicons-user',
+    to: '/about',
   },
   {
     label: 'Contact',

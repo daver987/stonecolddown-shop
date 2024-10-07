@@ -1,0 +1,787 @@
+planChat
+  - path: /woonuxt_base
+    type: directory
+    contents:
+    - path: /woonuxt_base/app
+      type: directory
+      contents:
+      - path: /woonuxt_base/app/app.vue
+        type: file
+      - path: /woonuxt_base/app/types
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/types/index.d.ts
+          type: file
+      - path: /woonuxt_base/app/composables
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/composables/useProducts.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useHelpers.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useWishlist.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useSharedMouseInElement.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useCountry.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useUIState.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useFiltering.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useAuth.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useSearch.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useSorting.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useCart.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useSharedMouse.ts
+          type: file
+        - path: /woonuxt_base/app/composables/useCheckout.ts
+          type: file
+      - path: /woonuxt_base/app/locales
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/locales/it-IT.json
+          type: file
+        - path: /woonuxt_base/app/locales/es-ES.json
+          type: file
+        - path: /woonuxt_base/app/locales/pt-BR.json
+          type: file
+        - path: /woonuxt_base/app/locales/de-DE.json
+          type: file
+        - path: /woonuxt_base/app/locales/fr-FR.json
+          type: file
+        - path: /woonuxt_base/app/locales/en-US.json
+          type: file
+      - path: /woonuxt_base/app/plugins
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/plugins/init.ts
+          type: file
+        - path: /woonuxt_base/app/plugins/presets.ts
+          type: file
+        - path: /woonuxt_base/app/plugins/variables.ts
+          type: file
+        - path: /woonuxt_base/app/plugins/scrollbars.client.ts
+          type: file
+      - path: /woonuxt_base/app/constants
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/constants/index.ts
+          type: file
+      - path: /woonuxt_base/app/queries
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/queries/getStripePaymentIntent.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getStates.gql
+          type: file
+        - path: /woonuxt_base/app/queries/changeShippingLocation.gql
+          type: file
+        - path: /woonuxt_base/app/queries/registerCustomer.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getProductCategories.gql
+          type: file
+        - path: /woonuxt_base/app/queries/login.gql
+          type: file
+        - path: /woonuxt_base/app/queries/resetPasswordEmail.gql
+          type: file
+        - path: /woonuxt_base/app/queries/fragments
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/queries/fragments/ExternalProduct.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/CartFragment.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/TermsFragment.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/OrderFragment.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/DownloadableItems.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/CustomerFragment.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/ProductCategoriesFragment.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/ImageFragment.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/SimpleProduct.gql
+            type: file
+          - path: /woonuxt_base/app/queries/fragments/VariableProduct.gql
+            type: file
+        - path: /woonuxt_base/app/queries/checkout.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getOrder.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getStockStatus.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getProducts.gql
+          type: file
+        - path: /woonuxt_base/app/queries/logout.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getCart.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getAllowedCountries.gql
+          type: file
+        - path: /woonuxt_base/app/queries/removeCoupon.gql
+          type: file
+        - path: /woonuxt_base/app/queries/writeReview.gql
+          type: file
+        - path: /woonuxt_base/app/queries/updateCartQuantity.gql
+          type: file
+        - path: /woonuxt_base/app/queries/updatePassword.gql
+          type: file
+        - path: /woonuxt_base/app/queries/resetPasswordKey.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getProduct.gql
+          type: file
+        - path: /woonuxt_base/app/queries/updateCustomer.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getOrders.gql
+          type: file
+        - path: /woonuxt_base/app/queries/emptyCart.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getAllTerms.gql
+          type: file
+        - path: /woonuxt_base/app/queries/applyCoupon.gql
+          type: file
+        - path: /woonuxt_base/app/queries/getDownloads.gql
+          type: file
+        - path: /woonuxt_base/app/queries/addToCart.gql
+          type: file
+        - path: /woonuxt_base/app/queries/changeShippingMethod.gql
+          type: file
+      - path: /woonuxt_base/app/utils
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/utils/createImageUrls.ts
+          type: file
+      - path: /woonuxt_base/app/components
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/components/footer
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/footer/FooterColumns.vue
+            type: file
+          - path: /woonuxt_base/app/components/footer/FooterLinks.vue
+            type: file
+          - path: /woonuxt_base/app/components/footer/Footer.vue
+            type: file
+        - path: /woonuxt_base/app/components/landing
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/landing/LandingLogos.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingTestimonial.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingSection.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingHero.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingCTA.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingCard.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingGrid.vue
+            type: file
+          - path: /woonuxt_base/app/components/landing/LandingFAQ.vue
+            type: file
+        - path: /woonuxt_base/app/components/page
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/page/PageHero.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageColumns.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageCard.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageHeader.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageGrid.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageBody.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageLinks.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/Page.vue
+            type: file
+          - path: /woonuxt_base/app/components/page/PageError.vue
+            type: file
+        - path: /woonuxt_base/app/components/WishListItem.vue
+          type: file
+        - path: /woonuxt_base/app/components/forms
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/forms/ForgotPasswordForm.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/LoginForm.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/RegisterForm.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/ChangePassword.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/ShippingDetails.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/AuthForms.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/BillingAndShipping.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/ResetPassword.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/PasswordInput.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/ContactForm.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/BillingDetails.vue
+            type: file
+          - path: /woonuxt_base/app/components/forms/PersonalInformation.vue
+            type: file
+        - path: /woonuxt_base/app/components/filtering
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/filtering/GlobalFilter.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/Filters.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/ShowFilterTrigger.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/ResetFiltersButton.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/StarRatingFilter.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/CategoryFilter.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/OnSaleFilter.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/PriceFilter.vue
+            type: file
+          - path: /woonuxt_base/app/components/filtering/ColorFilter.vue
+            type: file
+        - path: /woonuxt_base/app/components/LangSwitcher.vue
+          type: file
+        - path: /woonuxt_base/app/components/navigation
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/navigation/NavigationTree.vue
+            type: file
+          - path: /woonuxt_base/app/components/navigation/NavigationAccordion.vue
+            type: file
+          - path: /woonuxt_base/app/components/navigation/NavigationLinks.vue
+            type: file
+        - path: /woonuxt_base/app/components/cartElements
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/cartElements/CloseIcon.vue
+            type: file
+          - path: /woonuxt_base/app/components/cartElements/TrashIcon.vue
+            type: file
+          - path: /woonuxt_base/app/components/cartElements/QuantityInput.vue
+            type: file
+          - path: /woonuxt_base/app/components/cartElements/CartCard.vue
+            type: file
+          - path: /woonuxt_base/app/components/cartElements/EmptyCart.vue
+            type: file
+          - path: /woonuxt_base/app/components/cartElements/CartTrigger.vue
+            type: file
+          - path: /woonuxt_base/app/components/cartElements/SwipeCard.vue
+            type: file
+        - path: /woonuxt_base/app/components/CategoryCard.vue
+          type: file
+        - path: /woonuxt_base/app/components/shopElements
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/shopElements/Cart.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/ProductSearch.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/ProductGrid.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/Pagination.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/ProductResultCount.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/CountrySelect.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/WebsiteShortDescription.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/WishList.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/ProductReviews.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/StripeElement.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/ProductRow.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/NoProductsFound.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/OrderByDropdown.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/StateSelect.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/OrderStatusLabel.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/EmptyCartMessage.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/OrderSummary.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/PaymentOptions.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/AddCoupon.vue
+            type: file
+          - path: /woonuxt_base/app/components/shopElements/ShippingOptions.vue
+            type: file
+        - path: /woonuxt_base/app/components/OrderList.vue
+          type: file
+        - path: /woonuxt_base/app/components/BackgroundCard.vue
+          type: file
+        - path: /woonuxt_base/app/components/DownloadableItems.vue
+          type: file
+        - path: /woonuxt_base/app/components/generalElements
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/generalElements/SEOHead.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/LoadingIcon.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/SocialIcons.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/Tooltip.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/Breadcrumb.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/AppHeader.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/AppFooter.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/MenuTrigger.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/Logo.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/HeroBanner.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/SearchTrigger.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/MobileMenu.vue
+            type: file
+          - path: /woonuxt_base/app/components/generalElements/MainMenu.vue
+            type: file
+        - path: /woonuxt_base/app/components/AccountMyDetails.vue
+          type: file
+        - path: /woonuxt_base/app/components/SignInLink.vue
+          type: file
+        - path: /woonuxt_base/app/components/productElements
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/productElements/WishlistButton.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/ProductPrice.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/ProductImageGallery.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/StockStatus.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/ProductCard.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/AddToCartButton.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/ProductTabs.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/ShareButton.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/StarRating.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/ReviewsScore.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/SaleBadge.vue
+            type: file
+          - path: /woonuxt_base/app/components/productElements/AttributeSelections.vue
+            type: file
+        - path: /woonuxt_base/app/components/WPAdminLink.vue
+          type: file
+        - path: /woonuxt_base/app/components/DownloadList.vue
+          type: file
+        - path: /woonuxt_base/app/components/main
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/main/Main.vue
+            type: file
+        - path: /woonuxt_base/app/components/aside
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/aside/Aside.vue
+            type: file
+          - path: /woonuxt_base/app/components/aside/AsideLinks.vue
+            type: file
+        - path: /woonuxt_base/app/components/header
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/components/header/HeaderLinks.vue
+            type: file
+          - path: /woonuxt_base/app/components/header/Header.vue
+            type: file
+          - path: /woonuxt_base/app/components/header/HeaderPopoverLinks.vue
+            type: file
+        - path: /woonuxt_base/app/components/Reviews.vue
+          type: file
+      - path: /woonuxt_base/app/app.config.ts
+        type: file
+      - path: /woonuxt_base/app/error.vue
+        type: file
+      - path: /woonuxt_base/app/lib
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/lib/slots.ts
+          type: file
+      - path: /woonuxt_base/app/pages
+        type: directory
+        contents:
+        - path: /woonuxt_base/app/pages/index.vue
+          type: file
+        - path: /woonuxt_base/app/pages/order-summary.vue
+          type: file
+        - path: /woonuxt_base/app/pages/wishlist.vue
+          type: file
+        - path: /woonuxt_base/app/pages/checkout.vue
+          type: file
+        - path: /woonuxt_base/app/pages/contact.vue
+          type: file
+        - path: /woonuxt_base/app/pages/tattoos.vue
+          type: file
+        - path: /woonuxt_base/app/pages/product-category
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/pages/product-category/[slug].vue
+            type: file
+        - path: /woonuxt_base/app/pages/product
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/pages/product/[slug].vue
+            type: file
+        - path: /woonuxt_base/app/pages/my-account
+          type: directory
+          contents:
+          - path: /woonuxt_base/app/pages/my-account/index.vue
+            type: file
+          - path: /woonuxt_base/app/pages/my-account/lost-password.vue
+            type: file
+        - path: /woonuxt_base/app/pages/portfolio.vue
+          type: file
+        - path: /woonuxt_base/app/pages/products.vue
+          type: file
+        - path: /woonuxt_base/app/pages/about.vue
+          type: file
+        - path: /woonuxt_base/app/pages/categories.vue
+          type: file
+    - path: /woonuxt_base/CHANGELOG.md
+      type: file
+    - path: /woonuxt_base/server
+      type: directory
+      contents:
+      - path: /woonuxt_base/server/api
+        type: directory
+        contents:
+        - path: /woonuxt_base/server/api/flash-designs
+          type: directory
+          contents:
+          - path: /woonuxt_base/server/api/flash-designs/index.get.ts
+            type: file
+        - path: /woonuxt_base/server/api/categories
+          type: directory
+          contents:
+          - path: /woonuxt_base/server/api/categories/index.get.ts
+            type: file
+        - path: /woonuxt_base/server/api/reviews
+          type: directory
+          contents:
+          - path: /woonuxt_base/server/api/reviews/index.get.ts
+            type: file
+      - path: /woonuxt_base/server/tsconfig.json
+        type: file
+    - path: /woonuxt_base/tailwind.config.ts
+      type: file
+    - path: /woonuxt_base/json
+      type: directory
+      contents:
+      - path: /woonuxt_base/json/flash_girls_09.json
+        type: file
+      - path: /woonuxt_base/json/flash_misc_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_13.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_05.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_04.json
+        type: file
+      - path: /woonuxt_base/json/flash_hearts_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_12.json
+        type: file
+      - path: /woonuxt_base/json/flash_spiders_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_misc_03.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_08.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_03.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_07.json
+        type: file
+      - path: /woonuxt_base/json/flash_flowers_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_eyes_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_misc_04.json
+        type: file
+      - path: /woonuxt_base/json/flash_misc_05.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_06.json
+        type: file
+      - path: /woonuxt_base/json/flash_scorpion.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_14.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_05.json
+        type: file
+      - path: /woonuxt_base/json/flash_snakes_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_09.json
+        type: file
+      - path: /woonuxt_base/json/flash_flowers_01.json
+        type: file
+      - path: /woonuxt_base/json/flash_eyes_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_08.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_04.json
+        type: file
+      - path: /woonuxt_base/json/flash_spiders_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_03.json
+        type: file
+      - path: /woonuxt_base/json/flash_hearts_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_07.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_11.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_10.json
+        type: file
+      - path: /woonuxt_base/json/flash_hearts_03.json
+        type: file
+      - path: /woonuxt_base/json/flash_girls_06.json
+        type: file
+      - path: /woonuxt_base/json/flash_skulls_02.json
+        type: file
+      - path: /woonuxt_base/json/flash_misc_01.json
+        type: file
+    - path: /woonuxt_base/public
+      type: directory
+      contents:
+      - path: /woonuxt_base/public/images
+        type: directory
+        contents:
+        - path: /woonuxt_base/public/images/search.svg
+          type: file
+        - path: /woonuxt_base/public/images/hero-2.jpeg
+          type: file
+        - path: /woonuxt_base/public/images/chevron-down.svg
+          type: file
+        - path: /woonuxt_base/public/images/empty.svg
+          type: file
+        - path: /woonuxt_base/public/images/logoipsum-211.svg
+          type: file
+        - path: /woonuxt_base/public/images/log-in.svg
+          type: file
+        - path: /woonuxt_base/public/images/logo-woocommerce.svg
+          type: file
+        - path: /woonuxt_base/public/images/netlify-logo.svg
+          type: file
+        - path: /woonuxt_base/public/images/cookie.png
+          type: file
+        - path: /woonuxt_base/public/images/logoipsum-215.svg
+          type: file
+        - path: /woonuxt_base/public/images/placeholder.jpg
+          type: file
+        - path: /woonuxt_base/public/images/hero-3.jpg
+          type: file
+        - path: /woonuxt_base/public/images/logoipsum-225.svg
+          type: file
+        - path: /woonuxt_base/public/images/paypal.svg
+          type: file
+        - path: /woonuxt_base/public/images/nuxt_logo.svg
+          type: file
+        - path: /woonuxt_base/public/images/hero-4.jpg
+          type: file
+        - path: /woonuxt_base/public/images/star.svg
+          type: file
+        - path: /woonuxt_base/public/images/logoipsum-221.svg
+          type: file
+        - path: /woonuxt_base/public/images/hero.jpeg
+          type: file
+        - path: /woonuxt_base/public/images/logoipsum-284.svg
+          type: file
+        - path: /woonuxt_base/public/images/hero-xmas.jpg
+          type: file
+        - path: /woonuxt_base/public/images/wpgraphql_logo.png
+          type: file
+        - path: /woonuxt_base/public/images/logoipsum-280.svg
+          type: file
+      - path: /woonuxt_base/public/icons
+        type: directory
+        contents:
+        - path: /woonuxt_base/public/icons/secure.svg
+          type: file
+        - path: /woonuxt_base/public/icons/package.svg
+          type: file
+        - path: /woonuxt_base/public/icons/shield.svg
+          type: file
+        - path: /woonuxt_base/public/icons/moneyback.svg
+          type: file
+        - path: /woonuxt_base/public/icons/support.svg
+          type: file
+        - path: /woonuxt_base/public/icons/box.svg
+          type: file
+        - path: /woonuxt_base/public/icons/pp.svg
+          type: file
+      - path: /woonuxt_base/public/logo.svg
+        type: file
+    - path: /woonuxt_base/package.json
+      type: file
+    - path: /woonuxt_base/nuxt.config.ts
+      type: file
+    - path: /woonuxt_base/tsconfig.json
+      type: file
+  - path: /tailwind.config.js
+    type: file
+  - path: /app
+    type: directory
+    contents:
+    - path: /app/app.config.ts
+      type: file
+    - path: /app/assets
+      type: directory
+      contents:
+      - path: /app/assets/svg
+        type: directory
+        contents:
+        - path: /app/assets/svg/scd_signature.svg
+          type: file
+        - path: /app/assets/svg/scd_signature-1.svg
+          type: file
+      - path: /app/assets/css
+        type: directory
+        contents:
+        - path: /app/assets/css/main.css
+          type: file
+  - path: /LICENSE
+    type: file
+  - path: /netlify.toml
+    type: file
+  - path: /README.md
+    type: file
+  - path: /public
+    type: directory
+    contents:
+    - path: /public/favicon.ico
+      type: file
+    - path: /public/images
+      type: directory
+      contents:
+      - path: /public/images/scd_logo.jpg
+        type: file
+      - path: /public/images/scd_signature_white.svg
+        type: file
+      - path: /public/images/scd_logo_.png
+        type: file
+      - path: /public/images/natasha-rem-bg-26.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-24.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-18.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-19.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-25.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-09.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-21.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-20.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-08.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-22.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-23.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-06.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-12.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-13.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-07.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-11.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-05.jpg
+        type: file
+      - path: /public/images/scd_signature_black.svg
+        type: file
+      - path: /public/images/natasha-rem-bg-04.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-10.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-14.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-15.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-03.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-17.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-16.jpg
+        type: file
+      - path: /public/images/natasha-rem-bg-02.jpg
+        type: file
+    - path: /public/videos
+      type: directory
+      contents:
+      - path: /public/videos/scd_hero_video.mp4
+        type: file
+    - path: /public/fonts
+      type: directory
+      contents:
+      - path: /public/fonts/Lato-Regular.ttf
+        type: file
+      - path: /public/fonts/Stockport-Brush.otf
+        type: file
+      - path: /public/fonts/Stockport-Brush.woff
+        type: file
+      - path: /public/fonts/Stockport-Extra.ttf
+        type: file
+      - path: /public/fonts/Stockport-Brush.ttf
+        type: file
+      - path: /public/fonts/Stockport-Extra.otf
+        type: file
+      - path: /public/fonts/Stockport-Extra.woff
+        type: file
+  - path: /package-lock.json
+    type: file
+  - path: /package.json
+    type: file
+  - path: /nuxt.config.ts
+    type: file
+  - path: /repo_structure.yaml
+    type: file
