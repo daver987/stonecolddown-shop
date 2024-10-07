@@ -1,14 +1,30 @@
 <script lang="ts" setup>
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'My Account | Stone Cold Down',
+  description: 'Manage your Stone Cold Down account. View orders, update details, and track your tattoo appointments with Natasha Smith.',
+  ogTitle: 'My Account | Stone Cold Down',
+  ogDescription: 'Access your Stone Cold Down account. Manage orders and stay connected with fine line tattoo artist Natasha Smith.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com/my-account',
+  twitterTitle: 'My Account | Stone Cold Down',
+  twitterDescription: 'Your Stone Cold Down account dashboard. Manage orders and tattoo appointments with Natasha Smith.',
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
+});
+
 const { logoutUser, viewer, customer, avatar, isPending } = useAuth();
 const { cart } = useCart();
 const route = useRoute();
 
 const activeTab = computed(() => route.query.tab || 'my-details');
 const showLoader = computed(() => !cart.value);
-
-definePageMeta({
-  title: 'My Account',
-});
 
 const menuItems = [
   { name: 'my-details', label: 'My Details', icon: 'i-heroicons-user-circle' },

@@ -4,6 +4,24 @@ import type { Stripe, StripeElements, CreateSourceData, StripeCardElement } from
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 
+useSeoMeta({
+  title: 'Checkout | Stone Cold Down',
+  description: 'Complete your purchase at Stone Cold Down. Securely checkout with our trusted payment gateway.',
+  ogTitle: 'Checkout | Stone Cold Down',
+  ogDescription: 'Securely checkout with our trusted payment gateway at Stone Cold Down.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com/checkout',
+  twitterTitle: 'Checkout | Stone Cold Down',
+  twitterDescription: 'Complete your purchase at Stone Cold Down. Securely checkout with our trusted payment gateway.',
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
+});
+
 const { t } = useI18n();
 const { query } = useRoute();
 const { cart, isUpdatingCart, paymentGateways } = useCart();

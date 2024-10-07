@@ -3,6 +3,28 @@ import { z } from 'zod';
 import { StockStatusEnum, ProductTypesEnum, type AddToCartInput } from '#woo';
 import type { Product, Variation, VariationAttribute } from '../../types';
 import type { FormSubmitEvent } from '#ui/types';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: () => `${product.value?.name} | Stone Cold Down Shop`,
+  description: () =>
+    product.value?.shortDescription ||
+    `Shop ${product.value?.name} from Stone Cold Down. Inspired by Natasha Smith's fine line black and gray tattoo artistry.`,
+  ogTitle: () => `${product.value?.name} | Stone Cold Down Shop`,
+  ogDescription: () =>
+    product.value?.shortDescription || `Get your hands on ${product.value?.name}. Unique merchandise featuring Natasha Smith's distinctive tattoo designs.`,
+  ogImage: () => product.value?.image?.sourceUrl || '/images/scd_logo.png',
+  ogUrl: () => `https://stonecolddown.com/product/${product.value?.slug}`,
+  twitterTitle: () => `${product.value?.name} | Stone Cold Down Shop`,
+  twitterDescription: () => `Discover ${product.value?.name} from Stone Cold Down. Tattoo-inspired product by fine line artist Natasha Smith.`,
+  twitterImage: () => product.value?.image?.sourceUrl || '/images/scd_logo.png',
+  twitterCard: 'summary_large_image',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
+});
 
 const route = useRoute();
 const { storeSettings } = useAppConfig();

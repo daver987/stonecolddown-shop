@@ -2,6 +2,24 @@
 import { OrderStatusEnum } from '#woo';
 import type { Order } from '../types';
 
+useSeoMeta({
+  title: 'Order Summary | Stone Cold Down',
+  description: 'View your order summary at Stone Cold Down. Review your order details and track the status of your purchase.',
+  ogTitle: 'Order Summary | Stone Cold Down',
+  ogDescription: 'Review your order details and track the status of your purchase at Stone Cold Down.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com/order-summary',
+  twitterTitle: 'Order Summary | Stone Cold Down',
+  twitterDescription: 'Review your order details and track the status of your purchase at Stone Cold Down.',
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
+});
+
 const { query, params, name } = useRoute();
 const { customer } = useAuth();
 const { formatDate, formatPrice } = useHelpers();

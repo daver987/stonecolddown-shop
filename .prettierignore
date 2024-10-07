@@ -23,3 +23,6 @@ pnpm-lock.yaml
 .env.*
 !.env.example
 /public/img/ebc_logo.svg
+repo_structure.yaml
+flattened_repo.txt
+fr.sh

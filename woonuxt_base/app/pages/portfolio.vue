@@ -7,12 +7,17 @@ useSeoMeta({
     "Explore Natasha Smith's portfolio of fine line black and grey tattoos. View her unique designs and custom tattoo work at Stone Cold Down in Toronto.",
   ogTitle: 'Tattoo Portfolio | Natasha Smith at Stone Cold Down',
   ogDescription: 'Discover the artistry of Natasha Smith through her portfolio of fine line black and grey tattoos. See her unique designs and custom work.',
-  ogImage: '/images/scd_logo.jpg',
+  ogImage: '/images/scd_logo.png',
   ogUrl: 'https://stonecolddown.com/portfolio',
   twitterTitle: 'Tattoo Portfolio | Natasha Smith at Stone Cold Down',
   twitterDescription: "Browse Natasha Smith's portfolio of fine line black and grey tattoos. Experience her unique style and custom designs.",
-  twitterImage: '/images/scd_logo.jpg',
+  twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary_large_image',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 useHead({

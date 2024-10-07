@@ -18,7 +18,6 @@ const toast = useToast();
 const subscribeToNewsletter = (data: FormSubmitEvent<Subscribe>) => {
   loading.value = true;
   isDisabled.value = true;
-  console.log('Subscribe to newsletter', data);
   setTimeout(() => {
     loading.value = false;
     subscribeState.email = undefined;

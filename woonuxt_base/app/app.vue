@@ -1,5 +1,15 @@
 <script setup lang="ts">
 useHead({
+  htmlAttrs: {
+    lang: 'en',
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.ico',
+    },
+  ],
   bodyAttrs: {
     class: 'dark:bg-gray-900',
   },

@@ -1,11 +1,33 @@
 <script setup lang="ts">
+import { useSeoMeta } from '#imports';
 import type { Product } from '../../types';
+
+useSeoMeta({
+  title: () => `${category.name} | Stone Cold Down Shop`,
+  description: () =>
+    category.description || `Shop ${category.name} merchandise from Stone Cold Down. Inspired by Natasha Smith's fine line black and gray tattoo art.`,
+  ogTitle: () => `${category.name} | Stone Cold Down Shop`,
+  ogDescription: () => category.description || `Explore our ${category.name} collection. Unique products featuring Natasha Smith's distinctive tattoo designs.`,
+  ogImage: '/images/scd_logo.png',
+  ogUrl: () => `https://stonecolddown.com/product-category/${category.slug}`,
+  twitterTitle: () => `${category.name} | Stone Cold Down Shop`,
+  twitterDescription: () => `Discover ${category.name} products from Stone Cold Down. Tattoo-inspired merchandise by fine line artist Natasha Smith.`,
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary_large_image',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
+});
 
 const { setProducts, updateProductList } = useProducts();
 const { isQueryEmpty } = useHelpers();
 const { storeSettings } = useAppConfig();
 const route = useRoute();
 const { slug } = route.params;
+
+const { category } = defineProps(['category']);
 
 const { data } = await useAsyncGql('getProducts', { slug });
 const productsInCategory = (data.value?.products?.nodes || []) as Product[];
@@ -22,11 +44,6 @@ watch(
     updateProductList();
   },
 );
-
-useHead({
-  title: 'Products',
-  meta: [{ hid: 'description', name: 'description', content: 'Products' }],
-});
 </script>
 
 <template>

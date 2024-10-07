@@ -1,8 +1,23 @@
 <script lang="ts" setup>
+import { useSeoMeta } from '#imports';
 import { ProductsOrderByEnum } from '#woo';
 import type { Review } from '../types';
 import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
-import BackgroundCard from '../components/BackgroundCard.vue';
+
+useSeoMeta({
+  title: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
+  description:
+    "Discover the artistry of Stone Cold Down, Toronto's premier female tattoo artist specializing in fine line black and grey tattoos. Elevate your ink with Natasha Smith's unique designs.",
+  ogTitle: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
+  ogDescription:
+    'Explore the distinctive fine line black and grey tattoos by Natasha Smith at Stone Cold Down. Experience personalized tattoo artistry in Toronto.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com',
+  twitterTitle: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
+  twitterDescription: 'Natasha Smith of Stone Cold Down specializes in fine line black and grey tattoos. Discover your next masterpiece in Toronto.',
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary',
+});
 
 definePageMeta({
   layout: 'default',
@@ -65,15 +80,6 @@ const productCategories = data.value?.productCategories?.nodes || [];
 
 const { data: productData } = await useAsyncGql('getProducts', { first: 5, orderby: ProductsOrderByEnum.POPULARITY });
 const popularProducts = productData.value.products?.nodes || [];
-
-useSeoMeta({
-  title: 'Home',
-  ogTitle: siteName,
-  description: description,
-  ogDescription: shortDescription,
-  ogImage: siteImage,
-  twitterCard: 'summary_large_image',
-});
 </script>
 
 <template>

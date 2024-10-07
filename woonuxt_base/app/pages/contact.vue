@@ -5,13 +5,18 @@ useSeoMeta({
     "Get in touch with Natasha Smith, Toronto's premier female tattoo artist specializing in fine line black and grey tattoos. Book your appointment or ask questions about custom designs.",
   ogTitle: 'Contact Natasha Smith | Stone Cold Down',
   ogDescription: 'Reach out to Natasha Smith for tattoo inquiries, bookings, or questions about her fine line black and grey tattoo designs.',
-  ogImage: '/images/scd_logo.jpg',
+  ogImage: '/images/scd_logo.png',
   ogUrl: 'https://stonecolddown.com/contact',
   twitterTitle: 'Contact Natasha Smith | Stone Cold Down',
   twitterDescription:
     'Connect with Natasha Smith for tattoo appointments, custom designs, or any questions about her fine line black and grey tattoo artistry.',
-  twitterImage: '/images/scd_logo.jpg',
+  twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 useHead({

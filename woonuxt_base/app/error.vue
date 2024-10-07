@@ -10,7 +10,11 @@ const closeCartAndMenu = () => {
 };
 
 watch([isShowingCart, isShowingMobileMenu], () => {
-  isShowingCart.value || isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
+  if (isShowingCart.value || isShowingMobileMenu.value) {
+    addBodyClass('overflow-hidden');
+  } else {
+    removeBodyClass('overflow-hidden');
+  }
 });
 
 watch(

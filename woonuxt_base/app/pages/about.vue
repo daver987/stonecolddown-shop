@@ -9,25 +9,17 @@ useSeoMeta({
   ogTitle: 'About Natasha Smith | Stone Cold Down',
   ogDescription:
     'Explore the story of Natasha Smith, a talented tattoo artist at Stone Cold Down. Learn about her journey and passion for creating unique, personalized tattoos.',
-  ogImage: '/images/scd_logo.jpg',
+  ogImage: '/images/scd_logo.png',
   ogUrl: 'https://stonecolddown.com/about',
   twitterTitle: 'About Natasha Smith | Stone Cold Down',
   twitterDescription: 'Discover the journey of Natasha Smith, a premier tattoo artist specializing in fine line black and grey tattoos at Stone Cold Down.',
-  twitterImage: '/images/scd_logo.jpg',
+  twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
 });
 
-useHead({
-  htmlAttrs: {
-    lang: 'en',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 const bio = {

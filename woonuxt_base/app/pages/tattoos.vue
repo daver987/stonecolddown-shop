@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
 
-definePageMeta({
-  layout: 'default',
-});
-
 useSeoMeta({
   title: 'Custom Tattoos | Natasha Smith',
   description: 'Explore custom tattoo designs by Natasha Smith. Get a unique, personalized tattoo that tells your story.',
@@ -16,6 +12,11 @@ useSeoMeta({
   twitterDescription: 'Create your perfect tattoo with Natasha Smith. Personalized designs that bring your vision to life.',
   twitterImage: '/images/scd_logo.jpg',
   twitterCard: 'summary',
+});
+
+definePageMeta({
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 const customTattooInfo = {
