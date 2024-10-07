@@ -126,7 +126,8 @@
       "productNotFound": "Product not found",
       "productResultCount": {
         "showing": "Showing",
-        "to": "to",
+        "to": "To",
+        "from": "From",
         "of": "of"
       },
       "noProductsFound": {

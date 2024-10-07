@@ -3,6 +3,7 @@ import animate from 'tailwindcss-animate'
 import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
 import aspectRatio from '@tailwindcss/aspect-ratio'
+import slider from '@vueform/slider/tailwind'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -41,5 +42,5 @@ export default {
       },
     },
   },
-  plugins: [animate, forms, typography, aspectRatio],
+  plugins: [animate, forms, typography, aspectRatio, slider],
 }

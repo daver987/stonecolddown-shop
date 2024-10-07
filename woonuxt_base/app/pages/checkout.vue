@@ -2,7 +2,6 @@
 import { loadStripe } from '@stripe/stripe-js';
 import type { Stripe, StripeElements, CreateSourceData, StripeCardElement } from '@stripe/stripe-js';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRuntimeConfig } from '#app';
 import { z } from 'zod';
 
 const { t } = useI18n();
@@ -94,7 +93,7 @@ useSeoMeta({
   <div class="flex min-h-[600px] flex-col">
     <template v-if="cart && customer">
       <div v-if="cart.isEmpty" class="mb-12 flex flex-1 flex-col items-center justify-center">
-        <UIcon name="ion:cart-outline" size="156" class="mb-5 opacity-25" />
+        <Icon name="ion:cart-outline" size="156" class="mb-5 opacity-25" />
         <h2 class="mb-2 text-2xl font-bold">{{ $t('messages.shop.cartEmpty') }}</h2>
         <span class="mb-4 text-gray-400">{{ $t('messages.shop.addProductsInYourCart') }}</span>
         <ULink
