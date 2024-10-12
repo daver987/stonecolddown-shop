@@ -30,6 +30,12 @@ definePageMeta({
 	colorMode: "dark",
 });
 
+type BillingDetails = {
+	lastName: string;
+	firstName: string;
+	[key: string]: any;
+};
+
 const { t } = useI18n();
 const { query } = useRoute();
 const { cart, isUpdatingCart, paymentGateways } = useCart();
@@ -194,7 +200,7 @@ useSeoMeta({
 
           <div>
             <h2 class="mb-3 w-full text-2xl font-semibold">{{ $t('messages.billing.billingDetails') }}</h2>
-            <BillingDetails v-model="customer.billing" />
+            <BillingDetails v-model="customer.billing as BillingDetails" />
           </div>
 
           <UFormGroup v-if="cart?.availableShippingMethods!.length > 0" name="shipToDifferentAddress">
@@ -204,7 +210,7 @@ useSeoMeta({
           <Transition name="scale-y" mode="out-in">
             <div v-if="state.shipToDifferentAddress">
               <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.general.shippingDetails') }}</h2>
-              <ShippingDetails v-model="customer.shipping" />
+              <ShippingDetails v-model="customer.shipping as Record<string, any>" />
             </div>
           </Transition>
 
