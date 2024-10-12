@@ -1,91 +1,91 @@
 <script setup lang="ts">
 const links = [
-  {
-    label: 'Tattoos',
-    icon: 'i-heroicons-pencil-square',
-    children: [
-      {
-        label: 'Custom Tattoos',
-        to: '/tattoos',
-        description: 'Bring your custom ideas to life',
-      },
-      {
-        label: 'Flash Designs',
-        to: '/product-category/flash-designs',
-        description: 'Pre-drawn tattoo designs',
-      },
-    ],
-  },
-  {
-    label: 'Portfolio',
-    icon: 'i-heroicons-photo',
-    to: '/portfolio',
-  },
-  {
-    label: 'Shop',
-    icon: 'i-heroicons-shopping-cart',
-    children: [
-      {
-        label: 'Prints',
-        to: '/product-category/prints',
-        description: 'Art prints for your walls',
-      },
-      {
-        label: 'Merch',
-        to: '/product-category/merch',
-        description: 'Branded merchandise',
-      },
-      {
-        label: 'All Products',
-        to: '/products',
-        description: 'Browse all items in the store',
-      },
-    ],
-  },
-  {
-    label: 'About',
-    icon: 'i-heroicons-user',
-    to: '/about',
-  },
-  {
-    label: 'Contact',
-    icon: 'i-heroicons-phone',
-    to: '/contact',
-  },
+	{
+		label: "Tattoos",
+		icon: "i-heroicons-pencil-square",
+		children: [
+			{
+				label: "Custom Tattoos",
+				to: "/tattoos",
+				description: "Bring your custom ideas to life",
+			},
+			{
+				label: "Flash Designs",
+				to: "/product-category/flash-designs",
+				description: "Pre-drawn tattoo designs",
+			},
+		],
+	},
+	{
+		label: "Portfolio",
+		icon: "i-heroicons-photo",
+		to: "/portfolio",
+	},
+	{
+		label: "Shop",
+		icon: "i-heroicons-shopping-cart",
+		children: [
+			{
+				label: "All Products",
+				to: "/products",
+				description: "Browse all items in the store",
+			},
+			{
+				label: "Prints",
+				to: "/product-category/prints",
+				description: "Art prints for your walls",
+			},
+			{
+				label: "Merch",
+				to: "/product-category/merch",
+				description: "Branded merchandise",
+			},
+		],
+	},
+	{
+		label: "About",
+		icon: "i-heroicons-user",
+		to: "/about",
+	},
+	{
+		label: "Contact",
+		icon: "i-heroicons-phone",
+		to: "/contact",
+	},
 ];
 
 const aboveHeaderLinksRight = [
-  {
-    label: 'Sign In',
-    icon: 'i-heroicons-arrow-right-on-rectangle',
-    to: '/my-account',
-  },
-  {
-    label: 'Create an Account',
-    icon: 'i-heroicons-user',
-    to: '/my-account?action=register',
-  },
+	{
+		label: "Sign In",
+		icon: "i-heroicons-arrow-right-on-rectangle",
+		to: "/my-account",
+	},
+	{
+		label: "Create an Account",
+		icon: "i-heroicons-user",
+		to: "/my-account?action=register",
+	},
 ];
 
 const aboveHeaderLinksCenter = [
-  {
-    label: 'Tell me your idea',
-    icon: 'i-heroicons-calendar',
-    to: '/booking',
-  },
+	{
+		label: "Tell me your idea",
+		icon: "i-heroicons-calendar",
+		to: "/booking",
+	},
 ];
 
 // Hide subheader on scroll
-const isAboveMd = useMediaQuery('(min-width: 768px)');
+const isAboveMd = useMediaQuery("(min-width: 768px)");
 const isSubheaderVisible = ref(true);
 onMounted(() => {
-  const handleScroll = () => {
-    isSubheaderVisible.value = window.scrollY <= 300;
-  };
-  window.addEventListener('scroll', handleScroll);
-  onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-  });
+	const handleScroll = () => {
+		isSubheaderVisible.value = window.scrollY <= 300;
+	};
+	window.addEventListener("scroll", handleScroll);
+	onUnmounted(() => {
+		window.removeEventListener("scroll", handleScroll);
+	});
 });
 </script>
 

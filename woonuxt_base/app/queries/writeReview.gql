@@ -1,5 +1,19 @@
-mutation WriteReview($author: String!, $commentOn: Int!, $content: String!, $rating: Int!, $authorEmail: String!) {
-  writeReview(input: { rating: $rating, author: $author, content: $content, commentOn: $commentOn, authorEmail: $authorEmail }) {
-    rating
-  }
+mutation WriteReview(
+	$author: String!
+	$commentOn: Int!
+	$content: String!
+	$rating: Int!
+	$authorEmail: String!
+) {
+	writeReview(
+		input: {
+			rating: $rating
+			author: $author
+			content: $content
+			commentOn: $commentOn
+			authorEmail: $authorEmail
+		}
+	) {
+		rating
+	}
 }

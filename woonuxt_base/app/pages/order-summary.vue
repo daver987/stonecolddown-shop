@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import { OrderStatusEnum } from '#woo';
-import type { Order } from '../types';
+import { OrderStatusEnum } from "#woo";
+import type { Order } from "../types";
 
 useSeoMeta({
-  title: 'Order Summary | Stone Cold Down',
-  description: 'View your order summary at Stone Cold Down. Review your order details and track the status of your purchase.',
-  ogTitle: 'Order Summary | Stone Cold Down',
-  ogDescription: 'Review your order details and track the status of your purchase at Stone Cold Down.',
-  ogImage: '/images/scd_logo.png',
-  ogUrl: 'https://stonecolddown.com/order-summary',
-  twitterTitle: 'Order Summary | Stone Cold Down',
-  twitterDescription: 'Review your order details and track the status of your purchase at Stone Cold Down.',
-  twitterImage: '/images/scd_logo.png',
-  twitterCard: 'summary',
+	title: "Order Summary | Stone Cold Down",
+	description:
+		"View your order summary at Stone Cold Down. Review your order details and track the status of your purchase.",
+	ogTitle: "Order Summary | Stone Cold Down",
+	ogDescription:
+		"Review your order details and track the status of your purchase at Stone Cold Down.",
+	ogImage: "/images/scd_logo.png",
+	ogUrl: "https://stonecolddown.com/order-summary",
+	twitterTitle: "Order Summary | Stone Cold Down",
+	twitterDescription:
+		"Review your order details and track the status of your purchase at Stone Cold Down.",
+	twitterImage: "/images/scd_logo.png",
+	twitterCard: "summary",
 });
 
 definePageMeta({
-  layout: 'default',
-  colorMode: 'dark',
+	layout: "default",
+	colorMode: "dark",
 });
 
 const { query, params, name } = useRoute();
@@ -26,67 +29,80 @@ const { formatDate, formatPrice } = useHelpers();
 const { t } = useI18n();
 
 const order = ref<Order | null>(null);
-const fetchDelay = ref<boolean>(query.fetch_delay === 'true');
+const fetchDelay = ref<boolean>(query.fetch_delay === "true");
 const delayLength = 2500;
 const isLoaded = ref<boolean>(false);
-const errorMessage = ref('');
+const errorMessage = ref("");
 
 const isGuest = computed(() => !customer.value?.email);
-const isSummaryPage = computed<boolean>(() => name === 'order-summary');
-const isCheckoutPage = computed<boolean>(() => name === 'order-received');
-const orderIsNotCompleted = computed<boolean>(() => order.value?.status !== OrderStatusEnum.COMPLETED);
-const hasDiscount = computed<boolean>(() => !!Number.parseFloat(order.value?.rawDiscountTotal || '0'));
-const downloadableItems = computed(() => order.value?.downloadableItems?.nodes || []);
+const isSummaryPage = computed<boolean>(() => name === "order-summary");
+const isCheckoutPage = computed<boolean>(() => name === "order-received");
+const orderIsNotCompleted = computed<boolean>(
+	() => order.value?.status !== OrderStatusEnum.COMPLETED,
+);
+const hasDiscount = computed<boolean>(
+	() => !!Number.parseFloat(order.value?.rawDiscountTotal || "0"),
+);
+const downloadableItems = computed(
+	() => order.value?.downloadableItems?.nodes || [],
+);
 
 onBeforeMount(() => {
-  /**
-   * This is to close the child PayPal window we open on the checkout page.
-   * It will fire off an event that redirects the parent window to the order summary page.
-   */
-  if (isCheckoutPage.value && (query.cancel_order || query.from_paypal || query.PayerID)) window.close();
+	/**
+	 * This is to close the child PayPal window we open on the checkout page.
+	 * It will fire off an event that redirects the parent window to the order summary page.
+	 */
+	if (
+		isCheckoutPage.value &&
+		(query.cancel_order || query.from_paypal || query.PayerID)
+	)
+		window.close();
 });
 
 onMounted(async () => {
-  await getOrder();
-  /**
-   * WooCommerce sometimes takes a while to update the order status.
-   * This is a workaround to fetch the order again after a delay.
-   * The length of the delay might need to be adjusted depending on your server.
-   */
+	await getOrder();
+	/**
+	 * WooCommerce sometimes takes a while to update the order status.
+	 * This is a workaround to fetch the order again after a delay.
+	 * The length of the delay might need to be adjusted depending on your server.
+	 */
 
-  if (isCheckoutPage.value && fetchDelay.value && orderIsNotCompleted.value) {
-    setTimeout(() => {
-      getOrder();
-    }, delayLength);
-  }
+	if (isCheckoutPage.value && fetchDelay.value && orderIsNotCompleted.value) {
+		setTimeout(() => {
+			getOrder();
+		}, delayLength);
+	}
 });
 
 async function getOrder() {
-  try {
-    const data = await GqlGetOrder({ id: params.orderId as string });
-    if (data.order) {
-      order.value = data.order;
-    } else {
-      errorMessage.value = 'Could not find order';
-    }
-  } catch (err: unknown) {
-    errorMessage.value =
-      typeof err === 'object' && err !== null && 'gqlErrors' in err
-        ? (err as { gqlErrors: { message: string }[] }).gqlErrors[0]?.message || 'Could not find order'
-        : 'Could not find order';
-  }
-  isLoaded.value = true;
+	try {
+		const data = await GqlGetOrder({ id: params.orderId as string });
+		if (data.order) {
+			order.value = data.order;
+		} else {
+			errorMessage.value = "Could not find order";
+		}
+	} catch (err: unknown) {
+		errorMessage.value =
+			typeof err === "object" && err !== null && "gqlErrors" in err
+				? (err as { gqlErrors: { message: string }[] }).gqlErrors[0]?.message ||
+					"Could not find order"
+				: "Could not find order";
+	}
+	isLoaded.value = true;
 }
 
 const refreshOrder = async () => {
-  isLoaded.value = false;
-  await getOrder();
+	isLoaded.value = false;
+	await getOrder();
 };
 
 useSeoMeta({
-  title() {
-    return isSummaryPage.value ? t('messages.shop.orderSummary') : t('messages.shop.orderReceived');
-  },
+	title() {
+		return isSummaryPage.value
+			? t("messages.shop.orderSummary")
+			: t("messages.shop.orderReceived");
+	},
 });
 </script>
 

@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import type { ButtonColor, FormSubmitEvent } from '#ui/types';
-import { z } from 'zod';
+import { useI18n } from "vue-i18n";
+import type { ButtonColor, FormSubmitEvent } from "#ui/types";
+import { z } from "zod";
 
 const { viewer, customer } = useAuth();
 const { t } = useI18n();
 
 const loading = ref<boolean>(false);
-const button = ref<{ text: string; color: ButtonColor }>({ text: t('messages.account.updateDetails'), color: 'primary' });
+const button = ref<{ text: string; color: ButtonColor }>({
+	text: t("messages.account.updateDetails"),
+	color: "primary",
+});
 
 const BillingSchema = z.object({
-  firstName: z.string().min(1, t('messages.billing.enterFirstName')),
-  lastName: z.string().min(1, t('messages.billing.enterLastName')),
-  phone: z.string().optional(),
-  company: z.string().optional(),
-  address1: z.string().min(1, t('messages.billing.enterAddress')),
-  address2: z.string().optional(),
-  city: z.string().min(1, t('messages.billing.enterCity')),
-  state: z.string().optional(),
-  country: z.string().min(1, t('messages.billing.enterCountry')),
-  postcode: z.string().min(1, t('messages.billing.enterZip')),
-  email: z.string().email(t('messages.billing.enterValidEmail')),
+	firstName: z.string().min(1, t("messages.billing.enterFirstName")),
+	lastName: z.string().min(1, t("messages.billing.enterLastName")),
+	phone: z.string().optional(),
+	company: z.string().optional(),
+	address1: z.string().min(1, t("messages.billing.enterAddress")),
+	address2: z.string().optional(),
+	city: z.string().min(1, t("messages.billing.enterCity")),
+	state: z.string().optional(),
+	country: z.string().min(1, t("messages.billing.enterCountry")),
+	postcode: z.string().min(1, t("messages.billing.enterZip")),
+	email: z.string().email(t("messages.billing.enterValidEmail")),
 });
 
 type Billing = z.infer<typeof BillingSchema>;
@@ -28,20 +31,28 @@ type Billing = z.infer<typeof BillingSchema>;
 const state = ref({ ...customer.value.billing });
 
 async function onSubmit(event: FormSubmitEvent<Billing>) {
-  loading.value = true;
-  button.value.text = t('messages.account.updating');
-  try {
-    const { updateCustomer } = await GqlUpdateCustomer({ input: { id: viewer.value?.id, billing: state.value } });
-    if (updateCustomer) {
-      button.value = { text: t('messages.account.updateSuccess'), color: 'green' };
-    }
-  } catch (error) {
-    button.value = { text: t('messages.account.failed'), color: 'red' };
-  }
-  loading.value = false;
-  setTimeout(() => {
-    button.value = { text: t('messages.account.updateDetails'), color: 'primary' };
-  }, 2000);
+	loading.value = true;
+	button.value.text = t("messages.account.updating");
+	try {
+		const { updateCustomer } = await GqlUpdateCustomer({
+			input: { id: viewer.value?.id, billing: state.value },
+		});
+		if (updateCustomer) {
+			button.value = {
+				text: t("messages.account.updateSuccess"),
+				color: "green",
+			};
+		}
+	} catch (error) {
+		button.value = { text: t("messages.account.failed"), color: "red" };
+	}
+	loading.value = false;
+	setTimeout(() => {
+		button.value = {
+			text: t("messages.account.updateDetails"),
+			color: "primary",
+		};
+	}, 2000);
 }
 </script>
 

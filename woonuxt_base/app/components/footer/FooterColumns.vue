@@ -1,47 +1,57 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { getULinkProps } from '#ui/utils';
-import type { FooterLink } from '~~/woonuxt_base/app/types';
+import type { PropType } from "vue";
+import { getULinkProps } from "#ui/utils";
+import type { FooterLink } from "~~/woonuxt_base/app/types";
 
 const appConfig = useAppConfig();
 
 const config = computed(() => ({
-  wrapper: 'xl:grid xl:grid-cols-3 xl:gap-8',
-  left: 'mb-10 xl:mb-0',
-  center: 'flex flex-col lg:grid grid-flow-col auto-cols-fr gap-8 xl:col-span-2',
-  right: 'mt-10 xl:mt-0',
-  label: 'text-sm/6 font-semibold text-gray-900 dark:text-primary',
-  list: 'mt-6 space-y-4',
-  base: 'text-sm relative',
-  active: 'text-gray-900 dark:text-primary font-medium',
-  inactive: 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-primary',
-  externalIcon: {
-    //@ts-ignore
-    name: appConfig.ui.icons.external,
-    base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500',
-  },
+	wrapper: "xl:grid xl:grid-cols-3 xl:gap-8",
+	left: "mb-10 xl:mb-0",
+	center:
+		"flex flex-col lg:grid grid-flow-col auto-cols-fr gap-8 xl:col-span-2",
+	right: "mt-10 xl:mt-0",
+	label: "text-sm/6 font-semibold text-gray-900 dark:text-primary",
+	list: "mt-6 space-y-4",
+	base: "text-sm relative",
+	active: "text-gray-900 dark:text-primary font-medium",
+	inactive:
+		"text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-primary",
+	externalIcon: {
+		//@ts-ignore
+		name: appConfig.ui.icons.external,
+		base: "w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500",
+	},
 }));
 
 defineOptions({
-  inheritAttrs: false,
+	inheritAttrs: false,
 });
 
 const props = defineProps({
-  links: {
-    type: Array as PropType<{ label: string; children: FooterLink[] }[]>,
-    default: () => [],
-  },
-  class: {
-    type: [String, Object, Array] as PropType<string | Record<string, unknown> | unknown[]>,
-    default: undefined,
-  },
-  ui: {
-    type: Object as PropType<Partial<typeof config.value>>,
-    default: () => ({}),
-  },
+	links: {
+		type: Array as PropType<{ label: string; children: FooterLink[] }[]>,
+		default: () => [],
+	},
+	class: {
+		type: [String, Object, Array] as PropType<
+			string | Record<string, unknown> | unknown[]
+		>,
+		default: undefined,
+	},
+	ui: {
+		type: Object as PropType<Partial<typeof config.value>>,
+		default: () => ({}),
+	},
 });
 
-const { ui, attrs } = useUI('footer.columns', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI(
+	"footer.columns",
+	toRef(props, "ui"),
+	config,
+	toRef(props, "class") as Ref<string>,
+	true,
+);
 </script>
 
 <template>

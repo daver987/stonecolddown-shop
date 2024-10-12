@@ -1,84 +1,95 @@
 <script lang="ts" setup>
-import { useSeoMeta } from '#imports';
-import { ProductsOrderByEnum } from '#woo';
-import type { Review } from '../types';
-import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
+import { useSeoMeta } from "#imports";
+import { ProductsOrderByEnum } from "#woo";
+import type { Review } from "../types";
+import type { ButtonColor, ButtonSize, ButtonVariant } from "#ui/types";
 
 useSeoMeta({
-  title: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
-  description:
-    "Discover the artistry of Stone Cold Down, Toronto's premier female tattoo artist specializing in fine line black and grey tattoos. Elevate your ink with Natasha Smith's unique designs.",
-  ogTitle: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
-  ogDescription:
-    'Explore the distinctive fine line black and grey tattoos by Natasha Smith at Stone Cold Down. Experience personalized tattoo artistry in Toronto.',
-  ogImage: '/images/scd_logo.png',
-  ogUrl: 'https://stonecolddown.com',
-  twitterTitle: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
-  twitterDescription: 'Natasha Smith of Stone Cold Down specializes in fine line black and grey tattoos. Discover your next masterpiece in Toronto.',
-  twitterImage: '/images/scd_logo.png',
-  twitterCard: 'summary',
+	title: "Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith",
+	description:
+		"Discover the artistry of Stone Cold Down, Toronto's premier female tattoo artist specializing in fine line black and grey tattoos. Elevate your ink with Natasha Smith's unique designs.",
+	ogTitle:
+		"Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith",
+	ogDescription:
+		"Explore the distinctive fine line black and grey tattoos by Natasha Smith at Stone Cold Down. Experience personalized tattoo artistry in Toronto.",
+	ogImage: "/images/scd_logo.png",
+	ogUrl: "https://stonecolddown.com",
+	twitterTitle:
+		"Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith",
+	twitterDescription:
+		"Natasha Smith of Stone Cold Down specializes in fine line black and grey tattoos. Discover your next masterpiece in Toronto.",
+	twitterImage: "/images/scd_logo.png",
+	twitterCard: "summary",
 });
 
 definePageMeta({
-  layout: 'default',
-  colorMode: 'dark',
+	layout: "default",
+	colorMode: "dark",
 });
 
 const bio = {
-  headline: 'Meet The Artist',
-  title: 'Natasha Smith',
-  description:
-    'Natasha Smith is a talented tattoo artist specializing in fine line black and grey tattoos. With years of experience and a passion for creating unique, personalized designs, Natasha brings your vision to life through her artistry.',
-  align: 'left' as 'left' | 'center' | 'right' | undefined,
-  links: [
-    {
-      label: 'Learn More',
-      color: 'primary' as ButtonColor,
-      size: 'md' as ButtonSize,
-      variant: 'outline' as ButtonVariant,
-    },
-  ],
+	headline: "Meet Natasha Smith",
+	title: "Natasha Smith",
+	description:
+		"Natasha Smith is a talented tattoo artist specializing in fine line black and grey tattoos. With years of experience and a passion for creating unique, personalized designs, Natasha brings your vision to life through her artistry.",
+	align: "left" as "left" | "center" | "right" | undefined,
+	links: [
+		{
+			label: "Learn More",
+			color: "primary" as ButtonColor,
+			size: "md" as ButtonSize,
+			variant: "outline" as ButtonVariant,
+		},
+	],
 };
 
 const aboutImg = {
-  one: 'https://res.cloudinary.com/dks0sw9qh/image/upload/e_grayscale/e_brightness:-60/ar_3:2,c_crop/stonecolddown/Natasha/natasha-36.jpg',
+	one: "https://res.cloudinary.com/dks0sw9qh/image/upload/e_grayscale/e_brightness:-60/ar_3:2,c_crop/stonecolddown/Natasha/natasha-36.jpg",
 };
 
 const backgroundCards = [
-  {
-    type: 'background' as 'background' | 'product',
-    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
-    title: 'Tattoos',
-    description:
-      'Whether you know exactly what you want or need some inspiration, Natasha will work with you to create a custom design that perfectly captures your style and personality.',
-    to: '/tattoos',
-    buttonLabel: 'Tell Me Your Idea',
-  },
-  {
-    type: 'background' as 'background' | 'product',
-    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/ballpoint/ballpoint_21',
-    title: 'Flash Tattoo Designs',
-    description: 'Check out our flash tattoo designs. These designs are ready to be tattooed and are a great way to get started with your tattoo journey.',
-    to: '/flash-designs',
-    buttonLabel: 'View Flash Designs',
-  },
-  {
-    type: 'background' as 'background' | 'product',
-    image: 'https://res-console.cloudinary.com/dks0sw9qh/media_explorer_thumbnails/a2bffa0c5dcff7b8f4473d8d9650cb5f/detailed',
-    title: 'Merchandise',
-    description: 'Shop our exclusive merchandise. We have a wide range of product from hats to shirts to mugs and more.',
-    to: '/products',
-    buttonLabel: 'Shop Merch',
-  },
+	{
+		type: "background" as "background" | "product",
+		image:
+			"https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28",
+		title: "Tattoos",
+		description:
+			"Whether you know exactly what you want or need some inspiration, Natasha will work with you to create a custom design that perfectly captures your style and personality.",
+		to: "/tattoos",
+		buttonLabel: "Tell Me Your Idea",
+	},
+	{
+		type: "background" as "background" | "product",
+		image:
+			"https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/ballpoint/ballpoint_21",
+		title: "Flash Tattoo Designs",
+		description:
+			"Check out our flash tattoo designs. These designs are ready to be tattooed and are a great way to get started with your tattoo journey.",
+		to: "/flash-designs",
+		buttonLabel: "View Flash Designs",
+	},
+	{
+		type: "background" as "background" | "product",
+		image:
+			"https://res-console.cloudinary.com/dks0sw9qh/media_explorer_thumbnails/a2bffa0c5dcff7b8f4473d8d9650cb5f/detailed",
+		title: "Merchandise",
+		description:
+			"Shop our exclusive merchandise. We have a wide range of product from hats to shirts to mugs and more.",
+		to: "/products",
+		buttonLabel: "Shop Merch",
+	},
 ];
 const { siteName, description, shortDescription, siteImage } = useAppConfig();
 
-const { data: reviews } = await useFetch<Review[]>('/api/reviews');
+const { data: reviews } = await useFetch<Review[]>("/api/reviews");
 
-const { data } = await useAsyncGql('getProductCategories', { first: 6 });
+const { data } = await useAsyncGql("getProductCategories", { first: 6 });
 const productCategories = data.value?.productCategories?.nodes || [];
 
-const { data: productData } = await useAsyncGql('getProducts', { first: 5, orderby: ProductsOrderByEnum.POPULARITY });
+const { data: productData } = await useAsyncGql("getProducts", {
+	first: 5,
+	orderby: ProductsOrderByEnum.POPULARITY,
+});
 const popularProducts = productData.value.products?.nodes || [];
 </script>
 
@@ -98,24 +109,19 @@ const popularProducts = productData.value.products?.nodes || [];
         description: 'text-base',
         links: 'bg-transparent text-ballance border-1 border-primary-400 hover:bg-primary/10 hover:text-white hover:border-primary-400 w-16 rounded-none',
       }">
-      <NuxtImg class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700" :src="aboutImg.one" alt="Natash Smith" />
+      <NuxtImg class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700" :src="aboutImg.one" alt="Natasha Smith" />
     </LandingSection>
 
-    <LandingSection headline="Collections" title="Ink and Inspiration">
+    <LandingSection headline="Custom Tattoos Tailored to You" title="Your Vision, Natasha's Expertise">
       <LandingGrid>
         <BackgroundCard class="col-span-4 row-span-8" v-for="card in backgroundCards" v-bind="card" :key="card.title" />
       </LandingGrid>
     </LandingSection>
-
-    <section class="container my-16">
-      <div class="flex items-end justify-between">
-        <h2 class="text-lg font-semibold md:text-2xl">{{ $t('messages.shop.shopByCategory') }}</h2>
-        <NuxtLink class="text-primary" to="/categories">{{ $t('messages.general.viewAll') }}</NuxtLink>
-      </div>
+    <LandingSection :headline="$t('messages.shop.shopByCategory')" title="Explore Our Categories">
       <div class="grid justify-center grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-6">
         <CategoryCard v-for="(category, i) in productCategories" :key="i" class="w-full" :node="category" />
       </div>
-    </section>
+    </LandingSection>
 
     <LandingSection>
       <LandingCTA
@@ -134,13 +140,12 @@ const popularProducts = productData.value.products?.nodes || [];
         ]" />
     </LandingSection>
 
-    <section class="container my-16" v-if="popularProducts">
-      <div class="flex items-end justify-between">
-        <h2 class="text-lg font-medium md:text-2xl">{{ $t('messages.shop.popularProducts') }}</h2>
-        <NuxtLink class="text-primary" to="/products">{{ $t('messages.general.viewAll') }}</NuxtLink>
+    <LandingSection headline="What's Hot" title="Popular Designs and Products">
+      <div class="grid justify-center grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-6">
+        <CategoryCard v-for="(category, i) in productCategories" :key="i" class="w-full" :node="category" />
       </div>
-      <ProductRow :products="popularProducts" class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-8" />
-    </section>
+    </LandingSection>
+
     <Reviews :reviews="reviews || []" />
 
     <LandingSection>

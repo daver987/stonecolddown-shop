@@ -1,83 +1,83 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
 
 const SubscribeSchema = z.object({
-  email: z.string().email(),
+	email: z.string().email(),
 });
 
 type Subscribe = z.infer<typeof SubscribeSchema>;
 
 const subscribeState = reactive({
-  email: undefined,
+	email: undefined,
 });
 const loading = ref(false);
 const isDisabled = ref(false);
 
 const toast = useToast();
 const subscribeToNewsletter = (data: FormSubmitEvent<Subscribe>) => {
-  loading.value = true;
-  isDisabled.value = true;
-  setTimeout(() => {
-    loading.value = false;
-    subscribeState.email = undefined;
-    toast.add({ title: 'Thank you for subscribing!' });
-    isDisabled.value = false;
-  }, 2000);
+	loading.value = true;
+	isDisabled.value = true;
+	setTimeout(() => {
+		loading.value = false;
+		subscribeState.email = undefined;
+		toast.add({ title: "Thank you for subscribing!" });
+		isDisabled.value = false;
+	}, 2000);
 };
 
 const footerLinks = [
-  {
-    label: 'Tattoos',
-    children: [
-      {
-        label: 'Custom Tattoos',
-        to: '/tattoos',
-      },
-      {
-        label: 'Flash Designs',
-        to: '/product-category/flash-designs',
-      },
-    ],
-  },
-  {
-    label: 'Shop',
-    children: [
-      {
-        label: 'Prints',
-        to: '/product-category/prints',
-      },
-      {
-        label: 'Merch',
-        to: '/product-category/merch',
-      },
-      {
-        label: 'All Products',
-        to: '/products',
-      },
-    ],
-  },
-  {
-    label: 'Information',
-    children: [
-      {
-        label: 'Portfolio',
-        to: '/portfolio',
-      },
-      {
-        label: 'About',
-        to: '/about',
-      },
-      {
-        label: 'Contact',
-        to: '/contact',
-      },
-      {
-        label: 'My Account',
-        to: '/my-account',
-      },
-    ],
-  },
+	{
+		label: "Tattoos",
+		children: [
+			{
+				label: "Custom Tattoos",
+				to: "/tattoos",
+			},
+			{
+				label: "Flash Designs",
+				to: "/product-category/flash-designs",
+			},
+		],
+	},
+	{
+		label: "Shop",
+		children: [
+			{
+				label: "Prints",
+				to: "/product-category/prints",
+			},
+			{
+				label: "Merch",
+				to: "/product-category/merch",
+			},
+			{
+				label: "All Products",
+				to: "/products",
+			},
+		],
+	},
+	{
+		label: "Information",
+		children: [
+			{
+				label: "Portfolio",
+				to: "/portfolio",
+			},
+			{
+				label: "About",
+				to: "/about",
+			},
+			{
+				label: "Contact",
+				to: "/contact",
+			},
+			{
+				label: "My Account",
+				to: "/my-account",
+			},
+		],
+	},
 ];
 </script>
 

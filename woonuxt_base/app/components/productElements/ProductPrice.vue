@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface ProductPriceProps {
-  regularPrice?: string | null;
-  salePrice?: string | null;
+	regularPrice?: string | null;
+	salePrice?: string | null;
 }
 
 const props = defineProps<ProductPriceProps>();

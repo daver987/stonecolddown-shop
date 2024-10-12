@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  products: { type: Array, default: null },
+	products: { type: Array, default: null },
 });
 </script>
 

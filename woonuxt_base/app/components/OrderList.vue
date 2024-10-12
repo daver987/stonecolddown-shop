@@ -6,13 +6,13 @@ const { getOrders, orders } = useAuth();
 if (orders.value === null) getOrders();
 
 const refresh = () => {
-  orders.value = null;
-  scrollToTop();
-  getOrders();
+	orders.value = null;
+	scrollToTop();
+	getOrders();
 };
 
 const goToOrder = (orderNumber: string): void => {
-  router.push(`/order-summary/${orderNumber}`);
+	router.push(`/order-summary/${orderNumber}`);
 };
 </script>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
-import { useI18n } from 'vue-i18n';
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -9,66 +9,69 @@ const route = useRoute();
 const { viewer, resetPasswordWithKey, loginUser } = useAuth();
 
 const schema = z
-  .object({
-    newPassword: z.string().min(8, t('messages.error.passwordMinLength')),
-    confirmPassword: z.string().min(8, t('messages.error.passwordMinLength')),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: t('messages.error.passwordMismatch'),
-    path: ['confirmPassword'],
-  });
+	.object({
+		newPassword: z.string().min(8, t("messages.error.passwordMinLength")),
+		confirmPassword: z.string().min(8, t("messages.error.passwordMinLength")),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: t("messages.error.passwordMismatch"),
+		path: ["confirmPassword"],
+	});
 
 const state = reactive({
-  newPassword: '',
-  confirmPassword: '',
+	newPassword: "",
+	confirmPassword: "",
 });
 
 const isPending = ref(false);
 const isInvalidLink = ref(false);
 
 if (!route.query.key && !route.query.login) {
-  router.push('/my-account?action=forgotPassword');
+	router.push("/my-account?action=forgotPassword");
 }
 
 async function onSubmit(event: FormSubmitEvent<typeof schema>) {
-  isPending.value = true;
-  isInvalidLink.value = false;
+	isPending.value = true;
+	isInvalidLink.value = false;
 
-  try {
-    const userInfo = {
-      key: route.query.key as string,
-      login: route.query.login as string,
-      password: state.newPassword,
-    };
+	try {
+		const userInfo = {
+			key: route.query.key as string,
+			login: route.query.login as string,
+			password: state.newPassword,
+		};
 
-    if (!userInfo.key || !userInfo.login) {
-      isInvalidLink.value = true;
-      throw new Error(t('messages.error.invalidPasswordResetLink'));
-    }
+		if (!userInfo.key || !userInfo.login) {
+			isInvalidLink.value = true;
+			throw new Error(t("messages.error.invalidPasswordResetLink"));
+		}
 
-    const resetResult = await resetPasswordWithKey(userInfo);
-    if (!resetResult.success) {
-      isInvalidLink.value = true;
-      throw new Error(resetResult.error);
-    }
+		const resetResult = await resetPasswordWithKey(userInfo);
+		if (!resetResult.success) {
+			isInvalidLink.value = true;
+			throw new Error(resetResult.error);
+		}
 
-    if (viewer.value) {
-      const loginResult = await loginUser({ username: userInfo.login, password: userInfo.password });
-      if (!loginResult.success) {
-        throw new Error(loginResult.error);
-      }
-    }
+		if (viewer.value) {
+			const loginResult = await loginUser({
+				username: userInfo.login,
+				password: userInfo.password,
+			});
+			if (!loginResult.success) {
+				throw new Error(loginResult.error);
+			}
+		}
 
-    await navigateTo('/my-account');
-  } catch (error: unknown) {
-    console.error((error as Error).message || t('messages.error.general'));
-  } finally {
-    isPending.value = false;
-  }
+		await navigateTo("/my-account");
+	} catch (error: unknown) {
+		console.error((error as Error).message || t("messages.error.general"));
+	} finally {
+		isPending.value = false;
+	}
 }
 
 useHead({
-  title: t('messages.account.resetPassword'),
+	title: t("messages.account.resetPassword"),
 });
 </script>
 

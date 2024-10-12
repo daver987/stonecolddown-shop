@@ -1,44 +1,52 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
+import type { PropType } from "vue";
 
 const config = {
-  wrapper: 'flex flex-col lg:grid lg:grid-cols-10 lg:gap-8',
-  left: 'lg:col-span-2',
-  center: {
-    narrow: 'lg:col-span-6',
-    base: 'lg:col-span-8',
-    full: 'lg:col-span-10',
-  },
-  right: 'lg:col-span-2 order-first lg:order-last',
+	wrapper: "flex flex-col lg:grid lg:grid-cols-10 lg:gap-8",
+	left: "lg:col-span-2",
+	center: {
+		narrow: "lg:col-span-6",
+		base: "lg:col-span-8",
+		full: "lg:col-span-10",
+	},
+	right: "lg:col-span-2 order-first lg:order-last",
 };
 
 defineOptions({
-  inheritAttrs: false,
+	inheritAttrs: false,
 });
 
 const props = defineProps({
-  class: {
-    type: [String, Object, Array] as PropType<string | Record<string, string> | string[]>,
-    default: undefined,
-  },
-  ui: {
-    type: Object as PropType<Partial<typeof config>>,
-    default: () => ({}),
-  },
+	class: {
+		type: [String, Object, Array] as PropType<
+			string | Record<string, string> | string[]
+		>,
+		default: undefined,
+	},
+	ui: {
+		type: Object as PropType<Partial<typeof config>>,
+		default: () => ({}),
+	},
 });
 
 const slots = useSlots();
-const { ui, attrs } = useUI('page', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI(
+	"page",
+	toRef(props, "ui"),
+	config,
+	toRef(props, "class") as Ref<string>,
+	true,
+);
 
 const centerClass = computed(() => {
-  if (slots.left && slots.right) {
-    return ui.value.center.narrow;
-  }
-  if (slots.left || slots.right) {
-    return ui.value.center.base;
-  }
+	if (slots.left && slots.right) {
+		return ui.value.center.narrow;
+	}
+	if (slots.left || slots.right) {
+		return ui.value.center.base;
+	}
 
-  return ui.value.center.full;
+	return ui.value.center.full;
 });
 </script>
 

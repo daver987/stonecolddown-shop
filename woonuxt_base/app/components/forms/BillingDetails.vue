@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '#ui/types';
-import { z } from 'zod';
-import { useI18n } from 'vue-i18n';
+import type { FormSubmitEvent } from "#ui/types";
+import { z } from "zod";
+import { useI18n } from "vue-i18n";
 
 const { updateShippingLocation } = useCheckout();
 const { isBillingAddressEnabled } = useCart();
 const { t } = useI18n();
 
 const BillingSchema = z.object({
-  firstName: z.string().min(1, t('messages.validation.required')),
-  lastName: z.string().min(1, t('messages.validation.required')),
-  address1: z.string().min(1, t('messages.validation.required')).optional(),
-  address2: z.string().optional(),
-  city: z.string().min(1, t('messages.validation.required')).optional(),
-  state: z.string().optional(),
-  country: z.string().min(1, t('messages.validation.required')).optional(),
-  postcode: z.string().min(1, t('messages.validation.required')).optional(),
-  phone: z.string().optional(),
+	firstName: z.string().min(1, t("messages.validation.required")),
+	lastName: z.string().min(1, t("messages.validation.required")),
+	address1: z.string().min(1, t("messages.validation.required")).optional(),
+	address2: z.string().optional(),
+	city: z.string().min(1, t("messages.validation.required")).optional(),
+	state: z.string().optional(),
+	country: z.string().min(1, t("messages.validation.required")).optional(),
+	postcode: z.string().min(1, t("messages.validation.required")).optional(),
+	phone: z.string().optional(),
 });
 
 type BillingDetails = z.infer<typeof BillingSchema>;
 
 const props = defineProps({
-  modelValue: { type: Object as () => BillingDetails, required: true },
+	modelValue: { type: Object as () => BillingDetails, required: true },
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const billing = reactive({ ...props.modelValue });
 
 watch(
-  () => billing,
-  (newVal) => {
-    emit('update:modelValue', newVal);
-  },
-  { deep: true },
+	() => billing,
+	(newVal) => {
+		emit("update:modelValue", newVal);
+	},
+	{ deep: true },
 );
 
 function onSubmit(event: FormSubmitEvent<BillingDetails>) {
-  // Handle form submission if necessary
+	// Handle form submission if necessary
 }
 </script>
 

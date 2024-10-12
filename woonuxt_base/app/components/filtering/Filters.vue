@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { TaxonomyEnum } from '#woo';
-import type { WooNuxtFilter } from '../../types';
+import { TaxonomyEnum } from "#woo";
+import type { WooNuxtFilter } from "../../types";
 
 const { isFiltersActive } = useFiltering();
 const { removeBodyClass } = useHelpers();
@@ -8,18 +8,30 @@ const runtimeConfig = useRuntimeConfig();
 const { storeSettings } = useAppConfig();
 
 // hide-categories prop is used to hide the category filter on the product category page
-const { hideCategories } = defineProps({ hideCategories: { type: Boolean, default: false } });
+const { hideCategories } = defineProps({
+	hideCategories: { type: Boolean, default: false },
+});
 
-const globalProductAttributes = (runtimeConfig?.public?.GLOBAL_PRODUCT_ATTRIBUTES as WooNuxtFilter[]) || [];
-const taxonomies = globalProductAttributes.map((attr) => attr?.slug?.toUpperCase().replace('_', '')) as TaxonomyEnum[];
-const { data } = await useAsyncGql('getAllTerms', { taxonomies: [...taxonomies, TaxonomyEnum.PRODUCTCATEGORY] });
+const globalProductAttributes =
+	(runtimeConfig?.public?.GLOBAL_PRODUCT_ATTRIBUTES as WooNuxtFilter[]) || [];
+const taxonomies = globalProductAttributes.map((attr) =>
+	attr?.slug?.toUpperCase().replace("_", ""),
+) as TaxonomyEnum[];
+const { data } = await useAsyncGql("getAllTerms", {
+	taxonomies: [...taxonomies, TaxonomyEnum.PRODUCTCATEGORY],
+});
 const terms = data.value?.terms?.nodes || [];
 
 // Filter out the product category terms and the global product attributes with their terms
-const productCategoryTerms = terms.filter((term) => term.taxonomyName === 'product_cart');
+const productCategoryTerms = terms.filter(
+	(term) => term.taxonomyName === "product_cart",
+);
 
 // Filter out the color attribute and the rest of the global product attributes
-const attributesWithTerms = globalProductAttributes.map((attr) => ({ ...attr, terms: terms.filter((term) => term.taxonomyName === attr.slug) }));
+const attributesWithTerms = globalProductAttributes.map((attr) => ({
+	...attr,
+	terms: terms.filter((term) => term.taxonomyName === attr.slug),
+}));
 </script>
 
 <template>

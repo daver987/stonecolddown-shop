@@ -1,9 +1,9 @@
 query getStripePaymentIntent {
-  stripePaymentIntent {
-    amount
-    clientSecret
-    error
-    id
-    currency
-  }
+	stripePaymentIntent {
+		amount
+		clientSecret
+		error
+		id
+		currency
+	}
 }

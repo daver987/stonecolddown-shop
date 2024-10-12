@@ -1,58 +1,61 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import { useI18n } from 'vue-i18n';
-import type { FormSubmitEvent } from '#ui/types';
+import { z } from "zod";
+import { useI18n } from "vue-i18n";
+import type { FormSubmitEvent } from "#ui/types";
 
 const { t } = useI18n();
 const { loginUser } = useAuth();
 const loading = ref(false);
-const message = ref('');
-const errorMessage = ref('');
+const message = ref("");
+const errorMessage = ref("");
 
 const schema = z.object({
-  emailOrUsername: z.string().min(1, t('messages.error.fieldRequired')),
-  password: z.string().min(8, t('messages.error.passwordMinLength')),
+	emailOrUsername: z.string().min(1, t("messages.error.fieldRequired")),
+	password: z.string().min(8, t("messages.error.passwordMinLength")),
 });
 
 type Schema = z.output<typeof schema>;
 
 const state = reactive<Schema>({
-  emailOrUsername: '',
-  password: '',
+	emailOrUsername: "",
+	password: "",
 });
 
 const handleFormSubmit = async (event: FormSubmitEvent<Schema>) => {
-  loading.value = true;
-  const userInfo = event.data;
-  try {
-    const { success, error } = await loginUser({
-      username: userInfo.emailOrUsername,
-      password: userInfo.password,
-    });
-    if (error) {
-      errorMessage.value = t(`messages.error.${error}`) || error;
-    }
-    if (success) {
-      errorMessage.value = '';
-      message.value = t('messages.account.loggingIn');
-    }
-  } catch (e) {
-    console.error(e);
-    errorMessage.value = t('messages.error.unknownError');
-  } finally {
-    loading.value = false;
-  }
+	loading.value = true;
+	const userInfo = event.data;
+	try {
+		const { success, error } = await loginUser({
+			username: userInfo.emailOrUsername,
+			password: userInfo.password,
+		});
+		if (error) {
+			errorMessage.value = t(`messages.error.${error}`) || error;
+		}
+		if (success) {
+			errorMessage.value = "";
+			message.value = t("messages.account.loggingIn");
+		}
+	} catch (e) {
+		console.error(e);
+		errorMessage.value = t("messages.error.unknownError");
+	} finally {
+		loading.value = false;
+	}
 };
 
-const emit = defineEmits(['navigate']);
+const emit = defineEmits(["navigate"]);
 
-const navigateToRegister = () => emit('navigate', 'register');
-const navigateToForgotPassword = () => emit('navigate', 'forgotPassword');
+const navigateToRegister = () => emit("navigate", "register");
+const navigateToForgotPassword = () => emit("navigate", "forgotPassword");
 
 const submitForm = () => {
-  if (!loading.value) {
-    handleFormSubmit({ preventDefault: () => {}, data: state } as FormSubmitEvent<Schema>);
-  }
+	if (!loading.value) {
+		handleFormSubmit({
+			preventDefault: () => {},
+			data: state,
+		} as FormSubmitEvent<Schema>);
+	}
 };
 </script>
 

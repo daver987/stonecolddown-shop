@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import type { Product } from '../../types';
+import type { Product } from "../../types";
 
 const { addToWishlist, removeFromWishlist, isInList } = useWishlist();
 
 const props = defineProps<{ product: Product }>();
 
-const isWishlisted = computed(() => (props.product.databaseId ? isInList(props.product.databaseId) : false));
+const isWishlisted = computed(() =>
+	props.product.databaseId ? isInList(props.product.databaseId) : false,
+);
 
-const toggleWishlist = () => (isWishlisted.value && props.product.databaseId ? removeFromWishlist(props.product.databaseId) : addToWishlist(props.product));
+const toggleWishlist = () =>
+	isWishlisted.value && props.product.databaseId
+		? removeFromWishlist(props.product.databaseId)
+		: addToWishlist(props.product);
 </script>
 
 <template>

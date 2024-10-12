@@ -1,9 +1,9 @@
 <script setup lang="ts">
 defineProps({
-  rating: { type: Number, default: 0 },
-  count: { type: Number, default: null },
-  hideCount: { type: Boolean, default: false },
-  size: { type: Number, default: 14 },
+	rating: { type: Number, default: 0 },
+	count: { type: Number, default: null },
+	hideCount: { type: Boolean, default: false },
+	size: { type: Number, default: 14 },
 });
 </script>
 

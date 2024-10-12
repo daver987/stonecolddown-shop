@@ -1,49 +1,50 @@
 <script setup lang="ts">
 useHead({
-  htmlAttrs: {
-    lang: 'en',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
-  bodyAttrs: {
-    class: 'dark:bg-gray-900',
-  },
+	htmlAttrs: {
+		lang: "en",
+	},
+	link: [
+		{
+			rel: "icon",
+			type: "image/png",
+			href: "/favicon.ico",
+		},
+	],
+	bodyAttrs: {
+		class: "dark:bg-gray-900",
+	},
 });
 const colorMode = useColorMode();
 
 colorMode.forced = true;
-colorMode.preference = 'dark';
+colorMode.preference = "dark";
 
 const route = useRoute();
 const { isShowingCart, toggleCart } = useCart();
-const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
+const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } =
+	useHelpers();
 const { siteName } = useAppConfig();
 
 const closeCartAndMenu = () => {
-  toggleCart(false);
-  toggleMobileMenu(false);
+	toggleCart(false);
+	toggleMobileMenu(false);
 };
 
 watch([isShowingCart, isShowingMobileMenu], () => {
-  if (isShowingCart.value || isShowingMobileMenu.value) {
-    addBodyClass('overflow-hidden');
-  } else {
-    removeBodyClass('overflow-hidden');
-  }
+	if (isShowingCart.value || isShowingMobileMenu.value) {
+		addBodyClass("overflow-hidden");
+	} else {
+		removeBodyClass("overflow-hidden");
+	}
 });
 
 watch(
-  () => route.path,
-  () => closeCartAndMenu(),
+	() => route.path,
+	() => closeCartAndMenu(),
 );
 
 useHead({
-  titleTemplate: `%s - ${siteName}`,
+	titleTemplate: `%s - ${siteName}`,
 });
 </script>
 

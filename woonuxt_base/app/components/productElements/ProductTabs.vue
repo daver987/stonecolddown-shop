@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Product } from '../../types';
+import type { Product } from "../../types";
 
 const { product } = defineProps({
-  product: { type: Object as PropType<Product>, required: true },
+	product: { type: Object as PropType<Product>, required: true },
 });
 const { storeSettings } = useAppConfig();
 

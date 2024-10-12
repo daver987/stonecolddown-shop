@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
 
 const { updateShippingLocation } = useCheckout();
 
 const props = defineProps({
-  modelValue: { type: Object, required: true },
+	modelValue: { type: Object, required: true },
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const schema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  address1: z.string().min(1, 'Address is required'),
-  address2: z.string().optional(),
-  city: z.string().min(1, 'City is required'),
-  state: z.string().optional(),
-  country: z.string().min(1, 'Country is required'),
-  postcode: z.string().min(1, 'Zip code is required'),
-  phone: z.string().optional(),
+	firstName: z.string().min(1, "First name is required"),
+	lastName: z.string().min(1, "Last name is required"),
+	address1: z.string().min(1, "Address is required"),
+	address2: z.string().optional(),
+	city: z.string().min(1, "City is required"),
+	state: z.string().optional(),
+	country: z.string().min(1, "Country is required"),
+	postcode: z.string().min(1, "Zip code is required"),
+	phone: z.string().optional(),
 });
 
 type Schema = z.output<typeof schema>;
@@ -27,16 +27,16 @@ type Schema = z.output<typeof schema>;
 const state = reactive({ ...props.modelValue });
 
 watch(
-  state,
-  (newValue) => {
-    emit('update:modelValue', newValue);
-  },
-  { deep: true },
+	state,
+	(newValue) => {
+		emit("update:modelValue", newValue);
+	},
+	{ deep: true },
 );
 
 function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Handle form submission if needed
-  console.log(event.data);
+	// Handle form submission if needed
+	console.log(event.data);
 }
 </script>
 

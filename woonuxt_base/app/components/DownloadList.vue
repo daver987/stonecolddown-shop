@@ -5,9 +5,9 @@ const { getDownloads, downloads } = useAuth();
 if (downloads.value === null) getDownloads();
 
 const refresh = () => {
-  downloads.value = null;
-  scrollToTop();
-  getDownloads();
+	downloads.value = null;
+	scrollToTop();
+	getDownloads();
 };
 </script>
 

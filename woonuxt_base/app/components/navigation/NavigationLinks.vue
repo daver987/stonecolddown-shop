@@ -1,49 +1,58 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twMerge } from 'tailwind-merge';
-import { getULinkProps } from '#ui/utils';
-import type { NavigationLink } from '../../types';
+import type { PropType } from "vue";
+import { twMerge } from "tailwind-merge";
+import { getULinkProps } from "#ui/utils";
+import type { NavigationLink } from "../../types";
 
 const config = {
-  wrapper: 'space-y-3',
-  wrapperLevel: 'space-y-1.5',
-  base: 'flex items-center gap-1.5 group',
-  active: 'text-primary font-medium border-current',
-  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-transparent hover:border-gray-500 dark:hover:border-gray-400',
-  level: 'border-l -ml-px pl-4',
-  icon: {
-    base: 'w-5 h-5 flex-shrink-0',
-  },
-  badge: {
-    base: 'rounded-full',
-  },
-  label: 'text-sm/6 truncate',
+	wrapper: "space-y-3",
+	wrapperLevel: "space-y-1.5",
+	base: "flex items-center gap-1.5 group",
+	active: "text-primary font-medium border-current",
+	inactive:
+		"text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-transparent hover:border-gray-500 dark:hover:border-gray-400",
+	level: "border-l -ml-px pl-4",
+	icon: {
+		base: "w-5 h-5 flex-shrink-0",
+	},
+	badge: {
+		base: "rounded-full",
+	},
+	label: "text-sm/6 truncate",
 };
 
 defineOptions({
-  inheritAttrs: false,
+	inheritAttrs: false,
 });
 
 const props = defineProps({
-  level: {
-    type: Number,
-    default: 0,
-  },
-  links: {
-    type: Array as PropType<NavigationLink[]>,
-    default: () => [],
-  },
-  class: {
-    type: [String, Object, Array] as PropType<string | Record<string, unknown> | unknown[]>,
-    default: undefined,
-  },
-  ui: {
-    type: Object as PropType<Partial<typeof config>>,
-    default: () => ({}),
-  },
+	level: {
+		type: Number,
+		default: 0,
+	},
+	links: {
+		type: Array as PropType<NavigationLink[]>,
+		default: () => [],
+	},
+	class: {
+		type: [String, Object, Array] as PropType<
+			string | Record<string, unknown> | unknown[]
+		>,
+		default: undefined,
+	},
+	ui: {
+		type: Object as PropType<Partial<typeof config>>,
+		default: () => ({}),
+	},
 });
 
-const { ui, attrs } = useUI('navigation.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI(
+	"navigation.links",
+	toRef(props, "ui"),
+	config,
+	toRef(props, "class") as Ref<string>,
+	true,
+);
 </script>
 
 <template>

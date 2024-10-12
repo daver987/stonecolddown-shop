@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: StockPort-Brush;
-  font-family: StockPort-Extra;
-  font-family: Lato;
+	font-family: StockPort-Brush;
+	font-family: StockPort-Extra;
+	font-family: Lato;
 }

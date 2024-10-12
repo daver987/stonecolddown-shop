@@ -1,18 +1,24 @@
 <script setup lang="ts">
 const props = defineProps({
-  product: { type: Object, required: true },
+	product: { type: Object, required: true },
 });
 
 const isOpen = ref(false);
 
-const twitterUrl = computed(() => `https://twitter.com/intent/tweet?text=${props.product.name}&url=${window.location.href}`);
-const facebookUrl = computed(() => `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`);
+const twitterUrl = computed(
+	() =>
+		`https://twitter.com/intent/tweet?text=${props.product.name}&url=${window.location.href}`,
+);
+const facebookUrl = computed(
+	() => `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+);
 const pinterestUrl = computed(
-  () => `https://pinterest.com/pin/create/button/?url=${window.location.href}&media=${props.product.image.sourceUrl}&description=${props.product.name}`,
+	() =>
+		`https://pinterest.com/pin/create/button/?url=${window.location.href}&media=${props.product.image.sourceUrl}&description=${props.product.name}`,
 );
 
 const showShare = () => {
-  isOpen.value = true;
+	isOpen.value = true;
 };
 </script>
 
