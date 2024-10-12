@@ -44,16 +44,16 @@ const footerLinks = [
 		label: "Shop",
 		children: [
 			{
+				label: "All Products",
+				to: "/products",
+			},
+			{
 				label: "Prints",
 				to: "/product-category/prints",
 			},
 			{
 				label: "Merch",
 				to: "/product-category/merch",
-			},
-			{
-				label: "All Products",
-				to: "/products",
 			},
 		],
 	},
