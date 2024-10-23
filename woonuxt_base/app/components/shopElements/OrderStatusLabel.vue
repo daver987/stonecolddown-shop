@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import type { Order } from "../../types";
+import type { Order } from '../../types';
 
 const props = defineProps<{ order: Order }>();
 
-const readableStatus = computed(
-	() => props.order?.status?.replace(/_/g, " ") || "",
-);
+const readableStatus = computed(() => props.order?.status?.replace(/_/g, ' ') || '');
 </script>
 
 <template>

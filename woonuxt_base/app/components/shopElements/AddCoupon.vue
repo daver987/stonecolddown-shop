@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { z } from "zod";
-import type { FormSubmitEvent } from "#ui/types";
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
 
 const { cart, isUpdatingCoupon, applyCoupon, removeCoupon } = useCart();
-const errorMessage = ref<string>("");
+const errorMessage = ref<string>('');
 
 const schema = z.object({
-	couponCode: z.string().min(1, "Coupon code is required"),
+  couponCode: z.string().min(1, 'Coupon code is required'),
 });
 
 type Schema = z.output<typeof schema>;
 
 const state = reactive({
-	couponCode: "",
+  couponCode: '',
 });
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-	const { message } = await applyCoupon(event.data.couponCode);
-	if (message) {
-		errorMessage.value = message;
-	} else {
-		state.couponCode = "";
-		errorMessage.value = "";
-	}
+  const { message } = await applyCoupon(event.data.couponCode);
+  if (message) {
+    errorMessage.value = message;
+  } else {
+    state.couponCode = '';
+    errorMessage.value = '';
+  }
 }
 </script>
 

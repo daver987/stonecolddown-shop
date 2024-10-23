@@ -1,57 +1,53 @@
 <script setup lang="ts">
-import type { ButtonSize, ButtonColor, ButtonVariant } from "#ui/types";
-import type { Review } from "../types";
+import type { ButtonSize, ButtonColor, ButtonVariant } from '#ui/types';
+import type { Review } from '../types';
 
 useSeoMeta({
-	title: "About Natasha Smith | Stone Cold Down",
-	description:
-		"Learn about Natasha Smith, Toronto's premier female tattoo artist specializing in fine line black and grey tattoos. Discover her journey and passion for tattoo artistry.",
-	ogTitle: "About Natasha Smith | Stone Cold Down",
-	ogDescription:
-		"Explore the story of Natasha Smith, a talented tattoo artist at Stone Cold Down. Learn about her journey and passion for creating unique, personalized tattoos.",
-	ogImage: "/images/scd_logo.png",
-	ogUrl: "https://stonecolddown.com/about",
-	twitterTitle: "About Natasha Smith | Stone Cold Down",
-	twitterDescription:
-		"Discover the journey of Natasha Smith, a premier tattoo artist specializing in fine line black and grey tattoos at Stone Cold Down.",
-	twitterImage: "/images/scd_logo.png",
-	twitterCard: "summary",
+  title: 'About Natasha Smith | Stone Cold Down',
+  description:
+    "Learn about Natasha Smith, Toronto's premier female tattoo artist specializing in fine line black and grey tattoos. Discover her journey and passion for tattoo artistry.",
+  ogTitle: 'About Natasha Smith | Stone Cold Down',
+  ogDescription:
+    'Explore the story of Natasha Smith, a talented tattoo artist at Stone Cold Down. Learn about her journey and passion for creating unique, personalized tattoos.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com/about',
+  twitterTitle: 'About Natasha Smith | Stone Cold Down',
+  twitterDescription: 'Discover the journey of Natasha Smith, a premier tattoo artist specializing in fine line black and grey tattoos at Stone Cold Down.',
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary',
 });
 
 definePageMeta({
-	layout: "default",
-	colorMode: "dark",
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 const bio = {
-	headline: "About Me",
-	title: "Natasha Smith",
-	description: `
+  headline: 'About Me',
+  title: 'Natasha Smith',
+  description: `
     As a renowned fine line black and grey tattoo artist, I've overcome significant adversity to become one of the most sought-after artists in Toronto. My journey is a testament to resilience and dedication to the craft of tattooing.
     
     Specializing in intricate designs, I transform my clients' visions into stunning tattoos that are both personal and artistic. My attention to detail and passion for creating unique pieces make me a go-to artist for those looking to express themselves through body art.
   `,
-	align: "left" as "left" | "center" | "right" | undefined,
-	links: [
-		{
-			label: "Book a Session",
-			color: "primary" as ButtonColor,
-			size: "md" as ButtonSize,
-			variant: "outline" as ButtonVariant,
-		},
-	],
+  align: 'left' as 'left' | 'center' | 'right' | undefined,
+  links: [
+    {
+      label: 'Book a Session',
+      color: 'primary' as ButtonColor,
+      size: 'md' as ButtonSize,
+      variant: 'outline' as ButtonVariant,
+    },
+  ],
 };
 
-const { data: reviews } = await useFetch<Review[]>("/api/reviews", {
-	key: "reviews",
-	headers: {
-		Accept: "application/json",
-	},
-	method: "GET",
+const { data: reviews } = await useFetch<Review[]>('/api/reviews', {
+  key: 'reviews',
+  headers: {
+    Accept: 'application/json',
+  },
+  method: 'GET',
 });
-if (reviews) {
-	console.log(reviews.value);
-}
 </script>
 
 <template>

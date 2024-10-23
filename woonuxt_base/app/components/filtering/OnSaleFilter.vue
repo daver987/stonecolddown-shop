@@ -1,22 +1,22 @@
 <script setup>
 const { getFilter, setFilter, isFiltersActive } = useFiltering();
-const selectedTerms = ref(getFilter("sale") || []);
+const selectedTerms = ref(getFilter('sale') || []);
 
 const isOpen = ref(true);
 
 watch(isFiltersActive, () => {
-	// uncheck all radio boxes when filters are cleared
-	if (!isFiltersActive.value) selectedTerms.value = [];
+  // uncheck all radio boxes when filters are cleared
+  if (!isFiltersActive.value) selectedTerms.value = [];
 });
 
 const checkboxClicked = (e) => {
-	if (selectedTerms.value.length === 0) {
-		selectedTerms.value = [e.target.value];
-		setFilter("sale", [e.target.value]);
-	} else {
-		selectedTerms.value = [];
-		setFilter("sale", []);
-	}
+  if (selectedTerms.value.length === 0) {
+    selectedTerms.value = [e.target.value];
+    setFilter('sale', [e.target.value]);
+  } else {
+    selectedTerms.value = [];
+    setFilter('sale', []);
+  }
 };
 </script>
 

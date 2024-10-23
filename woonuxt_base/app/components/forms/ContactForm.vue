@@ -1,29 +1,26 @@
 <script setup lang="ts">
-import { z } from "zod";
-import type { FormSubmitEvent } from "#ui/types";
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
 
 const ContactSchema = z.object({
-	full_name: z.string().min(1, "Full name is required"),
-	email_address: z.string().email("Invalid email address"),
-	phone_number: z
-		.string()
-		.regex(/^\\+?[1-9]\\d{1,14}$/, "Invalid phone number")
-		.min(1, "Phone number is required"),
-	message: z
-		.string()
-		.max(500, "Message must be less than 500 characters")
-		.min(10, "Message must be at least 10 characters"),
-	reference_images: z.array(z.instanceof(File)).optional(),
+  full_name: z.string().min(1, 'Full name is required'),
+  email_address: z.string().email('Invalid email address'),
+  phone_number: z
+    .string()
+    .regex(/^\\+?[1-9]\\d{1,14}$/, 'Invalid phone number')
+    .min(1, 'Phone number is required'),
+  message: z.string().max(500, 'Message must be less than 500 characters').min(10, 'Message must be at least 10 characters'),
+  reference_images: z.array(z.instanceof(File)).optional(),
 });
 
 type ContactForm = z.infer<typeof ContactSchema>;
 
 const contactState = reactive<ContactForm>({
-	full_name: "",
-	email_address: "",
-	phone_number: "",
-	message: "",
-	reference_images: [],
+  full_name: '',
+  email_address: '',
+  phone_number: '',
+  message: '',
+  reference_images: [],
 });
 
 const loading = ref(false);
@@ -31,28 +28,25 @@ const isDisabled = ref(false);
 const toast = useToast();
 
 const onSubmit = (data: FormSubmitEvent<ContactForm>) => {
-	loading.value = true;
-	isDisabled.value = true;
-	setTimeout(() => {
-		loading.value = false;
-		isDisabled.value = false;
-		contactState.full_name = "";
-		contactState.email_address = "";
-		contactState.phone_number = "";
-		contactState.message = "";
-		contactState.reference_images = [];
-		toast.add({ title: "Thank you for your inquiry!" });
-	}, 1000);
+  loading.value = true;
+  isDisabled.value = true;
+  setTimeout(() => {
+    loading.value = false;
+    isDisabled.value = false;
+    contactState.full_name = '';
+    contactState.email_address = '';
+    contactState.phone_number = '';
+    contactState.message = '';
+    contactState.reference_images = [];
+    toast.add({ title: 'Thank you for your inquiry!' });
+  }, 1000);
 };
 
-const fileNames = computed(
-	() =>
-		contactState.reference_images?.map((file) => file.name).join(", ") || "",
-);
+const fileNames = computed(() => contactState.reference_images?.map((file) => file.name).join(', ') || '');
 
 const handleFileInput = (event: Event) => {
-	const target = event.target as HTMLInputElement;
-	contactState.reference_images = target.files ? Array.from(target.files) : [];
+  const target = event.target as HTMLInputElement;
+  contactState.reference_images = target.files ? Array.from(target.files) : [];
 };
 </script>
 

@@ -1,65 +1,58 @@
 <script setup lang="ts">
-import type { PropType } from "vue";
-import { getULinkProps } from "#ui/utils";
-import type { HeaderLink } from "../../types";
+import type { PropType } from 'vue';
+import { getULinkProps } from '#ui/utils';
+import type { HeaderLink } from '../../types';
 
 const appConfig = useAppConfig();
 
 const config = computed(() => ({
-	wrapper: "flex items-center gap-x-8",
-	base: "text-sm/6 font-semibold flex items-center gap-1",
-	active: "text-primary",
-	inactive: "hover:text-primary",
-	trailingIcon: {
-		//@ts-ignore
-		name: appConfig.ui.icons.chevron,
-		base: "w-5 h-5 transform transition-transform duration-200 flex-shrink-0",
-		active: "rotate-180",
-		inactive: "",
-	},
-	externalIcon: {
-		//@ts-ignore
-		name: appConfig.ui.icons.external,
-		base: "w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500",
-	},
-	default: {
-		popover: {
-			mode: "click" as const,
-			openDelay: 0,
-			ui: {
-				width: "max-w-[16rem]",
-			},
-		},
-	},
+  wrapper: 'flex items-center gap-x-8',
+  base: 'text-sm/6 font-semibold flex items-center gap-1',
+  active: 'text-primary',
+  inactive: 'hover:text-primary',
+  trailingIcon: {
+    //@ts-ignore
+    name: appConfig.ui.icons.chevron,
+    base: 'w-5 h-5 transform transition-transform duration-200 flex-shrink-0',
+    active: 'rotate-180',
+    inactive: '',
+  },
+  externalIcon: {
+    //@ts-ignore
+    name: appConfig.ui.icons.external,
+    base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500',
+  },
+  default: {
+    popover: {
+      mode: 'click' as const,
+      openDelay: 0,
+      ui: {
+        width: 'max-w-[16rem]',
+      },
+    },
+  },
 }));
 
 defineOptions({
-	inheritAttrs: false,
+  inheritAttrs: false,
 });
 
 const props = defineProps({
-	links: {
-		type: Array as PropType<HeaderLink[]>,
-		default: () => [],
-	},
-	class: {
-		type: [String, Object, Array] as PropType<
-			string | Record<string, unknown> | unknown[]
-		>,
-		default: undefined,
-	},
-	ui: {
-		type: Object as PropType<Partial<typeof config.value>>,
-		default: () => ({}),
-	},
+  links: {
+    type: Array as PropType<HeaderLink[]>,
+    default: () => [],
+  },
+  class: {
+    type: [String, Object, Array] as PropType<string | Record<string, unknown> | unknown[]>,
+    default: undefined,
+  },
+  ui: {
+    type: Object as PropType<Partial<typeof config.value>>,
+    default: () => ({}),
+  },
 });
 
-const { ui, attrs } = useUI(
-	"header.links",
-	toRef(props, "ui"),
-	config,
-	toRef(props, "class") as Ref<string>,
-);
+const { ui, attrs } = useUI('header.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>);
 </script>
 
 <template>

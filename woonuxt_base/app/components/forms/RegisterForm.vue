@@ -1,67 +1,65 @@
 <script setup lang="ts">
-import { z } from "zod";
-import { useI18n } from "vue-i18n";
-import type { FormSubmitEvent } from "#ui/types";
-import type { RegisterCustomerInput } from "#gql";
+import { z } from 'zod';
+import { useI18n } from 'vue-i18n';
+import type { FormSubmitEvent } from '#ui/types';
+import type { RegisterCustomerInput } from '#gql';
 
 const { t } = useI18n();
 const { registerUser, loginUser } = useAuth();
 const loading = ref(false);
-const message = ref("");
-const errorMessage = ref("");
+const message = ref('');
+const errorMessage = ref('');
 
 const schema = z.object({
-	email: z.string().email(t("messages.error.invalidEmail")),
-	username: z.string().min(1, t("messages.error.fieldRequired")),
-	password: z.string().min(8, t("messages.error.passwordMinLength")),
+  email: z.string().email(t('messages.error.invalidEmail')),
+  username: z.string().min(1, t('messages.error.fieldRequired')),
+  password: z.string().min(8, t('messages.error.passwordMinLength')),
 });
 
 type Schema = z.output<typeof schema>;
 
 const state = reactive<Schema>({
-	email: "",
-	username: "",
-	password: "",
+  email: '',
+  username: '',
+  password: '',
 });
 
 const handleFormSubmit = async (event: FormSubmitEvent<Schema>) => {
-	loading.value = true;
-	const userInfo = event.data;
-	try {
-		const { success, error } = await registerUser(
-			userInfo as RegisterCustomerInput,
-		);
-		if (success) {
-			errorMessage.value = "";
-			message.value = `${t("messages.account.accountCreated")} ${t("messages.account.loggingIn")}`;
-			setTimeout(async () => {
-				await loginUser({
-					username: userInfo.username,
-					password: userInfo.password,
-				});
-			}, 1500);
-		} else {
-			errorMessage.value = error;
-		}
-	} catch (e) {
-		console.error(e);
-		errorMessage.value = t("messages.error.unknownError");
-	} finally {
-		loading.value = false;
-	}
+  loading.value = true;
+  const userInfo = event.data;
+  try {
+    const { success, error } = await registerUser(userInfo as RegisterCustomerInput);
+    if (success) {
+      errorMessage.value = '';
+      message.value = `${t('messages.account.accountCreated')} ${t('messages.account.loggingIn')}`;
+      setTimeout(async () => {
+        await loginUser({
+          username: userInfo.username,
+          password: userInfo.password,
+        });
+      }, 1500);
+    } else {
+      errorMessage.value = typeof error === 'string' ? error : String(error);
+    }
+  } catch (e) {
+    console.error(e);
+    errorMessage.value = t('messages.error.unknownError');
+  } finally {
+    loading.value = false;
+  }
 };
 
-const emit = defineEmits(["navigate"]);
+const emit = defineEmits(['navigate']);
 
-const navigateToLogin = () => emit("navigate", "login");
+const navigateToLogin = () => emit('navigate', 'login');
 
 const submitForm = () => {
-	if (!loading.value) {
-		handleFormSubmit({
-			preventDefault: () => {},
-			data: state,
-		} as FormSubmitEvent<Schema>);
-	}
+  if (!loading.value) {
+    handleFormSubmit({
+      preventDefault: () => {},
+      data: state,
+    } as FormSubmitEvent<Schema>);
+  }
 };
 </script>
 

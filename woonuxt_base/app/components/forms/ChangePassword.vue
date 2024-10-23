@@ -1,79 +1,78 @@
 <script setup lang="ts">
-import { z } from "zod";
-import type { FormSubmitEvent, ButtonColor } from "#ui/types";
-import { useI18n } from "vue-i18n";
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
+import { useI18n } from 'vue-i18n';
+import type { GqlError } from '../../types';
 
 const { viewer, loginUser } = useAuth();
 const { t } = useI18n();
 
 const schema = z
-	.object({
-		newPassword: z.string().min(8, t("messages.error.passwordMinLength")),
-		confirmPassword: z.string().min(8, t("messages.error.passwordMinLength")),
-	})
-	.refine((data) => data.newPassword === data.confirmPassword, {
-		message: t("messages.error.passwordMismatch"),
-		path: ["confirmPassword"],
-	});
+  .object({
+    newPassword: z.string().min(8, t('messages.error.passwordMinLength')),
+    confirmPassword: z.string().min(8, t('messages.error.passwordMinLength')),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: t('messages.error.passwordMismatch'),
+    path: ['confirmPassword'],
+  });
 
 const state = reactive({
-	newPassword: "",
-	confirmPassword: "",
+  newPassword: '',
+  confirmPassword: '',
 });
 
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({
-	text: t("messages.account.updatePassword"),
-	color: "bg-primary hover:bg-primary-dark",
+  text: t('messages.account.updatePassword'),
+  color: 'bg-primary hover:bg-primary-dark',
 });
-const errorMessage = ref<string>("");
+const errorMessage = ref<string>('');
 
 async function onSubmit(event: FormSubmitEvent<typeof schema>) {
-	errorMessage.value = "";
-	loading.value = true;
+  errorMessage.value = '';
+  loading.value = true;
 
-	try {
-		const { updateCustomer } = await GqlUpdateCustomer({
-			input: { id: viewer.value.id, password: state.newPassword },
-		});
-		if (updateCustomer) {
-			button.value = {
-				text: t("messages.account.updateSuccess"),
-				color: "bg-green-500",
-			};
-			const { success, error } = await loginUser({
-				username: viewer.value.username,
-				password: state.newPassword,
-			});
-			if (error) {
-				errorMessage.value = error;
-				button.value = {
-					text: t("messages.account.failed"),
-					color: "bg-red-500",
-				};
-			}
-			if (success) {
-				state.newPassword = "";
-				state.confirmPassword = "";
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		// @ts-ignore
-		const gqlError =
-			error?.graphQLErrors?.[0]?.message ?? error?.message ?? error?.toString();
-		errorMessage.value = gqlError || "An error occurred. Please try again.";
-		button.value = { text: t("messages.account.failed"), color: "bg-red-500" };
-	}
+  try {
+    const { updateCustomer } = await GqlUpdateCustomer({
+      input: { id: viewer.value?.id, password: state.newPassword },
+    });
+    if (updateCustomer) {
+      button.value = {
+        text: t('messages.account.updateSuccess'),
+        color: 'bg-green-500',
+      };
+      const { success, error } = await loginUser({
+        username: viewer.value?.username ?? '',
+        password: state.newPassword,
+      });
+      if (error) {
+        errorMessage.value = typeof error === 'string' ? error : String(error);
+        button.value = {
+          text: t('messages.account.failed'),
+          color: 'bg-red-500',
+        };
+      }
+      if (success) {
+        state.newPassword = '';
+        state.confirmPassword = '';
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    const gqlError = (error as { graphQLErrors?: { message: string }[] })?.graphQLErrors?.[0]?.message ?? (error as Error)?.message ?? String(error);
+    errorMessage.value = gqlError || 'An error occurred. Please try again.';
+    button.value = { text: t('messages.account.failed'), color: 'bg-red-500' };
+  }
 
-	loading.value = false;
+  loading.value = false;
 
-	setTimeout(() => {
-		button.value = {
-			text: t("messages.account.updatePassword"),
-			color: "bg-primary hover:bg-primary-dark",
-		};
-	}, 2000);
+  setTimeout(() => {
+    button.value = {
+      text: t('messages.account.updatePassword'),
+      color: 'bg-primary hover:bg-primary-dark',
+    };
+  }, 2000);
 }
 </script>
 

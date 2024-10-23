@@ -4,8 +4,8 @@ const { clearSearchQuery } = useSearching();
 const { resetFilter } = useFiltering();
 
 const clearAll = () => {
-	resetFilter();
-	clearSearchQuery();
+  resetFilter();
+  clearSearchQuery();
 };
 </script>
 

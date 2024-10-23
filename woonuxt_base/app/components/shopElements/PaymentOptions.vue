@@ -1,25 +1,22 @@
 <script setup lang="ts">
-import type { PaymentGateway, PaymentGateways } from "../../types";
+import type { PaymentGateway, PaymentGateways } from '../../types';
 
 const props = defineProps<{
-	modelValue: string | object;
-	paymentGateways: PaymentGateways;
+  modelValue: string | object;
+  paymentGateways: PaymentGateways;
 }>();
 
-const paymentMethod = toRef(props, "modelValue");
-const activePaymentMethod = computed<PaymentGateway>(
-	() => paymentMethod.value as PaymentGateway,
-);
-const emits = defineEmits(["update:modelValue"]);
+const paymentMethod = toRef(props, 'modelValue');
+const activePaymentMethod = computed<PaymentGateway>(() => paymentMethod.value as PaymentGateway);
+const emits = defineEmits(['update:modelValue']);
 
 const updatePaymentMethod = (value: any) => {
-	emits("update:modelValue", value);
+  emits('update:modelValue', value);
 };
 
 onMounted(() => {
-	// Emit first payment method
-	if (props.paymentGateways?.nodes.length)
-		updatePaymentMethod(props.paymentGateways?.nodes[0]);
+  // Emit first payment method
+  if (props.paymentGateways?.nodes.length) updatePaymentMethod(props.paymentGateways?.nodes[0]);
 });
 </script>
 

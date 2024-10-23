@@ -1,16 +1,14 @@
 <script setup>
 const { cart } = useCart();
 const props = defineProps({
-	disabled: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
 });
 const isLoading = ref(false);
 const { t } = useI18n();
-const addToCartButtonText = computed(() =>
-	isLoading.value ? t("messages.shop.adding") : t("messages.shop.addToCart"),
-);
+const addToCartButtonText = computed(() => (isLoading.value ? t('messages.shop.adding') : t('messages.shop.addToCart')));
 
 watch(cart, (val) => {
-	isLoading.value = false;
+  isLoading.value = false;
 });
 </script>
 

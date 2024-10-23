@@ -1,78 +1,69 @@
 <script setup lang="ts">
-import type { ImageObject, ImageType } from "../types";
+import type { ImageObject, ImageType } from '../types';
 
 useSeoMeta({
-	title: "Portfolio | Natasha Smith at Stone Cold Down",
-	description:
-		"Explore Natasha Smith's portfolio of fine line black and grey tattoos. View her unique designs and custom tattoo work at Stone Cold Down in Toronto.",
-	ogTitle: "Tattoo Portfolio | Natasha Smith at Stone Cold Down",
-	ogDescription:
-		"Discover the artistry of Natasha Smith through her portfolio of fine line black and grey tattoos. See her unique designs and custom work.",
-	ogImage: "/images/scd_logo.png",
-	ogUrl: "https://stonecolddown.com/portfolio",
-	twitterTitle: "Tattoo Portfolio | Natasha Smith at Stone Cold Down",
-	twitterDescription:
-		"Browse Natasha Smith's portfolio of fine line black and grey tattoos. Experience her unique style and custom designs.",
-	twitterImage: "/images/scd_logo.png",
-	twitterCard: "summary_large_image",
+  title: 'Portfolio | Natasha Smith at Stone Cold Down',
+  description:
+    "Explore Natasha Smith's portfolio of fine line black and grey tattoos. View her unique designs and custom tattoo work at Stone Cold Down in Toronto.",
+  ogTitle: 'Tattoo Portfolio | Natasha Smith at Stone Cold Down',
+  ogDescription: 'Discover the artistry of Natasha Smith through her portfolio of fine line black and grey tattoos. See her unique designs and custom work.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com/portfolio',
+  twitterTitle: 'Tattoo Portfolio | Natasha Smith at Stone Cold Down',
+  twitterDescription: "Browse Natasha Smith's portfolio of fine line black and grey tattoos. Experience her unique style and custom designs.",
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary_large_image',
 });
 
 definePageMeta({
-	layout: "default",
-	colorMode: "dark",
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 useHead({
-	htmlAttrs: {
-		lang: "en",
-	},
-	link: [
-		{
-			rel: "icon",
-			type: "image/png",
-			href: "/favicon.ico",
-		},
-	],
+  htmlAttrs: {
+    lang: 'en',
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.ico',
+    },
+  ],
 });
 
-const createImageUrls = (
-	basePath: ImageType,
-	maxImages: number,
-	skipNumbers: number[] = [],
-): ImageObject[] => {
-	const imageUrls: ImageObject[] = [];
-
-	for (let i = 1; i <= maxImages; i++) {
-		if (skipNumbers.includes(i)) continue;
-
-		const paddedNumber = i.toString().padStart(2, "00");
-		const url = `stonecolddown/${basePath}/${basePath.toLowerCase()}_${paddedNumber}`;
-
-		imageUrls.push({
-			id: `${basePath.toLowerCase()}_${paddedNumber}`,
-			url,
-		});
-	}
-	return imageUrls;
+const createImageUrls = (basePath: ImageType, maxImages: number, skipNumbers: number[] = []): ImageObject[] => {
+  const imageUrls: ImageObject[] = [];
+  for (let i = 1; i <= maxImages; i++) {
+    if (skipNumbers.includes(i)) continue;
+    const paddedNumber = i.toString().padStart(2, '00');
+    const url = `stonecolddown/${basePath}/${basePath.toLowerCase()}_${paddedNumber}`;
+    imageUrls.push({
+      id: `${basePath.toLowerCase()}_${paddedNumber}`,
+      url,
+    });
+  }
+  return imageUrls;
 };
 
-const portfolioImages = createImageUrls("Portfolio", 29, [3, 4, 6, 8]);
+const portfolioImages = createImageUrls('Portfolio', 29, [3, 4, 6, 8]);
 
 // State for grid layout
-const gridCols = ref("5");
+const gridCols = ref('5');
 
 // State for lightbox
 const selectedImage = ref<ImageObject | null>(null);
 const isLightboxOpen = ref(false);
 
 const openLightbox = (image: ImageObject) => {
-	selectedImage.value = image;
-	isLightboxOpen.value = true;
+  selectedImage.value = image;
+  isLightboxOpen.value = true;
 };
 
 const closeLightbox = () => {
-	isLightboxOpen.value = false;
-	selectedImage.value = null;
+  isLightboxOpen.value = false;
+  selectedImage.value = null;
 };
 </script>
 
@@ -138,7 +129,3 @@ const closeLightbox = () => {
     </UModal>
   </Page>
 </template>
-
-<style>
-/* No custom CSS needed */
-</style>

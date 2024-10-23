@@ -2,7 +2,7 @@
 const { toggleBodyClass, removeBodyClass } = useHelpers();
 const { isFiltersActive } = await useFiltering();
 onBeforeUnmount(() => {
-	removeBodyClass("show-filters");
+  removeBodyClass('show-filters');
 });
 </script>
 

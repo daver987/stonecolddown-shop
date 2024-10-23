@@ -1,93 +1,70 @@
 <script setup lang="ts">
-import type { Button } from "#ui/types";
-import { twJoin } from "tailwind-merge";
-import type { PropType } from "vue";
+import type { Button } from '#ui/types';
+import { twJoin } from 'tailwind-merge';
+import type { PropType } from 'vue';
 
 defineOptions({
-	inheritAttrs: false,
+  inheritAttrs: false,
 });
 
 const props = defineProps({
-	headline: {
-		type: String,
-		default: undefined,
-	},
-	title: {
-		type: String,
-		default: undefined,
-	},
-	description: {
-		type: String,
-		default: undefined,
-	},
-	icon: {
-		type: String,
-		default: undefined,
-	},
-	links: {
-		type: Array as PropType<(Button & { click?: () => void })[]>,
-		default: () => [],
-	},
-	align: {
-		type: String as PropType<"left" | "center" | "right">,
-		default: "left",
-	},
-	class: {
-		type: [String, Object, Array] as PropType<
-			string | Record<string, unknown> | unknown[]
-		>,
-		default: undefined,
-	},
-	ui: {
-		type: Object as PropType<Partial<typeof config.value>>,
-		default: () => ({}),
-	},
+  headline: {
+    type: String,
+    default: undefined,
+  },
+  title: {
+    type: String,
+    default: undefined,
+  },
+  description: {
+    type: String,
+    default: undefined,
+  },
+  icon: {
+    type: String,
+    default: undefined,
+  },
+  links: {
+    type: Array as PropType<(Button & { click?: () => void })[]>,
+    default: () => [],
+  },
+  align: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'left',
+  },
+  class: {
+    type: [String, Object, Array] as PropType<string | Record<string, unknown> | unknown[]>,
+    default: undefined,
+  },
+  ui: {
+    type: Object as PropType<Partial<typeof config.value>>,
+    default: () => ({}),
+  },
 });
 
 const config = computed(() => {
-	const container: string = twJoin(
-		"gap-8 sm:gap-y-16",
-		props.align === "center"
-			? "flex flex-col"
-			: "grid lg:grid-cols-2 lg:items-center",
-	);
+  const container: string = twJoin('gap-8 sm:gap-y-16', props.align === 'center' ? 'flex flex-col' : 'grid lg:grid-cols-2 lg:items-center');
 
-	const base: string = twJoin(
-		"",
-		props.align === "center" && "text-center flex flex-col items-center",
-		props.align === "right" && "lg:order-last",
-	);
+  const base: string = twJoin('', props.align === 'center' && 'text-center flex flex-col items-center', props.align === 'right' && 'lg:order-last');
 
-	const links: string = twJoin(
-		"mt-8 flex flex-wrap gap-x-3 gap-y-1.5",
-		props.align === "center" && "justify-center",
-	);
+  const links: string = twJoin('mt-8 flex flex-wrap gap-x-3 gap-y-1.5', props.align === 'center' && 'justify-center');
 
-	return {
-		wrapper: "py-8 sm:py-12 bg-gray-950 -mt-14 md:-mt-4",
-		container,
-		base,
-		icon: {
-			wrapper: "flex mb-4",
-			base: "w-10 h-10 flex-shrink-0 text-primary",
-		},
-		headline:
-			"mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5",
-		title:
-			"text-3xl font-bold font-heading tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl",
-		description:
-			"mt-4 text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-[60ch] text-balance",
-		links,
-	};
+  return {
+    wrapper: 'py-8 sm:py-12 bg-gray-950 -mt-14 md:-mt-4',
+    container,
+    base,
+    icon: {
+      wrapper: 'flex mb-4',
+      base: 'w-10 h-10 flex-shrink-0 text-primary',
+    },
+    headline: 'mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5',
+    title: 'text-3xl font-bold font-heading tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl',
+    description: 'mt-4 text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-[60ch] text-balance',
+    links,
+  };
 });
 
-const { ui, attrs } = useUI(
-	"page.hero",
-	toRef(props, "ui"),
-	config,
-	toRef(props, "class") as Ref<string>,
-	true,
-);
+const { ui, attrs } = useUI('page.hero', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
 </script>
 
 <template>

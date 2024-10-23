@@ -1,36 +1,34 @@
 <script setup lang="ts">
-import Slider from "@vueform/slider";
+import Slider from '@vueform/slider';
 
 const { getFilter, setFilter, isFiltersActive } = useFiltering();
 const runtimeConfig = useRuntimeConfig();
 const maxPrice = runtimeConfig?.public?.MAX_PRICE || 1000;
-const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || "$";
+const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || '$';
 
-const activeFilters = ref(getFilter("price"));
-const price = activeFilters.value.length
-	? ref(activeFilters.value)
-	: ref([0, maxPrice]);
+const activeFilters = ref(getFilter('price'));
+const price = activeFilters.value.length ? ref(activeFilters.value) : ref([0, maxPrice]);
 
 const resetSlider = () => {
-	price.value = [0, maxPrice];
+  price.value = [0, maxPrice];
 };
 
 const applyPrice = () => {
-	//@ts-ignore
-	setFilter("price", price.value);
+  //@ts-ignore
+  setFilter('price', price.value);
 };
 
 watch(isFiltersActive, () => {
-	if (!isFiltersActive.value) resetSlider();
+  if (!isFiltersActive.value) resetSlider();
 });
 
 const items = [
-	{
-		label: "messages.shop.price",
-		icon: "i-heroicons-currency-dollar",
-		defaultOpen: true,
-		slot: "content",
-	},
+  {
+    label: 'messages.shop.price',
+    icon: 'i-heroicons-currency-dollar',
+    defaultOpen: true,
+    slot: 'content',
+  },
 ];
 </script>
 

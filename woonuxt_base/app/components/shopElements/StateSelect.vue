@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import type { CountriesEnum } from "#gql/default";
+import type { CountriesEnum } from '#gql/default';
 
 const { getStatesForCountry, countryStatesDict } = useCountry();
-const stateName = defineModel<string>("stateName");
-const countryCode = defineModel<string>("countryCode");
+const stateName = defineModel<string>('stateName');
+const countryCode = defineModel<string>('countryCode');
 
 async function updateState() {
-	if (countryCode.value) {
-		await getStatesForCountry(countryCode.value as CountriesEnum);
-	}
+  if (countryCode.value) {
+    await getStatesForCountry(countryCode.value as CountriesEnum);
+  }
 }
 
 onMounted(() => {
-	updateState();
+  updateState();
 });
 
 watch(
-	() => countryCode,
-	() => {
-		updateState();
-	},
+  () => countryCode,
+  () => {
+    updateState();
+  },
 );
 </script>
 

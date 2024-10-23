@@ -1,39 +1,31 @@
 <script setup lang="ts">
-import { loadStripe } from "@stripe/stripe-js";
-import type {
-	Stripe,
-	StripeElements,
-	CreateSourceData,
-	StripeCardElement,
-} from "@stripe/stripe-js";
-import { useI18n } from "vue-i18n";
-import { z } from "zod";
+import { loadStripe } from '@stripe/stripe-js';
+import type { Stripe, StripeElements, CreateSourceData, StripeCardElement } from '@stripe/stripe-js';
+import { useI18n } from 'vue-i18n';
+import { z } from 'zod';
 
 useSeoMeta({
-	title: "Checkout | Stone Cold Down",
-	description:
-		"Complete your purchase at Stone Cold Down. Securely checkout with our trusted payment gateway.",
-	ogTitle: "Checkout | Stone Cold Down",
-	ogDescription:
-		"Securely checkout with our trusted payment gateway at Stone Cold Down.",
-	ogImage: "/images/scd_logo.png",
-	ogUrl: "https://stonecolddown.com/checkout",
-	twitterTitle: "Checkout | Stone Cold Down",
-	twitterDescription:
-		"Complete your purchase at Stone Cold Down. Securely checkout with our trusted payment gateway.",
-	twitterImage: "/images/scd_logo.png",
-	twitterCard: "summary",
+  title: 'Checkout | Stone Cold Down',
+  description: 'Complete your purchase at Stone Cold Down. Securely checkout with our trusted payment gateway.',
+  ogTitle: 'Checkout | Stone Cold Down',
+  ogDescription: 'Securely checkout with our trusted payment gateway at Stone Cold Down.',
+  ogImage: '/images/scd_logo.png',
+  ogUrl: 'https://stonecolddown.com/checkout',
+  twitterTitle: 'Checkout | Stone Cold Down',
+  twitterDescription: 'Complete your purchase at Stone Cold Down. Securely checkout with our trusted payment gateway.',
+  twitterImage: '/images/scd_logo.png',
+  twitterCard: 'summary',
 });
 
 definePageMeta({
-	layout: "default",
-	colorMode: "dark",
+  layout: 'default',
+  colorMode: 'dark',
 });
 
 type BillingDetails = {
-	lastName: string;
-	firstName: string;
-	[key: string]: any;
+  lastName: string;
+  firstName: string;
+  [key: string]: any;
 };
 
 const { t } = useI18n();
@@ -44,111 +36,90 @@ const { orderInput, isProcessingOrder, proccessCheckout } = useCheckout();
 const runtimeConfig = useRuntimeConfig();
 const stripeKey = runtimeConfig.public?.STRIPE_PUBLISHABLE_KEY || null;
 
-const buttonText = ref<string>(
-	isProcessingOrder.value
-		? t("messages.general.processing")
-		: t("messages.shop.checkoutButton"),
-);
-const isCheckoutDisabled = computed<boolean>(
-	() =>
-		isProcessingOrder.value ||
-		isUpdatingCart.value ||
-		!orderInput.value.paymentMethod,
-);
+const buttonText = ref<string>(isProcessingOrder.value ? t('messages.general.processing') : t('messages.shop.checkoutButton'));
+const isCheckoutDisabled = computed<boolean>(() => isProcessingOrder.value || isUpdatingCart.value || !orderInput.value.paymentMethod);
 
 const isInvalidEmail = ref<boolean>(false);
-const stripe: Stripe | null = stripeKey
-	? await loadStripe(stripeKey as string)
-	: null;
+const stripe: Stripe | null = stripeKey ? await loadStripe(stripeKey as string) : null;
 const elements = ref();
 const isPaid = ref<boolean>(false);
 
 const CheckoutSchema = z.object({
-	email: z.string().email(t("messages.billing.enterValidEmail")),
-	username: z.string().optional(),
-	password: z.string().min(6, t("messages.account.enterPassword")).optional(),
-	createAccount: z.boolean().optional(),
-	shipToDifferentAddress: z.boolean().optional(),
-	customerNote: z.string().optional(),
+  email: z.string().email(t('messages.billing.enterValidEmail')),
+  username: z.string().optional(),
+  password: z.string().min(6, t('messages.account.enterPassword')).optional(),
+  createAccount: z.boolean().optional(),
+  shipToDifferentAddress: z.boolean().optional(),
+  customerNote: z.string().optional(),
 });
 
 type Checkout = z.infer<typeof CheckoutSchema>;
 
 const state = ref<Checkout>({
-	email: customer.value.billing?.email || "",
-	username: orderInput.value.username || "",
-	password: orderInput.value.password || "",
-	createAccount: orderInput.value.createAccount || false,
-	shipToDifferentAddress: orderInput.value.shipToDifferentAddress || false,
-	customerNote: orderInput.value.customerNote || "",
+  email: customer.value.billing?.email || '',
+  username: orderInput.value.username || '',
+  password: orderInput.value.password || '',
+  createAccount: orderInput.value.createAccount || false,
+  shipToDifferentAddress: orderInput.value.shipToDifferentAddress || false,
+  customerNote: orderInput.value.customerNote || '',
 });
 
 onBeforeMount(async () => {
-	if (query.cancel_order) window.close();
+  if (query.cancel_order) window.close();
 });
 
 const payNow = async () => {
-	buttonText.value = t("messages.general.processing");
+  buttonText.value = t('messages.general.processing');
 
-	const { stripePaymentIntent } = await GqlGetStripePaymentIntent();
-	const clientSecret = stripePaymentIntent?.clientSecret || "";
+  const { stripePaymentIntent } = await GqlGetStripePaymentIntent();
+  const clientSecret = stripePaymentIntent?.clientSecret || '';
 
-	try {
-		if (
-			orderInput.value.paymentMethod.id === "stripe" &&
-			stripe &&
-			elements.value
-		) {
-			const cardElement = elements.value.getElement(
-				"card",
-			) as StripeCardElement;
-			const { setupIntent } = await stripe.confirmCardSetup(clientSecret, {
-				payment_method: { card: cardElement },
-			});
-			const { source } = await stripe.createSource(
-				cardElement as CreateSourceData,
-			);
+  try {
+    if (orderInput.value.paymentMethod.id === 'stripe' && stripe && elements.value) {
+      const cardElement = elements.value.getElement('card') as StripeCardElement;
+      const { setupIntent } = await stripe.confirmCardSetup(clientSecret, {
+        payment_method: { card: cardElement },
+      });
+      const { source } = await stripe.createSource(cardElement as CreateSourceData);
 
-			if (source)
-				orderInput.value.metaData.push({
-					key: "_stripe_source_id",
-					value: source.id,
-				});
-			if (setupIntent)
-				orderInput.value.metaData.push({
-					key: "_stripe_intent_id",
-					value: setupIntent.id,
-				});
+      if (source)
+        orderInput.value.metaData.push({
+          key: '_stripe_source_id',
+          value: source.id,
+        });
+      if (setupIntent)
+        orderInput.value.metaData.push({
+          key: '_stripe_intent_id',
+          value: setupIntent.id,
+        });
 
-			isPaid.value = setupIntent?.status === "succeeded" || false;
-			orderInput.value.transactionId =
-				source?.created?.toString() || new Date().getTime().toString();
-		}
-	} catch (error) {
-		console.error(error);
-		buttonText.value = t("messages.shop.placeOrder");
-	}
+      isPaid.value = setupIntent?.status === 'succeeded' || false;
+      orderInput.value.transactionId = source?.created?.toString() || new Date().getTime().toString();
+    }
+  } catch (error) {
+    console.error(error);
+    buttonText.value = t('messages.shop.placeOrder');
+  }
 
-	proccessCheckout(isPaid.value);
+  proccessCheckout(isPaid.value);
 };
 
 const handleStripeElement = (stripeElements: StripeElements): void => {
-	elements.value = stripeElements;
+  elements.value = stripeElements;
 };
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
 const checkEmailOnBlur = (email?: string | null): void => {
-	if (email) isInvalidEmail.value = !emailRegex.test(email);
+  if (email) isInvalidEmail.value = !emailRegex.test(email);
 };
 
 const checkEmailOnInput = (email?: string | null): void => {
-	if (email && isInvalidEmail.value)
-		isInvalidEmail.value = !emailRegex.test(email);
+  if (email && isInvalidEmail.value) isInvalidEmail.value = !emailRegex.test(email);
 };
 
 useSeoMeta({
-	title: t("messages.shop.checkout"),
+  title: t('messages.shop.checkout'),
 });
 </script>
 

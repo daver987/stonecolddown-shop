@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { getFilter, setFilter, isFiltersActive } = useFiltering();
 
-const selectedTerms = ref<string[]>(getFilter("rating"));
+const selectedTerms = ref<string[]>(getFilter('rating'));
 const isOpen = ref(true);
 
 /**
@@ -9,7 +9,7 @@ const isOpen = ref(true);
  * @example If the user clicks the 'clear filters' button, the isFiltersActive variable would change to false.
  */
 watch(isFiltersActive, () => {
-	if (!isFiltersActive.value) selectedTerms.value = [];
+  if (!isFiltersActive.value) selectedTerms.value = [];
 });
 
 /**
@@ -17,7 +17,7 @@ watch(isFiltersActive, () => {
  * @description This sets the filter to the selected rating. If the rating is already selected, it will be removed from the filter.
  */
 const radioClicked = (rating: string): void => {
-	setFilter("rating", selectedTerms.value.includes(rating) ? [] : [rating]);
+  setFilter('rating', selectedTerms.value.includes(rating) ? [] : [rating]);
 };
 </script>
 

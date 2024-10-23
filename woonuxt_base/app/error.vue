@@ -2,30 +2,29 @@
 const route = useRoute();
 const { error } = defineProps<{ error: any }>();
 const { isShowingCart, toggleCart } = useCart();
-const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } =
-	useHelpers();
+const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
 
 const closeCartAndMenu = () => {
-	toggleCart(false);
-	toggleMobileMenu(false);
+  toggleCart(false);
+  toggleMobileMenu(false);
 };
 
 watch([isShowingCart, isShowingMobileMenu], () => {
-	if (isShowingCart.value || isShowingMobileMenu.value) {
-		addBodyClass("overflow-hidden");
-	} else {
-		removeBodyClass("overflow-hidden");
-	}
+  if (isShowingCart.value || isShowingMobileMenu.value) {
+    addBodyClass('overflow-hidden');
+  } else {
+    removeBodyClass('overflow-hidden');
+  }
 });
 
 watch(
-	() => route.path,
-	() => closeCartAndMenu(),
+  () => route.path,
+  () => closeCartAndMenu(),
 );
 
 useSeoMeta({
-	title: error?.statusCode ? `Error ${error.statusCode}` : "Error",
-	description: error?.message || "",
+  title: error?.statusCode ? `Error ${error.statusCode}` : 'Error',
+  description: error?.message || '',
 });
 </script>
 

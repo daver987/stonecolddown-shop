@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { z } from "zod";
-import type { FormSubmitEvent } from "#ui/types";
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
 
 const { viewer, customer } = useAuth();
 const { t } = useI18n();
 
 const loading = ref<boolean>(false);
-const buttonState = ref<{ text: string; color: "primary" | "green" | "red" }>({
-	text: t("messages.account.updateDetails"),
-	color: "primary",
+const buttonState = ref<{ text: string; color: 'primary' | 'green' | 'red' }>({
+  text: t('messages.account.updateDetails'),
+  color: 'primary',
 });
 
 const schema = z.object({
-	firstName: z.string().min(1, "First name is required"),
-	lastName: z.string().min(1, "Last name is required"),
-	email: z.string().email("Invalid email"),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Invalid email'),
 });
 
 type Schema = z.output<typeof schema>;
 
 const state = reactive({
-	firstName: customer.value?.firstName || "",
-	lastName: customer.value?.lastName || "",
-	email: customer.value?.email || "",
+  firstName: customer.value?.firstName || '',
+  lastName: customer.value?.lastName || '',
+  email: customer.value?.email || '',
 });
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-	loading.value = true;
-	buttonState.value = {
-		text: t("messages.account.updating"),
-		color: "primary",
-	};
+  loading.value = true;
+  buttonState.value = {
+    text: t('messages.account.updating'),
+    color: 'primary',
+  };
 
-	try {
-		const { updateCustomer } = await GqlUpdateCustomer({
-			input: {
-				id: viewer.value?.id,
-				firstName: event.data.firstName,
-				lastName: event.data.lastName,
-				email: event.data.email,
-			},
-		});
+  try {
+    const { updateCustomer } = await GqlUpdateCustomer({
+      input: {
+        id: viewer.value?.id,
+        firstName: event.data.firstName,
+        lastName: event.data.lastName,
+        email: event.data.email,
+      },
+    });
 
-		if (updateCustomer) {
-			buttonState.value = {
-				text: t("messages.account.updateSuccess"),
-				color: "green",
-			};
-		}
-	} catch (error) {
-		buttonState.value = { text: t("messages.account.failed"), color: "red" };
-	}
+    if (updateCustomer) {
+      buttonState.value = {
+        text: t('messages.account.updateSuccess'),
+        color: 'green',
+      };
+    }
+  } catch (error) {
+    buttonState.value = { text: t('messages.account.failed'), color: 'red' };
+  }
 
-	loading.value = false;
+  loading.value = false;
 
-	setTimeout(() => {
-		buttonState.value = {
-			text: t("messages.account.updateDetails"),
-			color: "primary",
-		};
-	}, 2000);
+  setTimeout(() => {
+    buttonState.value = {
+      text: t('messages.account.updateDetails'),
+      color: 'primary',
+    };
+  }, 2000);
 }
 </script>
 

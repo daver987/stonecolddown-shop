@@ -1,15 +1,15 @@
 query GetPortfolioImages {
-	mediaItems(first: 100) {
-		nodes {
-			id
-			title
-			altText
-			caption
-			sourceUrl
-			mediaDetails {
-				width
-				height
-			}
-		}
-	}
+  mediaItems(first: 100) {
+    nodes {
+      id
+      title
+      altText
+      caption
+      sourceUrl
+      mediaDetails {
+        width
+        height
+      }
+    }
+  }
 }

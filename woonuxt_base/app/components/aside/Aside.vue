@@ -1,46 +1,37 @@
 <script setup lang="ts">
-import type { PropType } from "vue";
-import type { AsideLink } from "../../types";
+import type { PropType } from 'vue';
+import type { AsideLink } from '../../types';
 
 const config = {
-	wrapper:
-		"hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4",
-	top: {
-		wrapper: "sticky -top-8 -mt-8 pointer-events-none z-[1]",
-		header: "h-8 bg-background -mx-4 px-4",
-		body: "bg-background relative pointer-events-auto flex -mx-4 px-4",
-		footer: "h-8 bg-gradient-to-b from-background -mx-4 px-4",
-	},
+  wrapper: 'hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4',
+  top: {
+    wrapper: 'sticky -top-8 -mt-8 pointer-events-none z-[1]',
+    header: 'h-8 bg-background -mx-4 px-4',
+    body: 'bg-background relative pointer-events-auto flex -mx-4 px-4',
+    footer: 'h-8 bg-gradient-to-b from-background -mx-4 px-4',
+  },
 };
 
 defineOptions({
-	inheritAttrs: false,
+  inheritAttrs: false,
 });
 
 const props = defineProps({
-	links: {
-		type: Array as PropType<AsideLink[]>,
-		default: () => [],
-	},
-	class: {
-		type: [String, Object, Array] as PropType<
-			string | Record<string, unknown> | unknown[]
-		>,
-		default: undefined,
-	},
-	ui: {
-		type: Object as PropType<Partial<typeof config>>,
-		default: () => ({}),
-	},
+  links: {
+    type: Array as PropType<AsideLink[]>,
+    default: () => [],
+  },
+  class: {
+    type: [String, Object, Array] as PropType<string | Record<string, unknown> | unknown[]>,
+    default: undefined,
+  },
+  ui: {
+    type: Object as PropType<Partial<typeof config>>,
+    default: () => ({}),
+  },
 });
 
-const { ui, attrs } = useUI(
-	"aside",
-	toRef(props, "ui"),
-	config,
-	toRef(props, "class") as Ref<string>,
-	true,
-);
+const { ui, attrs } = useUI('aside', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
 </script>
 
 <template>

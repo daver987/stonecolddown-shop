@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { viewer, avatar, logoutUser, isPending, wishlistLink } = useAuth();
-const linkTitle = computed<string>(() => viewer.value?.username || "Sign In");
+const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
 </script>
 
 <template>
