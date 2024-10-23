@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { DownloadableItem } from '../types';
+import type { DownloadableItem } from '../types'
 
-const { formatDate } = useHelpers();
+const { formatDate } = useHelpers()
 
 const props = defineProps({
   downloadableItems: {
     type: Object as PropType<DownloadableItem[]>,
     default: [],
   },
-});
+})
 </script>
 
 <template>

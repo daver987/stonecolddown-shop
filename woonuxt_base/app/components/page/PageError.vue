@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app';
-import type { Button } from '#ui/types';
-import type { PropType } from 'vue';
+import type { NuxtError } from '#app'
+import type { Button } from '#ui/types'
+import type { PropType } from 'vue'
 
 const config = {
   wrapper: 'min-h-[calc(100vh-var(--header-height))] flex flex-col items-center justify-center',
@@ -16,11 +16,11 @@ const config = {
       size: 'lg' as const,
     },
   },
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   error: {
@@ -51,11 +51,11 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('page.error', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('page.error', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 
-const handleError = () => clearError({ redirect: '/' });
+const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <template>

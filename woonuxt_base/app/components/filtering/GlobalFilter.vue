@@ -1,23 +1,23 @@
 <script setup lang="ts">
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
+const { getFilter, setFilter, isFiltersActive } = useFiltering()
 
 const { attribute } = defineProps({
   attribute: { type: Object, required: true },
-});
+})
 
-const selectedTerms = ref(getFilter(attribute.slug) || []);
-const filterTitle = ref(attribute.label || attribute.slug);
-const isOpen = ref(attribute.openByDefault);
+const selectedTerms = ref(getFilter(attribute.slug) || [])
+const filterTitle = ref(attribute.label || attribute.slug)
+const isOpen = ref(attribute.openByDefault)
 
 watch(isFiltersActive, () => {
   // uncheck all checkboxes when filters are cleared
-  if (!isFiltersActive.value) selectedTerms.value = [];
-});
+  if (!isFiltersActive.value) selectedTerms.value = []
+})
 
 // Update the URL when the checkbox is changed
 const checkboxChanged = () => {
-  setFilter(attribute.slug, selectedTerms.value);
-};
+  setFilter(attribute.slug, selectedTerms.value)
+}
 </script>
 
 <template>

@@ -1,24 +1,24 @@
-import pkg from '../../../woonuxt_base/package.json';
-import type { Product, WooNuxtSEOItem } from '../types';
+import pkg from '../../../woonuxt_base/package.json'
+import type { Product, WooNuxtSEOItem } from '../types'
 
 // A collection of helper functions.
 export function useHelpers() {
-  const route = useRoute();
-  const runtimeConfig = useRuntimeConfig();
+  const route = useRoute()
+  const runtimeConfig = useRuntimeConfig()
 
-  const isShowingMobileMenu = useState<boolean>('isShowingMobileMenu', () => false);
-  const wooNuxtVersionInfo: string = pkg.version || '0.0.0';
-  const productsPerPage: number = runtimeConfig.public?.PRODUCTS_PER_PAGE || 24;
-  const wooNuxtSEO = runtimeConfig.public?.WOO_NUXT_SEO as WooNuxtSEOItem[];
-  const frontEndUrl = runtimeConfig.public?.FRONT_END_URL?.replace(/\/$/, '') || null;
-  const isDev: boolean = process.env.NODE_ENV === 'development';
-  const FALLBACK_IMG = '/images/placeholder.jpg';
+  const isShowingMobileMenu = useState<boolean>('isShowingMobileMenu', () => false)
+  const wooNuxtVersionInfo: string = pkg.version || '0.0.0'
+  const productsPerPage: number = runtimeConfig.public?.PRODUCTS_PER_PAGE || 24
+  const wooNuxtSEO = runtimeConfig.public?.WOO_NUXT_SEO as WooNuxtSEOItem[]
+  const frontEndUrl = runtimeConfig.public?.FRONT_END_URL?.replace(/\/$/, '') || null
+  const isDev: boolean = process.env.NODE_ENV === 'development'
+  const FALLBACK_IMG = '/images/placeholder.jpg'
 
   /**
    * Toggles the mobile menu.
    */
   function toggleMobileMenu(state: boolean | undefined = undefined): void {
-    isShowingMobileMenu.value = state ?? !isShowingMobileMenu.value;
+    isShowingMobileMenu.value = state ?? !isShowingMobileMenu.value
   }
 
   /**
@@ -30,7 +30,7 @@ export function useHelpers() {
     arr.map((a) => ({
       name: a.name.replace(/[-\s]/g, ''),
       value: a.value.replace(/[-\s]/g, ''),
-    }));
+    }))
 
   /**
    * Determines if two arrays of variations are equal by comparing the formatted arrays.
@@ -38,27 +38,27 @@ export function useHelpers() {
    * @param {any[]} a2 - The second array of variations to compare.
    * @returns {boolean} True if the arrays are equal, false otherwise.
    */
-  const arraysEqual = (a1: any[], a2: any[]): boolean => JSON.stringify(formatVariationArrays(a1)) === JSON.stringify(formatVariationArrays(a2));
+  const arraysEqual = (a1: any[], a2: any[]): boolean => JSON.stringify(formatVariationArrays(a1)) === JSON.stringify(formatVariationArrays(a2))
 
   // Formats an array of variations by converting the name and value properties to lowercase.
   const formatArray = (arr: any[]): any[] => {
     return arr.map((v) => {
-      let name = v.name.toLowerCase();
-      name = name.startsWith('pa_') ? name.replace('pa_', '') : name;
-      const value = v.value.toLowerCase();
-      return { name, value };
-    });
-  };
+      let name = v.name.toLowerCase()
+      name = name.startsWith('pa_') ? name.replace('pa_', '') : name
+      const value = v.value.toLowerCase()
+      return { name, value }
+    })
+  }
 
   /**
    * Clears all cookies.
    */
   function clearAllCookies(): void {
-    const cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(';')
     for (const cookie of cookies) {
-      const eqPos = cookie.indexOf('=');
-      const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      const eqPos = cookie.indexOf('=')
+      const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
     }
   }
 
@@ -66,7 +66,7 @@ export function useHelpers() {
    * Clear all local storage.
    */
   function clearAllLocalStorage(): void {
-    localStorage.clear();
+    localStorage.clear()
   }
 
   /**
@@ -77,9 +77,9 @@ export function useHelpers() {
    * @returns {string} The updated URL.
    */
   function replaceQueryParam(param: string, newval: string, search: string): string {
-    const regex = new RegExp('([?;&])' + param + '[^&;]*[;&]?');
-    const query = search.replace(regex, '$1').replace(/&$/, '');
-    return (query.length > 2 ? query + '&' : '?') + (newval ? param + '=' + newval : '');
+    const regex = new RegExp('([?;&])' + param + '[^&;]*[;&]?')
+    const query = search.replace(regex, '$1').replace(/&$/, '')
+    return (query.length > 2 ? query + '&' : '?') + (newval ? param + '=' + newval : '')
   }
 
   /**
@@ -87,8 +87,8 @@ export function useHelpers() {
    * @param {string} className - The class to remove.
    */
   function removeBodyClass(className: string): void {
-    const body = document.querySelector('body');
-    body?.classList.remove(className);
+    const body = document.querySelector('body')
+    body?.classList.remove(className)
   }
 
   /**
@@ -96,8 +96,8 @@ export function useHelpers() {
    * @param {string} className - The class to add.
    */
   function addBodyClass(className: string): void {
-    const body = document.querySelector('body');
-    body?.classList.add(className);
+    const body = document.querySelector('body')
+    body?.classList.add(className)
   }
 
   /**
@@ -105,8 +105,8 @@ export function useHelpers() {
    * @param {string} className - The class to toggle.
    */
   function toggleBodyClass(className: string): void {
-    const body = document.querySelector('body');
-    body?.classList.contains(className) ? body.classList.remove(className) : body?.classList.add(className);
+    const body = document.querySelector('body')
+    body?.classList.contains(className) ? body.classList.remove(className) : body?.classList.add(className)
   }
 
   /**
@@ -115,27 +115,27 @@ export function useHelpers() {
    * @returns {number[]} An array of the indexes of variations with a type of 'any'.
    */
   const checkForVariationTypeOfAny = (product: Product): number[] => {
-    const numberOfVariation = product?.attributes?.nodes?.length ?? 0;
-    let indexOfTypeAny = [] as number[];
+    const numberOfVariation = product?.attributes?.nodes?.length ?? 0
+    let indexOfTypeAny = [] as number[]
 
     for (let index = 0; index < numberOfVariation; index++) {
-      const tempArray = [] as string[];
+      const tempArray = [] as string[]
       product.variations?.nodes.forEach((element) => {
         // @ts-ignore
-        if (element.attributes?.nodes[index]?.value) tempArray.push(element.attributes.nodes[index].value);
-      });
+        if (element.attributes?.nodes[index]?.value) tempArray.push(element.attributes.nodes[index].value)
+      })
 
-      if (!tempArray.some(Boolean)) indexOfTypeAny.push(index);
+      if (!tempArray.some(Boolean)) indexOfTypeAny.push(index)
     }
 
-    return indexOfTypeAny;
-  };
+    return indexOfTypeAny
+  }
 
   /**
    * Determines if the route query is empty.
    * @returns {boolean} True if the route query is empty, false otherwise.
    */
-  const isQueryEmpty = computed<boolean>(() => Object.keys(route.query).length === 0);
+  const isQueryEmpty = computed<boolean>(() => Object.keys(route.query).length === 0)
 
   /**
    * Formats a date string.
@@ -143,13 +143,13 @@ export function useHelpers() {
    * @returns {string} The formatted date string.
    */
   const formatDate = (date?: string | null): string => {
-    if (!date) return '';
+    if (!date) return ''
     return new Date(date).toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',
       year: 'numeric',
-    });
-  };
+    })
+  }
 
   /**
    * Formats a price string.
@@ -160,14 +160,14 @@ export function useHelpers() {
     parseFloat(price).toLocaleString('en-US', {
       style: 'currency',
       currency: 'EUR',
-    });
+    })
 
   /**
    * Scrolls to the top of the page.
    */
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   /**
    * Strips HTML tags from a string.
@@ -175,8 +175,8 @@ export function useHelpers() {
    * @returns {string} The stripped string.
    */
   const stripHtml = (str: string | null | undefined = ''): string => {
-    return str === null ? '' : str.replace(/(<([^>]+)>)/gi, '');
-  };
+    return str === null ? '' : str.replace(/(<([^>]+)>)/gi, '')
+  }
 
   /**
    * Debounces a function.
@@ -185,24 +185,24 @@ export function useHelpers() {
    * @returns {Function} The debounced function.
    */
   const debounce = (func: Function, delay: number = 100) => {
-    let inDebounce: NodeJS.Timeout;
+    let inDebounce: NodeJS.Timeout
     return function (this: any, ...args: any[]) {
-      clearTimeout(inDebounce);
-      inDebounce = setTimeout(() => func.apply(this, args), delay);
-    };
-  };
+      clearTimeout(inDebounce)
+      inDebounce = setTimeout(() => func.apply(this, args), delay)
+    }
+  }
 
   /**
    *  Logs a GraphQL error message. Only show logs in development or when the 'debug' query parameter is present.
    * @param error
    */
   const logGQLError = (error: any) => {
-    if (!isDev && !route.query.debug) return;
-    const errorMessage = error?.gqlErrors?.[0]?.message;
+    if (!isDev && !route.query.debug) return
+    const errorMessage = error?.gqlErrors?.[0]?.message
     if (errorMessage) {
-      console.error(errorMessage);
+      console.error(errorMessage)
     }
-  };
+  }
 
   return {
     isShowingMobileMenu,
@@ -229,5 +229,5 @@ export function useHelpers() {
     stripHtml,
     debounce,
     logGQLError,
-  };
+  }
 }

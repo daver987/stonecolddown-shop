@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   products: { type: Array, default: null },
-});
+})
 </script>
 
 <template>

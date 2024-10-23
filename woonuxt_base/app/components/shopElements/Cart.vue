@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { cart, toggleCart, isUpdatingCart, isShowingCart } = useCart();
-const { t } = useI18n();
+const { cart, toggleCart, isUpdatingCart, isShowingCart } = useCart()
+const { t } = useI18n()
 
-const cartItemCount = computed(() => cart.value?.contents?.itemCount || 0);
-const isCartEmpty = computed(() => cart.value?.isEmpty);
+const cartItemCount = computed(() => cart.value?.contents?.itemCount || 0)
+const isCartEmpty = computed(() => cart.value?.isEmpty)
 </script>
 
 <template>

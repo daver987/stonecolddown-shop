@@ -1,40 +1,40 @@
 <script setup lang="ts">
-import type { Product } from '../../types';
+import type { Product } from '../../types'
 
 type Category = {
-  name: string;
-  description: string;
-  slug: string;
-};
+  name: string
+  description: string
+  slug: string
+}
 
-const { setProducts, updateProductList } = useProducts();
-const { isQueryEmpty } = useHelpers();
-const { storeSettings } = useAppConfig();
-const route = useRoute();
-const slug = route.params.slug;
+const { setProducts, updateProductList } = useProducts()
+const { isQueryEmpty } = useHelpers()
+const { storeSettings } = useAppConfig()
+const route = useRoute()
+const slug = route.params.slug
 
-const { data } = await useAsyncGql('getProducts', { slug });
-const productsInCategory = (data.value?.products?.nodes || []) as Product[];
-setProducts(productsInCategory);
+const { data } = await useAsyncGql('getProducts', { slug })
+const productsInCategory = (data.value?.products?.nodes || []) as Product[]
+setProducts(productsInCategory)
 
 // @ts-expect-error
-const category = (data.value?.products?.nodes[0]?.productCategories?.nodes[0] || null) as Category;
+const category = (data.value?.products?.nodes[0]?.productCategories?.nodes[0] || null) as Category
 onMounted(() => {
-  if (!isQueryEmpty.value) updateProductList();
-});
+  if (!isQueryEmpty.value) updateProductList()
+})
 
 watch(
   () => route.query,
   () => {
-    if (route.name !== 'product-category-slug') return;
-    updateProductList();
+    if (route.name !== 'product-category-slug') return
+    updateProductList()
   },
-);
+)
 
 useHead({
   title: 'Products',
   meta: [{ hid: 'description', name: 'description', content: 'Products' }],
-});
+})
 useSeoMeta({
   title: () => `${(category as Category).name || 'Products'} | Stone Cold Down Shop`,
   description: () =>
@@ -51,7 +51,7 @@ useSeoMeta({
     `Discover ${(category as Category).name || 'product'} products from Stone Cold Down. Tattoo-inspired merchandise by fine line artist Natasha Smith.`,
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary_large_image',
-});
+})
 </script>
 
 <template>

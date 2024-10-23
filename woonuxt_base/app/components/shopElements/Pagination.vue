@@ -1,23 +1,23 @@
 <script setup lang="ts">
-const route = useRoute();
-const { productsPerPage } = useHelpers();
-const { products } = useProducts();
+const route = useRoute()
+const { productsPerPage } = useHelpers()
+const { products } = useProducts()
 
-const page = ref<number>(route.params.pageNumber ? Number.parseInt(route.params.pageNumber as string, 10) : 1);
-const numberOfPages = computed<number>(() => Math.ceil(products.value.length / productsPerPage) || 1);
+const page = ref<number>(route.params.pageNumber ? Number.parseInt(route.params.pageNumber as string, 10) : 1)
+const numberOfPages = computed<number>(() => Math.ceil(products.value.length / productsPerPage) || 1)
 
 const currentQuery = computed(() => {
-  return new URLSearchParams(route.query as Record<string, string>).toString();
-});
+  return new URLSearchParams(route.query as Record<string, string>).toString()
+})
 
 const buildPageUrl = (pageNumber: number): string => {
-  const basePath = `/products/page/${pageNumber}`;
-  return currentQuery.value ? `${basePath}?${currentQuery.value}` : basePath;
-};
+  const basePath = `/products/page/${pageNumber}`
+  return currentQuery.value ? `${basePath}?${currentQuery.value}` : basePath
+}
 
-const prevSrc = computed(() => buildPageUrl(Math.max(page.value - 1, 1)));
-const nextSrc = computed(() => buildPageUrl(Math.min(page.value + 1, numberOfPages.value)));
-const numberSrc = (pageNumber: number): string => buildPageUrl(pageNumber);
+const prevSrc = computed(() => buildPageUrl(Math.max(page.value - 1, 1)))
+const nextSrc = computed(() => buildPageUrl(Math.min(page.value + 1, numberOfPages.value)))
+const numberSrc = (pageNumber: number): string => buildPageUrl(pageNumber)
 </script>
 
 <template>

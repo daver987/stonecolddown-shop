@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const { FALLBACK_IMG } = useHelpers();
+const { FALLBACK_IMG } = useHelpers()
 defineProps({
   node: { type: Object, required: true },
   imageLoading: { type: String as PropType<'lazy' | 'eager'>, default: 'lazy' },
-});
+})
 
-const imgWidth = 220;
-const imgHeight = Math.round(imgWidth * 1.125);
+const imgWidth = 220
+const imgHeight = Math.round(imgWidth * 1.125)
 </script>
 
 <template>

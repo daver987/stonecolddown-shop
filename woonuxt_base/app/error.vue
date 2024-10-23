@@ -1,31 +1,31 @@
 <script setup lang="ts">
-const route = useRoute();
-const { error } = defineProps<{ error: any }>();
-const { isShowingCart, toggleCart } = useCart();
-const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
+const route = useRoute()
+const { error } = defineProps<{ error: Error & { statusCode?: number } }>()
+const { isShowingCart, toggleCart } = useCart()
+const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers()
 
 const closeCartAndMenu = () => {
-  toggleCart(false);
-  toggleMobileMenu(false);
-};
+  toggleCart(false)
+  toggleMobileMenu(false)
+}
 
 watch([isShowingCart, isShowingMobileMenu], () => {
   if (isShowingCart.value || isShowingMobileMenu.value) {
-    addBodyClass('overflow-hidden');
+    addBodyClass('overflow-hidden')
   } else {
-    removeBodyClass('overflow-hidden');
+    removeBodyClass('overflow-hidden')
   }
-});
+})
 
 watch(
   () => route.path,
   () => closeCartAndMenu(),
-);
+)
 
 useSeoMeta({
   title: error?.statusCode ? `Error ${error.statusCode}` : 'Error',
   description: error?.message || '',
-});
+})
 </script>
 
 <template>

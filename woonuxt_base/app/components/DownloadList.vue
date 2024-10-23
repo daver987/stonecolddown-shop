@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const { scrollToTop } = useHelpers();
-const { getDownloads, downloads } = useAuth();
+const { scrollToTop } = useHelpers()
+const { getDownloads, downloads } = useAuth()
 
-if (downloads.value === null) getDownloads();
+if (downloads.value === null) getDownloads()
 
 const refresh = () => {
-  downloads.value = null;
-  scrollToTop();
-  getDownloads();
-};
+  downloads.value = null
+  scrollToTop()
+  getDownloads()
+}
 </script>
 
 <template>

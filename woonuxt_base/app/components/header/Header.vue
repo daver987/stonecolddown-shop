@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { Dialog, DialogPanel, TransitionRoot, provideUseId } from '@headlessui/vue';
-import { useId } from '#imports';
-import { getSlotChildrenText } from '../../lib/slots';
-import type { HeaderLink } from '../../types';
+import type { PropType } from 'vue'
+import { Dialog, DialogPanel, TransitionRoot, provideUseId } from '@headlessui/vue'
+import { useId } from '#imports'
+import { getSlotChildrenText } from '../../lib/slots'
+import type { HeaderLink } from '../../types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50',
@@ -26,11 +26,11 @@ const config = computed(() => ({
       close: appConfig.ui.icons.close,
     },
   },
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   to: {
@@ -53,12 +53,12 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const route = useRoute();
-const slots = useSlots();
-const { isHeaderDialogOpen } = useUIState();
-const { ui, attrs } = useUI('header', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const route = useRoute()
+const slots = useSlots()
+const { isHeaderDialogOpen } = useUIState()
+const { ui, attrs } = useUI('header', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 
 const ariaLabel = computed(() =>
   (
@@ -66,21 +66,21 @@ const ariaLabel = computed(() =>
     (slots.title &&
       getSlotChildrenText(
         slots.title() as {
-          children: string | { default?: (() => unknown) | undefined };
+          children: string | { default?: (() => unknown) | undefined }
         }[],
       )) ||
     'Logo'
   ).trim(),
-);
+)
 
 watch(
   () => route.fullPath,
   () => {
-    isHeaderDialogOpen.value = false;
+    isHeaderDialogOpen.value = false
   },
-);
+)
 
-provideUseId(() => useId() as string);
+provideUseId(() => useId() as string)
 </script>
 
 <template>

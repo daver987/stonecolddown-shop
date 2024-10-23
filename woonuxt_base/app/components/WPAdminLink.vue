@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
-const defaultClient = runtimeConfig?.public?.['graphql-client']?.clients?.default as { host: string } | undefined;
+const runtimeConfig = useRuntimeConfig()
+const defaultClient = runtimeConfig?.public?.['graphql-client']?.clients?.default as { host: string } | undefined
 
-const { link } = defineProps<{ link: string }>();
+const { link } = defineProps<{ link: string }>()
 
-const gqlEndpoint = defaultClient?.host ?? null;
-const wpBase = gqlEndpoint?.replace('/graphql', '') ?? null;
-const formattedLink = wpBase + link;
-const linkStartsWithWpAdmin = link?.startsWith('/wp-admin') || false;
+const gqlEndpoint = defaultClient?.host ?? null
+const wpBase = gqlEndpoint?.replace('/graphql', '') ?? null
+const formattedLink = wpBase + link
+const linkStartsWithWpAdmin = link?.startsWith('/wp-admin') || false
 </script>
 
 <template>

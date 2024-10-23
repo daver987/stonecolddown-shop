@@ -77,5 +77,5 @@ export default defineEventHandler(async () => {
       card: true,
       width: 'col-span-4',
     },
-  ];
-});
+  ]
+})

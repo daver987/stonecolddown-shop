@@ -1,38 +1,38 @@
 <script setup lang="ts">
-import type { Product } from '../../types';
+import type { Product } from '../../types'
 
-const { frontEndUrl, wooNuxtSEO, isDev, stripHtml } = useHelpers();
-const { path } = useRoute();
+const { frontEndUrl, wooNuxtSEO, isDev, stripHtml } = useHelpers()
+const { path } = useRoute()
 const { info } = defineProps({
   info: { type: Object as PropType<Product>, required: true },
-});
+})
 
-const title = info.name;
-const canonical = `${frontEndUrl}${path}`;
-const siteName = process.env.SITE_TITLE ?? 'WooNuxt';
+const title = info.name
+const canonical = `${frontEndUrl}${path}`
+const siteName = process.env.SITE_TITLE ?? 'WooNuxt'
 
-const img = useImage();
-const imageURL = info.image?.sourceUrl ?? '/images/placeholder.jpg';
+const img = useImage()
+const imageURL = info.image?.sourceUrl ?? '/images/placeholder.jpg'
 const defaultImageSrc = img.getSizes(imageURL, {
   width: 1200,
   height: 630,
-}).src;
+}).src
 const twitterImageSrc = img.getSizes(imageURL, {
   width: 1600,
   height: 900,
-}).src;
+}).src
 
 const getFullImageURL = (url: string) => {
-  if (url.startsWith('http')) return url;
-  return `${frontEndUrl}${url}`;
-};
+  if (url.startsWith('http')) return url
+  return `${frontEndUrl}${url}`
+}
 
-const defaultImage = getFullImageURL(defaultImageSrc as string);
-const twitterImage = getFullImageURL(twitterImageSrc as string);
-const description = info.shortDescription || info.description ? stripHtml(info.shortDescription || '') : stripHtml(info.description || '');
+const defaultImage = getFullImageURL(defaultImageSrc as string)
+const twitterImage = getFullImageURL(twitterImageSrc as string)
+const description = info.shortDescription || info.description ? stripHtml(info.shortDescription || '') : stripHtml(info.description || '')
 
-const facebook = wooNuxtSEO?.find((item) => item.provider === 'facebook') ?? null;
-const twitter = wooNuxtSEO?.find((item) => item.provider === 'twitter') ?? null;
+const facebook = wooNuxtSEO?.find((item) => item.provider === 'facebook') ?? null
+const twitter = wooNuxtSEO?.find((item) => item.provider === 'twitter') ?? null
 </script>
 
 <template>

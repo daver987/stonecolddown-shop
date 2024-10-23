@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twJoin, twMerge } from 'tailwind-merge';
-import type { Button } from '#ui/types';
+import type { PropType } from 'vue'
+import { twJoin, twMerge } from 'tailwind-merge'
+import type { Button } from '#ui/types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   icon: {
@@ -29,9 +29,9 @@ const props = defineProps({
   features: {
     type: Array as PropType<
       {
-        icon?: string;
-        name: string;
-        description?: string;
+        icon?: string
+        name: string
+        description?: string
       }[]
     >,
     default: () => [],
@@ -56,12 +56,12 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
 const config = computed(() => {
-  const container: string = twJoin('gap-16 sm:gap-y-24', props.align === 'center' ? 'flex flex-col' : 'grid lg:grid-cols-2 lg:items-center');
+  const container: string = twJoin('gap-16 sm:gap-y-24', props.align === 'center' ? 'flex flex-col' : 'grid lg:grid-cols-2 lg:items-center')
 
-  const base: string = twJoin('', props.align === 'center' && 'text-center flex flex-col items-center', props.align === 'right' && 'lg:order-last');
+  const base: string = twJoin('', props.align === 'center' && 'text-center flex flex-col items-center', props.align === 'right' && 'lg:order-last')
 
   return {
     wrapper: 'py-14 sm:py-20 px-4 sm:px-6',
@@ -89,10 +89,10 @@ const config = computed(() => {
         name: appConfig.ui.icons.check,
       },
     },
-  };
-});
+  }
+})
 
-const { ui, attrs } = useUI('landing.section', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('landing.section', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

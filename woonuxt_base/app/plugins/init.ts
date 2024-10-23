@@ -1,75 +1,75 @@
 export default defineNuxtPlugin(async (nuxtApp) => {
   if (!import.meta.env.SSR) {
-    const { storeSettings } = useAppConfig();
-    const { clearAllCookies, clearAllLocalStorage } = useHelpers();
-    const sessionToken = useCookie('woocommerce-session');
-    if (sessionToken.value) useGqlHeaders({ 'woocommerce-session': `Session ${sessionToken.value}` });
+    const { storeSettings } = useAppConfig()
+    const { clearAllCookies, clearAllLocalStorage } = useHelpers()
+    const sessionToken = useCookie('woocommerce-session')
+    if (sessionToken.value) useGqlHeaders({ 'woocommerce-session': `Session ${sessionToken.value}` })
 
     // Wait for the user to interact with the page before refreshing the cart, this is helpful to prevent excessive requests to the server
-    let initialised = false;
-    const eventsToFireOn = ['mousedown', 'keydown', 'touchstart', 'scroll', 'wheel', 'click', 'resize', 'mousemove', 'mouseover'];
+    let initialised = false
+    const eventsToFireOn = ['mousedown', 'keydown', 'touchstart', 'scroll', 'wheel', 'click', 'resize', 'mousemove', 'mouseover']
 
     async function initStore() {
       if (initialised) {
         // We only want to execute this code block once, so we return if initialised is truthy and remove the event listeners
         for (const event of eventsToFireOn) {
-          window.removeEventListener(event, initStore);
+          window.removeEventListener(event, initStore)
         }
-        return;
+        return
       }
 
-      initialised = true;
+      initialised = true
 
-      const { refreshCart } = useCart();
-      const success: boolean = await refreshCart();
+      const { refreshCart } = useCart()
+      const success: boolean = await refreshCart()
 
       useGqlError((err: unknown) => {
-        const serverErrors = ['The iss do not match with this server', 'Invalid session token'];
-        const errorMessage = (err as { gqlErrors?: { message: string }[] })?.gqlErrors?.[0]?.message;
+        const serverErrors = ['The iss do not match with this server', 'Invalid session token']
+        const errorMessage = (err as { gqlErrors?: { message: string }[] })?.gqlErrors?.[0]?.message
         if (!(errorMessage && serverErrors.includes(errorMessage))) {
-          return;
+          return
         }
-        clearAllCookies();
-        clearAllLocalStorage();
-        window.location.reload();
-      });
+        clearAllCookies()
+        clearAllLocalStorage()
+        window.location.reload()
+      })
 
       if (success) {
-        return;
+        return
       }
-      clearAllCookies();
-      clearAllLocalStorage();
+      clearAllCookies()
+      clearAllLocalStorage()
 
       // Add a new cookie to prevent infinite reloads
-      const reloadCount = useCookie('reloadCount');
+      const reloadCount = useCookie('reloadCount')
       if (reloadCount.value) {
-        return;
+        return
       }
 
-      reloadCount.value = '1';
+      reloadCount.value = '1'
 
       // Log out the user
-      const { logoutUser } = useAuth();
-      await logoutUser();
+      const { logoutUser } = useAuth()
+      await logoutUser()
 
-      if (!reloadCount.value) window.location.reload();
+      if (!reloadCount.value) window.location.reload()
     }
 
     // If we are in development mode, we want to initialise the store immediately
-    const isDev = process.env.NODE_ENV === 'development';
+    const isDev = process.env.NODE_ENV === 'development'
 
     // Check if the current route path is one of the pages that need immediate initialization
-    const pagesToInitializeRightAway = ['/checkout', '/my-account', '/order-summary'];
-    const isPathThatRequiresInit = pagesToInitializeRightAway.some((page) => useRoute().path.includes(page));
+    const pagesToInitializeRightAway = ['/checkout', '/my-account', '/order-summary']
+    const isPathThatRequiresInit = pagesToInitializeRightAway.some((page) => useRoute().path.includes(page))
 
-    const shouldInit = isDev || isPathThatRequiresInit || !storeSettings.initStoreOnUserActionToReduceServerLoad;
+    const shouldInit = isDev || isPathThatRequiresInit || !storeSettings.initStoreOnUserActionToReduceServerLoad
 
     if (shouldInit) {
-      initStore();
+      initStore()
     } else {
       for (const event of eventsToFireOn) {
-        window.addEventListener(event, initStore, { once: true });
+        window.addEventListener(event, initStore, { once: true })
       }
     }
   }
-});
+})

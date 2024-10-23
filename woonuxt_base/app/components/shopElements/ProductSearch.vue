@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
+import { z } from 'zod'
+import type { FormSubmitEvent } from '#ui/types'
 
-const { getSearchQuery, setSearchQuery, clearSearchQuery } = useSearching();
+const { getSearchQuery, setSearchQuery, clearSearchQuery } = useSearching()
 
 const schema = z.object({
   searchQuery: z.string().optional(),
-});
+})
 
-type Schema = z.output<typeof schema>;
+type Schema = z.output<typeof schema>
 
 const state = reactive({
   searchQuery: getSearchQuery(),
-});
+})
 
 const reset = () => {
-  clearSearchQuery();
-  state.searchQuery = '';
-};
+  clearSearchQuery()
+  state.searchQuery = ''
+}
 
 watch(getSearchQuery, (value) => {
-  if (!value) reset();
-});
+  if (!value) reset()
+})
 
 function onSubmit(event: FormSubmitEvent<Schema>) {
-  setSearchQuery(event.data.searchQuery || '');
+  setSearchQuery(event.data.searchQuery || '')
 }
 </script>
 

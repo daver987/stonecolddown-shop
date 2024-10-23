@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twMerge } from 'tailwind-merge';
-import { getULinkProps } from '#ui/utils';
-import type { HeaderPopoverLink } from '../../types';
+import type { PropType } from 'vue'
+import { twMerge } from 'tailwind-merge'
+import { getULinkProps } from '#ui/utils'
+import type { HeaderPopoverLink } from '../../types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'p-2 space-y-1',
@@ -21,11 +21,11 @@ const config = computed(() => ({
     name: appConfig.ui.icons.external,
     base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500',
   },
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   links: {
@@ -40,9 +40,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('header.popover.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('header.popover.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

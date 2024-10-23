@@ -4,7 +4,7 @@ defineProps({
   count: { type: Number, default: null },
   hideCount: { type: Boolean, default: false },
   size: { type: Number, default: 14 },
-});
+})
 </script>
 
 <template>

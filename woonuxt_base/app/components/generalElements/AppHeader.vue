@@ -52,7 +52,7 @@ const links = [
     icon: 'i-heroicons-phone',
     to: '/contact',
   },
-];
+]
 
 const aboveHeaderLinksRight = [
   {
@@ -65,7 +65,7 @@ const aboveHeaderLinksRight = [
     icon: 'i-heroicons-user',
     to: '/my-account?action=register',
   },
-];
+]
 
 const aboveHeaderLinksCenter = [
   {
@@ -73,20 +73,20 @@ const aboveHeaderLinksCenter = [
     icon: 'i-heroicons-calendar',
     to: '/booking',
   },
-];
+]
 
 // Hide subheader on scroll
-const isAboveMd = useMediaQuery('(min-width: 768px)');
-const isSubheaderVisible = ref(true);
+const isAboveMd = useMediaQuery('(min-width: 768px)')
+const isSubheaderVisible = ref(true)
 onMounted(() => {
   const handleScroll = () => {
-    isSubheaderVisible.value = window.scrollY <= 300;
-  };
-  window.addEventListener('scroll', handleScroll);
+    isSubheaderVisible.value = window.scrollY <= 300
+  }
+  window.addEventListener('scroll', handleScroll)
   onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-  });
-});
+    window.removeEventListener('scroll', handleScroll)
+  })
+})
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSeoMeta } from '#imports';
+import { useSeoMeta } from '#imports'
 
 useSeoMeta({
   title: 'My Wishlist | Stone Cold Down',
@@ -12,12 +12,12 @@ useSeoMeta({
   twitterDescription: 'Manage your wishlist of favorite items from Stone Cold Down. Save designs and merchandise for later.',
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
-});
+})
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 </script>
 
 <template>

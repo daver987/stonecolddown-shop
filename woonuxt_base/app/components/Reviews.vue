@@ -1,21 +1,21 @@
 <script setup lang="ts">
 interface Review {
-  id: string;
-  icon: string;
-  quote: string;
+  id: string
+  icon: string
+  quote: string
   author: {
-    name: string;
-    description: string;
+    name: string
+    description: string
     avatar: {
-      src: string;
-      loading: string;
-    };
-  };
-  card: boolean;
-  width: string;
+      src: string
+      loading: string
+    }
+  }
+  card: boolean
+  width: string
 }
 
-defineProps<{ reviews: Review[] }>();
+defineProps<{ reviews: Review[] }>()
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
+import type { PropType } from 'vue'
 
 const config = {
   wrapper: 'flex flex-col lg:grid lg:grid-cols-10 lg:gap-8',
@@ -10,11 +10,11 @@ const config = {
     full: 'lg:col-span-10',
   },
   right: 'lg:col-span-2 order-first lg:order-last',
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   class: {
@@ -25,21 +25,21 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({}),
   },
-});
+})
 
-const slots = useSlots();
-const { ui, attrs } = useUI('page', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const slots = useSlots()
+const { ui, attrs } = useUI('page', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 
 const centerClass = computed(() => {
   if (slots.left && slots.right) {
-    return ui.value.center.narrow;
+    return ui.value.center.narrow
   }
   if (slots.left || slots.right) {
-    return ui.value.center.base;
+    return ui.value.center.base
   }
 
-  return ui.value.center.full;
-});
+  return ui.value.center.full
+})
 </script>
 
 <template>

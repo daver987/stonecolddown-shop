@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Product } from '../../types';
+import type { Product } from '../../types'
 
 const { product } = defineProps({
   product: { type: Object as PropType<Product>, required: true },
-});
-const { storeSettings } = useAppConfig();
+})
+const { storeSettings } = useAppConfig()
 
-const initialTab = product.description ? 0 : 1;
-const show = ref(initialTab);
+const initialTab = product.description ? 0 : 1
+const show = ref(initialTab)
 </script>
 
 <template>

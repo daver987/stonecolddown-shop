@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const route = useRoute();
-const { products } = useProducts();
-const { productsPerPage } = useHelpers();
-const page = ref(Number.parseInt(route.params.pageNumber as string) || 1);
+const route = useRoute()
+const { products } = useProducts()
+const { productsPerPage } = useHelpers()
+const page = ref(Number.parseInt(route.params.pageNumber as string) || 1)
 </script>
 
 <template>

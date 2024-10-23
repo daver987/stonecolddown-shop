@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { toggleCart } = useCart();
-const { t } = useI18n();
+const { toggleCart } = useCart()
+const { t } = useI18n()
 </script>
 
 <template>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { getNuxtLinkProps } from '#ui/utils';
-import type { Avatar } from '#ui/types';
-import type { card as cardConfig } from '#ui/ui.config';
-import { NuxtLink } from '#components';
-import type { NuxtLinkProps } from '#app';
+import type { PropType } from 'vue'
+import { getNuxtLinkProps } from '#ui/utils'
+import type { Avatar } from '#ui/types'
+import type { card as cardConfig } from '#ui/ui.config'
+import { NuxtLink } from '#components'
+import type { NuxtLinkProps } from '#app'
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   icon: {
@@ -22,9 +22,9 @@ const props = defineProps({
   author: {
     type: Object as PropType<
       {
-        name: string;
-        description?: string;
-        avatar?: Avatar;
+        name: string
+        description?: string
+        avatar?: Avatar
       } & NuxtLinkProps
     >,
     default: undefined,
@@ -41,41 +41,41 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value & typeof cardConfig>>,
     default: () => ({}),
   },
-});
+})
 
 const config = computed(
   (): {
     author: {
-      wrapper: string;
-      name: string;
-      description: string;
+      wrapper: string
+      name: string
+      description: string
       avatar: {
-        base: string;
-        size: 'md';
-      };
-    };
+        base: string
+        size: 'md'
+      }
+    }
     body: {
-      base: string;
-      padding: string | undefined;
-    };
-    wrapper: string;
-    quote: string;
+      base: string
+      padding: string | undefined
+    }
+    wrapper: string
+    quote: string
     icon: {
-      wrapper: string;
-      base: string;
-    };
+      wrapper: string
+      base: string
+    }
   } => {
-    const card: Record<string, string> = {};
+    const card: Record<string, string> = {}
 
     if (!props.card) {
-      card.ring = '';
-      card.rounded = '';
-      card.background = '';
-      card.shadow = '';
-      card.divide = '';
+      card.ring = ''
+      card.rounded = ''
+      card.background = ''
+      card.shadow = ''
+      card.divide = ''
     }
 
-    const padding: string | undefined = props.card ? undefined : '';
+    const padding: string | undefined = props.card ? undefined : ''
 
     return {
       ...card,
@@ -98,11 +98,11 @@ const config = computed(
           size: 'md' as const,
         },
       },
-    };
+    }
   },
-);
+)
 
-const { ui, attrs } = useUI('landing.testimonial', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('landing.testimonial', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

@@ -1,55 +1,55 @@
 <script setup lang="ts">
-import type { VariationAttributeFragment } from '#gql';
-import type { VariationAttribute } from '../../types';
+import type { VariationAttributeFragment } from '#gql'
+import type { VariationAttribute } from '../../types'
 
 interface Props {
-  attributes: any[];
-  defaultAttributes?: { nodes: VariationAttribute[] };
+  attributes: any[]
+  defaultAttributes?: { nodes: VariationAttribute[] }
 }
 
-const { attributes, defaultAttributes } = defineProps<Props>();
-const emit = defineEmits(['attrs-changed']);
+const { attributes, defaultAttributes } = defineProps<Props>()
+const emit = defineEmits(['attrs-changed'])
 
-const activeVariations = ref<VariationAttribute[]>([]);
+const activeVariations = ref<VariationAttribute[]>([])
 
 const getSelectedName = (attr: any, activeVariation: VariationAttribute) => {
   if (attr?.terms?.nodes) {
-    return attr.terms.nodes.find((node: { slug: string }) => node.slug === activeVariation.value)?.name;
+    return attr.terms.nodes.find((node: { slug: string }) => node.slug === activeVariation.value)?.name
   }
 
-  return activeVariation.value || '';
-};
+  return activeVariation.value || ''
+}
 
 const updateAttrs = () => {
   const selectedVariations = attributes.map((row): VariationAttribute => {
-    const radioValue = document.querySelector(`.name-${row.name.toLowerCase()}:checked`) as HTMLInputElement;
-    const dropdownValue = document.querySelector(`#${row.name}`) as HTMLSelectElement;
-    const name = row.name.charAt(0).toLowerCase() + row.name.slice(1);
-    const value = radioValue?.value ?? dropdownValue?.value ?? '';
-    return { name, value };
-  });
+    const radioValue = document.querySelector(`.name-${row.name.toLowerCase()}:checked`) as HTMLInputElement
+    const dropdownValue = document.querySelector(`#${row.name}`) as HTMLSelectElement
+    const name = row.name.charAt(0).toLowerCase() + row.name.slice(1)
+    const value = radioValue?.value ?? dropdownValue?.value ?? ''
+    return { name, value }
+  })
 
-  activeVariations.value = selectedVariations;
-  emit('attrs-changed', selectedVariations);
-};
+  activeVariations.value = selectedVariations
+  emit('attrs-changed', selectedVariations)
+}
 
 const setDefaultAttributes = () => {
   if (defaultAttributes?.nodes) {
     defaultAttributes?.nodes.forEach((attr: VariationAttribute) => {
-      const radio = document.querySelector(`.name-${attr.name?.toLowerCase()}[value="${attr.value}"]`) as HTMLInputElement;
-      if (radio) radio.checked = true;
-      const dropdown = document.querySelector(`#${attr.name}`) as HTMLSelectElement;
-      if (dropdown) dropdown.value = attr.value || '';
-    });
+      const radio = document.querySelector(`.name-${attr.name?.toLowerCase()}[value="${attr.value}"]`) as HTMLInputElement
+      if (radio) radio.checked = true
+      const dropdown = document.querySelector(`#${attr.name}`) as HTMLSelectElement
+      if (dropdown) dropdown.value = attr.value || ''
+    })
   }
-};
+}
 
-const className = (name: string) => `name-${name.toLowerCase()}`;
+const className = (name: string) => `name-${name.toLowerCase()}`
 
 onBeforeMount(() => {
-  setDefaultAttributes();
-  updateAttrs();
-});
+  setDefaultAttributes()
+  updateAttrs()
+})
 </script>
 
 <template>

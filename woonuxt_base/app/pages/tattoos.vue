@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
+import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types'
 
 useSeoMeta({
   title: 'Custom Tattoos | Natasha Smith',
@@ -12,12 +12,12 @@ useSeoMeta({
   twitterDescription: 'Create your perfect tattoo with Natasha Smith. Personalized designs that bring your vision to life.',
   twitterImage: '/images/scd_logo.jpg',
   twitterCard: 'summary',
-});
+})
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 
 const customTattooInfo = {
   headline: 'Custom Designs',
@@ -33,7 +33,7 @@ const customTattooInfo = {
       to: '/booking',
     },
   ],
-};
+}
 
 const processSteps = [
   {
@@ -52,13 +52,13 @@ const processSteps = [
     title: 'Tattooing Session',
     description: "I'll bring your custom design to life in a professional, comfortable environment.",
   },
-];
+]
 
 const galleryImages = [
   'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
   'https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137881/stonecolddown/Portfolio/portfolio_10.jpg',
   'https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137912/stonecolddown/Portfolio/portfolio_02.jpg',
-];
+]
 </script>
 
 <template>

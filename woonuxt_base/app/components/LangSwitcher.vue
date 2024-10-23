@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const { locales, locale, setLocaleCookie } = useI18n();
+const { locales, locale, setLocaleCookie } = useI18n()
 
 watch(locale, (newLocale) => {
-  if (newLocale) setLocaleCookie(newLocale);
-});
+  if (newLocale) setLocaleCookie(newLocale)
+})
 
 const options = locales.value.map((locale) => ({
   key: locale.code,
   value: locale.code,
   html: locale.name,
-}));
+}))
 </script>
 
 <template>

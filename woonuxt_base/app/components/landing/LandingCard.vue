@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twJoin } from 'tailwind-merge';
-import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils';
-import { getSlotChildrenText } from '../../lib/slots';
-import colors from '#tailwind-config/theme/colors';
-import type uiColors from '#ui-colors';
-import type { card as cardConfig } from '#ui/ui.config';
+import type { PropType } from 'vue'
+import { twJoin } from 'tailwind-merge'
+import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils'
+import { getSlotChildrenText } from '../../lib/slots'
+import colors from '#tailwind-config/theme/colors'
+import type uiColors from '#ui-colors'
+import type { card as cardConfig } from '#ui/ui.config'
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   ...nuxtLinkProps,
@@ -41,27 +41,27 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value & typeof cardConfig>>,
     default: () => ({}),
   },
-});
+})
 
 const colorLight = computed(() => {
   if (props.color === 'primary') {
-    return 'rgb(var(--color-primary-DEFAULT))';
+    return 'rgb(var(--color-primary-DEFAULT))'
   }
-  return colors[props.color]?.['500'] || colors[props.color] || props.color;
-});
+  return colors[props.color]?.['500'] || colors[props.color] || props.color
+})
 const colorDark = computed(() => {
   if (props.color === 'primary') {
-    return 'rgb(var(--color-primary-DEFAULT))';
+    return 'rgb(var(--color-primary-DEFAULT))'
   }
-  return colors[props.color]?.['400'] || colors[props.color] || props.color;
-});
+  return colors[props.color]?.['400'] || colors[props.color] || props.color
+})
 
 const config = computed(() => {
   const base = twJoin(
     'gap-x-8 gap-y-4 rounded-xl flex-1',
     props.orientation === 'vertical' && 'flex flex-col',
     !!slots.default && props.orientation === 'horizontal' && 'grid lg:grid-cols-2 lg:items-center',
-  );
+  )
 
   return {
     wrapper:
@@ -82,28 +82,28 @@ const config = computed(() => {
     },
     title: 'text-gray-900 dark:text-white text-base font-bold truncate',
     description: 'text-[15px] text-gray-500 dark:text-gray-400 mt-1',
-  };
-});
+  }
+})
 
-const el = ref<HTMLDivElement>();
+const el = ref<HTMLDivElement>()
 
-const slots = useSlots();
-const { elementX, elementY } = useSharedMouseInElement(el);
-const { ui, attrs } = useUI('landing.card', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const slots = useSlots()
+const { elementX, elementY } = useSharedMouseInElement(el)
+const { ui, attrs } = useUI('landing.card', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 
-const nuxtLinkBind = computed(() => getNuxtLinkProps(props));
+const nuxtLinkBind = computed(() => getNuxtLinkProps(props))
 const ariaLabel = computed(() =>
   (
     props.title ||
     (slots.title &&
       getSlotChildrenText(
         slots.title() as {
-          children: string | { default?: (() => unknown) | undefined };
+          children: string | { default?: (() => unknown) | undefined }
         }[],
       )) ||
     'Logo'
   ).trim(),
-);
+)
 </script>
 
 <template>

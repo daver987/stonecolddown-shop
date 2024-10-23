@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface ProductPriceProps {
-  regularPrice?: string | null;
-  salePrice?: string | null;
+  regularPrice?: string | null
+  salePrice?: string | null
 }
 
-const props = defineProps<ProductPriceProps>();
+const props = defineProps<ProductPriceProps>()
 
-const regularPrice = computed(() => props.regularPrice);
-const salePrice = computed(() => props.salePrice);
+const regularPrice = computed(() => props.regularPrice)
+const salePrice = computed(() => props.salePrice)
 </script>
 
 <template>

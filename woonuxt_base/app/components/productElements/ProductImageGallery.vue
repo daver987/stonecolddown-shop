@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import type { Product } from '../../types';
+import type { Product } from '../../types'
 
-const { FALLBACK_IMG } = useHelpers();
+const { FALLBACK_IMG } = useHelpers()
 
 const props = defineProps({
   mainImage: { type: Object, required: true },
   gallery: { type: Object, required: true },
   node: { type: Object as PropType<Product>, required: true },
   activeVariation: { type: Object, required: false },
-});
+})
 
 const primaryImage = computed(() => ({
   sourceUrl: props.mainImage.sourceUrl || FALLBACK_IMG,
   title: props.mainImage.title,
   altText: props.mainImage.altText,
   databaseId: props.mainImage.databaseId,
-}));
+}))
 
-const imageToShow = ref(primaryImage.value);
+const imageToShow = ref(primaryImage.value)
 
 const galleryImages = computed(() => {
   // Add the primary image to the start of the gallery and remove duplicates
-  return [primaryImage.value, ...props.gallery.nodes].filter((img, index, self) => index === self.findIndex((t) => t?.databaseId === img?.databaseId));
-});
+  return [primaryImage.value, ...props.gallery.nodes].filter((img, index, self) => index === self.findIndex((t) => t?.databaseId === img?.databaseId))
+})
 
 const changeImage = (image: any) => {
-  if (image) imageToShow.value = image;
-};
+  if (image) imageToShow.value = image
+}
 
 watch(
   () => props.activeVariation,
   (newVal) => {
     if (newVal?.image) {
-      const foundImage = galleryImages.value.find((img) => img.databaseId === newVal.image?.databaseId);
-      if (foundImage) imageToShow.value = foundImage;
+      const foundImage = galleryImages.value.find((img) => img.databaseId === newVal.image?.databaseId)
+      if (foundImage) imageToShow.value = foundImage
     }
   },
-);
+)
 
-const imgWidth = 640;
+const imgWidth = 640
 </script>
 
 <template>

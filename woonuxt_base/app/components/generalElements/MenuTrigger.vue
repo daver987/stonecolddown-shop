@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { toggleMobileMenu } = useHelpers();
+const { toggleMobileMenu } = useHelpers()
 </script>
 
 <template>

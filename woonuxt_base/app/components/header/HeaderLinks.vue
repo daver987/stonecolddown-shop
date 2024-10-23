@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { getULinkProps } from '#ui/utils';
-import type { HeaderLink } from '../../types';
+import type { PropType } from 'vue'
+import { getULinkProps } from '#ui/utils'
+import type { HeaderLink } from '../../types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'flex items-center gap-x-8',
@@ -31,11 +31,11 @@ const config = computed(() => ({
       },
     },
   },
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   links: {
@@ -50,9 +50,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('header.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>);
+const { ui, attrs } = useUI('header.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>)
 </script>
 
 <template>

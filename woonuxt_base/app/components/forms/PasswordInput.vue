@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const showPassword = ref(false);
+const showPassword = ref(false)
 
 const { modelValue, className, placeholder, required } = defineProps({
   modelValue: { type: String, required: true },
@@ -7,14 +7,14 @@ const { modelValue, className, placeholder, required } = defineProps({
   placeholder: { type: String, default: '' },
   autocomplete: { type: String, default: 'new-password' },
   required: { type: Boolean, default: false },
-});
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
 const handleInputChanged = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
-};
+  const target = e.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
 </script>
 
 <template>

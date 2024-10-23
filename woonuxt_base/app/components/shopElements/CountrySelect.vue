@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const { getAllowedCountries, countriesToShow } = useCountry();
+const { getAllowedCountries, countriesToShow } = useCountry()
 
-const selected = defineModel<string>();
+const selected = defineModel<string>()
 
 onMounted(async () => {
-  await getAllowedCountries();
-});
-const countriesArray = computed(() => countriesToShow.value.map((country) => country.name));
+  await getAllowedCountries()
+})
+const countriesArray = computed(() => countriesToShow.value.map((country) => country.name))
 </script>
 
 <template>

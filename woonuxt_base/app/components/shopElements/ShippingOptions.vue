@@ -1,15 +1,15 @@
 <script setup>
-const { updateShippingMethod } = useCart();
-const runtimeConfig = useRuntimeConfig();
-const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || '$';
+const { updateShippingMethod } = useCart()
+const runtimeConfig = useRuntimeConfig()
+const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || '$'
 const props = defineProps({
   options: { type: Array, required: true },
   activeOption: { type: String, required: true },
-});
+})
 
 const setActiveOption = async (id) => {
-  await updateShippingMethod(id);
-};
+  await updateShippingMethod(id)
+}
 </script>
 
 <template>

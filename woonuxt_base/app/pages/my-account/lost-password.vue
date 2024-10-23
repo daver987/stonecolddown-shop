@@ -10,12 +10,12 @@ useSeoMeta({
   twitterDescription: "Securely reset your Stone Cold Down account password. Get back to exploring Natasha Smith's fine line tattoo art and merchandise.",
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
-});
+})
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 </script>
 
 <template>

@@ -3,37 +3,37 @@ const props = defineProps({
   reviews: { type: Object, default: null },
   productId: { type: Number, default: null },
   size: { type: Number, default: 21 },
-});
+})
 
 const numberAndPercentageOfEachRating = computed(() => {
-  const ratings = [0, 0, 0, 0, 0];
+  const ratings = [0, 0, 0, 0, 0]
   props.reviews.edges.forEach((review) => {
-    ratings[review.rating - 1] += 1;
-  });
-  const total = ratings.reduce((a, b) => a + b, 0);
+    ratings[review.rating - 1] += 1
+  })
+  const total = ratings.reduce((a, b) => a + b, 0)
   return ratings
     .map((count, index) => {
-      const percentage = (count / total) * 100;
-      return { count, percentage, rating: index + 1 };
+      const percentage = (count / total) * 100
+      return { count, percentage, rating: index + 1 }
     })
-    .reverse();
-});
+    .reverse()
+})
 
-const show = ref(false);
-const hovered = ref(0);
-const rating = ref(null);
-const content = ref(null);
-const authorEmail = ref(null);
-const errorMessage = ref('');
-const successMessage = ref('');
-const isPending = ref(false);
+const show = ref(false)
+const hovered = ref(0)
+const rating = ref(null)
+const content = ref(null)
+const authorEmail = ref(null)
+const errorMessage = ref('')
+const successMessage = ref('')
+const isPending = ref(false)
 
 function setHovered(i) {
-  hovered.value = i;
+  hovered.value = i
 }
 
 function resetHovered() {
-  hovered.value = 0;
+  hovered.value = 0
 }
 
 async function addComment() {
@@ -43,22 +43,22 @@ async function addComment() {
     content: content.value,
     rating: rating.value,
     authorEmail: authorEmail.value,
-  };
+  }
   try {
-    isPending.value = true;
-    await GqlWriteReview(variables);
-    successMessage.value = 'Your review is awaiting approval';
+    isPending.value = true
+    await GqlWriteReview(variables)
+    successMessage.value = 'Your review is awaiting approval'
     setTimeout(() => {
-      successMessage.value = '';
-      show.value = false;
-    }, 4000);
+      successMessage.value = ''
+      show.value = false
+    }, 4000)
   } catch (error) {
-    errorMessage.value = error?.gqlErrors?.[0].message;
+    errorMessage.value = error?.gqlErrors?.[0].message
     setTimeout(() => {
-      errorMessage.value = '';
-    }, 5000);
+      errorMessage.value = ''
+    }, 5000)
   } finally {
-    isPending.value = false;
+    isPending.value = false
   }
 }
 </script>

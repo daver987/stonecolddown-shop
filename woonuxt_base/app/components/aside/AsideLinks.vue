@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twMerge } from 'tailwind-merge';
-import { getULinkProps } from '#ui/utils';
-import type { AsideLink } from '../../types';
+import type { PropType } from 'vue'
+import { twMerge } from 'tailwind-merge'
+import { getULinkProps } from '#ui/utils'
+import type { AsideLink } from '../../types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0',
@@ -22,11 +22,11 @@ const config = computed(() => ({
     base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500',
   },
   label: 'text-sm/6 relative',
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   links: {
@@ -41,9 +41,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('aside.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('aside.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

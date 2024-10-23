@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { getULinkProps } from '#ui/utils';
-import { twMerge } from 'tailwind-merge';
-import type { PropType } from 'vue';
-import type { PageLink } from '~~/types';
+import { getULinkProps } from '#ui/utils'
+import { twMerge } from 'tailwind-merge'
+import type { PropType } from 'vue'
+import type { PageLink } from '~~/types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'space-y-3',
@@ -25,11 +25,11 @@ const config = computed(() => ({
     base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500',
   },
   label: 'text-sm/6 font-medium relative',
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   title: {
@@ -48,9 +48,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('page.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('page.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

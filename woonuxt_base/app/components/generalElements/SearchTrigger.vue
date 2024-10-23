@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { toggleSearch } = useSearching();
+const { toggleSearch } = useSearching()
 </script>
 
 <template>

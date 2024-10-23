@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { toggleMobileMenu, wooNuxtVersionInfo } = useHelpers();
+const { toggleMobileMenu, wooNuxtVersionInfo } = useHelpers()
 </script>
 
 <template>

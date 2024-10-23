@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import type { FooterLink } from '~~/woonuxt_base/app/types';
+import type { PropType } from 'vue'
+import type { FooterLink } from '~~/woonuxt_base/app/types'
 
 const config = {
   wrapper: 'relative',
@@ -15,11 +15,11 @@ const config = {
     center: 'mt-3 lg:mt-0 lg:order-2 flex items-center justify-center',
     right: 'lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3',
   },
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   links: {
@@ -34,9 +34,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('footer', toRef(props, 'ui') as Ref<Partial<typeof config>>, config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('footer', toRef(props, 'ui') as Ref<Partial<typeof config>>, config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

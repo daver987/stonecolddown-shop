@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 interface Props {
-  type: 'background' | 'product';
-  image: string;
-  title: string;
-  description: string;
-  price?: string;
-  sku?: string;
-  to?: string;
-  buttonLabel?: string;
+  type: 'background' | 'product'
+  image: string
+  title: string
+  description: string
+  price?: string
+  sku?: string
+  to?: string
+  buttonLabel?: string
 }
 
-const props = defineProps<Props>();
-const showModal = ref(false);
+const props = defineProps<Props>()
+const showModal = ref(false)
 
 const openModal = () => {
   if (props.type === 'product') {
-    showModal.value = true;
+    showModal.value = true
   }
-};
+}
 </script>
 
 <template>

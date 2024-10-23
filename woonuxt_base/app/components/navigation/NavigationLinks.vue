@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twMerge } from 'tailwind-merge';
-import { getULinkProps } from '#ui/utils';
-import type { NavigationLink } from '../../types';
+import type { PropType } from 'vue'
+import { twMerge } from 'tailwind-merge'
+import { getULinkProps } from '#ui/utils'
+import type { NavigationLink } from '../../types'
 
 const config = {
   wrapper: 'space-y-3',
@@ -18,11 +18,11 @@ const config = {
     base: 'rounded-full',
   },
   label: 'text-sm/6 truncate',
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   level: {
@@ -41,9 +41,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('navigation.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('navigation.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

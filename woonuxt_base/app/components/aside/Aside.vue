@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import type { AsideLink } from '../../types';
+import type { PropType } from 'vue'
+import type { AsideLink } from '../../types'
 
 const config = {
   wrapper: 'hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4',
@@ -10,11 +10,11 @@ const config = {
     body: 'bg-background relative pointer-events-auto flex -mx-4 px-4',
     footer: 'h-8 bg-gradient-to-b from-background -mx-4 px-4',
   },
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   links: {
@@ -29,9 +29,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('aside', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('aside', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

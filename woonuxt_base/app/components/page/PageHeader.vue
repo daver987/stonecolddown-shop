@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Button } from '#ui/types';
-import type { PropType } from 'vue';
+import type { Button } from '#ui/types'
+import type { PropType } from 'vue'
 
 const config = {
   wrapper: 'relative border-b border-gray-200 dark:border-gray-800 py-8',
@@ -13,11 +13,11 @@ const config = {
     base: 'w-10 h-10 flex-shrink-0 text-primary',
   },
   links: 'flex flex-wrap items-center gap-1.5 mt-4 lg:mt-0',
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   headline: {
@@ -48,9 +48,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('page.header', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('page.header', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

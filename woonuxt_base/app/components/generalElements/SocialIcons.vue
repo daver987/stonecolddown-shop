@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { wooNuxtSEO } = useHelpers();
+const { wooNuxtSEO } = useHelpers()
 </script>
 
 <template>

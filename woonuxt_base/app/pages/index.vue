@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useSeoMeta } from '#imports';
-import { ProductsOrderByEnum } from '#woo';
-import type { Review } from '../types';
-import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types';
+import { useSeoMeta } from '#imports'
+import { ProductsOrderByEnum } from '#woo'
+import type { Review } from '../types'
+import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types'
 
 useSeoMeta({
   title: 'Stone Cold Down | Fine Line Black and Grey Tattoos by Natasha Smith',
@@ -17,12 +17,12 @@ useSeoMeta({
   twitterDescription: 'Natasha Smith of Stone Cold Down specializes in fine line black and grey tattoos. Discover your next masterpiece in Toronto.',
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
-});
+})
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 
 const bio = {
   headline: 'Meet Natasha Smith',
@@ -38,11 +38,11 @@ const bio = {
       variant: 'outline' as ButtonVariant,
     },
   ],
-};
+}
 
 const aboutImg = {
   one: 'https://res.cloudinary.com/dks0sw9qh/image/upload/e_grayscale/e_brightness:-60/ar_3:2,c_crop/stonecolddown/Natasha/natasha-36.jpg',
-};
+}
 
 const backgroundCards = [
   {
@@ -70,19 +70,19 @@ const backgroundCards = [
     to: '/products',
     buttonLabel: 'Shop Merch',
   },
-];
-const { siteName, description, shortDescription, siteImage } = useAppConfig();
+]
+const { siteName, description, shortDescription, siteImage } = useAppConfig()
 
-const { data: reviews } = await useFetch<Review[]>('/api/reviews');
+const { data: reviews } = await useFetch<Review[]>('/api/reviews')
 
-const { data } = await useAsyncGql('getProductCategories', { first: 6 });
-const productCategories = data.value?.productCategories?.nodes || [];
+const { data } = await useAsyncGql('getProductCategories', { first: 6 })
+const productCategories = data.value?.productCategories?.nodes || []
 
 const { data: productData } = await useAsyncGql('getProducts', {
   first: 5,
   orderby: ProductsOrderByEnum.POPULARITY,
-});
-const popularProducts = productData.value.products?.nodes || [];
+})
+const popularProducts = productData.value.products?.nodes || []
 </script>
 
 <template>
@@ -108,11 +108,6 @@ const popularProducts = productData.value.products?.nodes || [];
       <LandingGrid>
         <BackgroundCard class="col-span-4 row-span-8" v-for="card in backgroundCards" v-bind="card" :key="card.title" />
       </LandingGrid>
-    </LandingSection>
-    <LandingSection :headline="$t('messages.shop.shopByCategory')" title="Explore Our Categories">
-      <div class="grid justify-center grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-6">
-        <CategoryCard v-for="(category, i) in productCategories" :key="i" class="w-full" :node="category" />
-      </div>
     </LandingSection>
 
     <LandingSection>

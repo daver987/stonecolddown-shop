@@ -1,29 +1,29 @@
 <script setup>
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
+const { getFilter, setFilter, isFiltersActive } = useFiltering()
 
 const props = defineProps({
   terms: { type: Array, required: true },
   label: { type: String, default: '' },
   openByDefault: { type: Boolean, default: true },
   showCount: { type: Boolean, default: false },
-});
+})
 
-const isOpen = ref(props.openByDefault);
-const selectedTerms = ref(getFilter('category') || []);
+const isOpen = ref(props.openByDefault)
+const selectedTerms = ref(getFilter('category') || [])
 
-const route = useRoute();
-const categorySlug = route.params.categorySlug;
-if (categorySlug) selectedTerms.value = [categorySlug];
+const route = useRoute()
+const categorySlug = route.params.categorySlug
+if (categorySlug) selectedTerms.value = [categorySlug]
 
 watch(isFiltersActive, () => {
   // uncheck all checkboxes when filters are cleared
-  if (!isFiltersActive.value) selectedTerms.value = [];
-});
+  if (!isFiltersActive.value) selectedTerms.value = []
+})
 
 // Update the URL when the checkbox is changed
 const checkboxChanged = () => {
-  setFilter('category', selectedTerms.value);
-};
+  setFilter('category', selectedTerms.value)
+}
 </script>
 
 <template>

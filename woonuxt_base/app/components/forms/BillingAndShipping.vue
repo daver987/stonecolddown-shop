@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import type { ButtonColor, FormSubmitEvent } from '#ui/types';
-import { z } from 'zod';
-import type { CountriesEnum } from '#gql/default';
+import { useI18n } from 'vue-i18n'
+import type { ButtonColor, FormSubmitEvent } from '#ui/types'
+import { z } from 'zod'
+import type { CountriesEnum } from '#gql/default'
 
-const { viewer, customer } = useAuth();
-const { t } = useI18n();
+const { viewer, customer } = useAuth()
+const { t } = useI18n()
 
-const loading = ref<boolean>(false);
+const loading = ref<boolean>(false)
 const button = ref<{ text: string; color: ButtonColor }>({
   text: t('messages.account.updateDetails'),
   color: 'primary',
-});
+})
 
 const BillingSchema = z.object({
   firstName: z.string().min(1, t('messages.billing.enterFirstName')),
@@ -25,15 +25,15 @@ const BillingSchema = z.object({
   country: z.string().min(1, t('messages.billing.enterCountry')),
   postcode: z.string().min(1, t('messages.billing.enterZip')),
   email: z.string().email(t('messages.billing.enterValidEmail')),
-});
+})
 
-type Billing = z.infer<typeof BillingSchema>;
+type Billing = z.infer<typeof BillingSchema>
 
-const state = ref({ ...customer.value.billing }) as Ref<Billing>;
+const state = ref({ ...customer.value.billing }) as Ref<Billing>
 
 async function onSubmit(event: FormSubmitEvent<Billing>) {
-  loading.value = true;
-  button.value.text = t('messages.account.updating');
+  loading.value = true
+  button.value.text = t('messages.account.updating')
   try {
     const { updateCustomer } = await GqlUpdateCustomer({
       input: {
@@ -43,23 +43,23 @@ async function onSubmit(event: FormSubmitEvent<Billing>) {
           country: state.value.country as CountriesEnum,
         },
       },
-    });
+    })
     if (updateCustomer) {
       button.value = {
         text: t('messages.account.updateSuccess'),
         color: 'green',
-      };
+      }
     }
   } catch (error) {
-    button.value = { text: t('messages.account.failed'), color: 'red' };
+    button.value = { text: t('messages.account.failed'), color: 'red' }
   }
-  loading.value = false;
+  loading.value = false
   setTimeout(() => {
     button.value = {
       text: t('messages.account.updateDetails'),
       color: 'primary',
-    };
-  }, 2000);
+    }
+  }, 2000)
 }
 </script>
 

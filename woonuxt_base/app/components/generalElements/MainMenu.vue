@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { wishlistLink } = useAuth();
+const { wishlistLink } = useAuth()
 </script>
 
 <template>

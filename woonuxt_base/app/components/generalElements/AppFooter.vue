@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
+import { z } from 'zod'
+import type { FormSubmitEvent } from '#ui/types'
 
 const SubscribeSchema = z.object({
   email: z.string().email(),
-});
+})
 
-type Subscribe = z.infer<typeof SubscribeSchema>;
+type Subscribe = z.infer<typeof SubscribeSchema>
 
 const subscribeState = reactive({
   email: undefined,
-});
-const loading = ref(false);
-const isDisabled = ref(false);
+})
+const loading = ref(false)
+const isDisabled = ref(false)
 
-const toast = useToast();
+const toast = useToast()
 const subscribeToNewsletter = (data: FormSubmitEvent<Subscribe>) => {
-  loading.value = true;
-  isDisabled.value = true;
+  loading.value = true
+  isDisabled.value = true
   setTimeout(() => {
-    loading.value = false;
-    subscribeState.email = undefined;
-    toast.add({ title: 'Thank you for subscribing!' });
-    isDisabled.value = false;
-  }, 2000);
-};
+    loading.value = false
+    subscribeState.email = undefined
+    toast.add({ title: 'Thank you for subscribing!' })
+    isDisabled.value = false
+  }, 2000)
+}
 
 const footerLinks = [
   {
@@ -78,7 +78,7 @@ const footerLinks = [
       },
     ],
   },
-];
+]
 </script>
 
 <template>

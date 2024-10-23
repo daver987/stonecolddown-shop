@@ -1,7 +1,7 @@
 export type GeoLocation = {
-  name: string;
-  code: string;
-};
+  name: string
+  code: string
+}
 
 export const countries: GeoLocation[] = [
   { name: 'Afghanistan', code: 'AF' },
@@ -248,4 +248,4 @@ export const countries: GeoLocation[] = [
   { name: 'Yemen', code: 'YE' },
   { name: 'Zambia', code: 'ZM' },
   { name: 'Zimbabwe', code: 'ZW' },
-];
+]

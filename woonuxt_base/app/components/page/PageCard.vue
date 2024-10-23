@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils';
-import { getSlotChildrenText } from '~/lib/slots';
-import type { card as cardConfig } from '#ui/ui.config';
+import type { PropType } from 'vue'
+import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils'
+import { getSlotChildrenText } from '~/lib/slots'
+import type { card as cardConfig } from '#ui/ui.config'
 
 const config = {
   wrapper: 'relative group',
@@ -16,11 +16,11 @@ const config = {
   },
   title: 'text-gray-900 dark:text-white text-base font-semibold truncate flex items-center gap-1.5',
   description: 'text-[15px] text-gray-500 dark:text-gray-400 mt-1',
-};
+}
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   ...nuxtLinkProps,
@@ -44,12 +44,12 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config & typeof cardConfig>>,
     default: () => ({}),
   },
-});
+})
 
-const slots = useSlots();
-const { ui, attrs } = useUI('page.card', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const slots = useSlots()
+const { ui, attrs } = useUI('page.card', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 
-const nuxtLinkBind = computed(() => getNuxtLinkProps(props));
+const nuxtLinkBind = computed(() => getNuxtLinkProps(props))
 
 const ariaLabel = computed(() =>
   (
@@ -57,12 +57,12 @@ const ariaLabel = computed(() =>
     (slots.title &&
       getSlotChildrenText(
         slots.title() as {
-          children: string | { default?: (() => unknown) | undefined };
+          children: string | { default?: (() => unknown) | undefined }
         }[],
       )) ||
     'Logo'
   ).trim(),
-);
+)
 </script>
 
 <template>

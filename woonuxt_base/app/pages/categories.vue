@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { ProductCategory } from '../types';
+import type { ProductCategory } from '../types'
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 
 useSeoMeta({
   title: 'Shop Categories | Stone Cold Down',
@@ -19,16 +19,16 @@ useSeoMeta({
   twitterDescription: "Explore Stone Cold Down's product categories. Find merchandise inspired by Natasha Smith's fine line tattoo artistry.",
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary_large_image',
-});
+})
 
-const { data } = await useAsyncGql('getProductCategories');
-const productCategories = data.value.productCategories?.nodes as ProductCategory[];
+const { data } = await useAsyncGql('getProductCategories')
+const productCategories = data.value.productCategories?.nodes as ProductCategory[]
 
 useHead({
   title: 'Categories',
   meta: [{ name: 'description', content: 'All product categories' }],
   link: [{ rel: 'canonical', href: 'https://stonecolddown.com/categories' }],
-});
+})
 </script>
 
 <template>

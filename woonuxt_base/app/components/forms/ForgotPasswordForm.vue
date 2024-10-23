@@ -1,55 +1,55 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import { useI18n } from 'vue-i18n';
-import type { FormSubmitEvent } from '#ui/types';
+import { z } from 'zod'
+import { useI18n } from 'vue-i18n'
+import type { FormSubmitEvent } from '#ui/types'
 
-const { t } = useI18n();
-const { sendResetPasswordEmail } = useAuth();
-const loading = ref(false);
-const message = ref('');
-const errorMessage = ref('');
+const { t } = useI18n()
+const { sendResetPasswordEmail } = useAuth()
+const loading = ref(false)
+const message = ref('')
+const errorMessage = ref('')
 
 const schema = z.object({
   email: z.string().email(t('messages.error.invalidEmail')),
-});
+})
 
-type Schema = z.output<typeof schema>;
+type Schema = z.output<typeof schema>
 
 const state = reactive<Schema>({
   email: '',
-});
+})
 
 const handleFormSubmit = async (event: FormSubmitEvent<Schema>) => {
-  loading.value = true;
-  const userInfo = event.data;
+  loading.value = true
+  const userInfo = event.data
   try {
-    const { success, error } = await sendResetPasswordEmail(userInfo.email);
+    const { success, error } = await sendResetPasswordEmail(userInfo.email)
     if (success) {
-      errorMessage.value = '';
-      message.value = t('messages.account.ifRegistered');
+      errorMessage.value = ''
+      message.value = t('messages.account.ifRegistered')
     } else {
-      errorMessage.value = typeof error === 'string' ? error : String(error);
+      errorMessage.value = typeof error === 'string' ? error : String(error)
     }
   } catch (e) {
-    console.error(e);
-    errorMessage.value = t('messages.error.unknownError');
+    console.error(e)
+    errorMessage.value = t('messages.error.unknownError')
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
-const emit = defineEmits(['navigate']);
+const emit = defineEmits(['navigate'])
 
-const navigateToLogin = () => emit('navigate', 'login');
+const navigateToLogin = () => emit('navigate', 'login')
 
 const submitForm = () => {
   if (!loading.value) {
     handleFormSubmit({
       preventDefault: () => {},
       data: state,
-    } as FormSubmitEvent<Schema>);
+    } as FormSubmitEvent<Schema>)
   }
-};
+}
 </script>
 
 <template>

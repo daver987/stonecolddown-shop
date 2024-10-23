@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { twJoin } from 'tailwind-merge';
-import type { Button } from '#ui/types';
+import type { PropType } from 'vue'
+import { twJoin } from 'tailwind-merge'
+import type { Button } from '#ui/types'
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   title: {
@@ -32,18 +32,18 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
 const config = computed(() => {
   const container: string = twJoin(
     'gap-16 sm:gap-y-24',
     props.orientation === 'vertical' && 'flex flex-col',
     props.orientation === 'horizontal' && 'grid lg:grid-cols-2 lg:items-center',
-  );
+  )
 
-  const base: string = props.orientation === 'vertical' ? 'text-center' : '';
+  const base: string = props.orientation === 'vertical' ? 'text-center' : ''
 
-  const links: string = twJoin('mt-10 flex flex-wrap gap-x-6 gap-y-3', props.orientation === 'vertical' && 'justify-center');
+  const links: string = twJoin('mt-10 flex flex-wrap gap-x-6 gap-y-3', props.orientation === 'vertical' && 'justify-center')
 
   return {
     wrapper: 'py-24 sm:py-32 md:py-40 relative',
@@ -53,10 +53,10 @@ const config = computed(() => {
     title: 'text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl',
     description: 'mt-6 text-lg tracking-tight text-gray-600 dark:text-gray-300',
     links,
-  };
-});
+  }
+})
 
-const { ui, attrs } = useUI('landing.hero', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('landing.hero', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

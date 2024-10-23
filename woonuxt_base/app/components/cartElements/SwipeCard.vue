@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useSwipe } from '@vueuse/core';
-const emit = defineEmits(['remove']);
+import { useSwipe } from '@vueuse/core'
+const emit = defineEmits(['remove'])
 
-const isAlive = ref(true);
-const el = useTemplateRef('el');
+const isAlive = ref(true)
+const el = useTemplateRef('el')
 const { isSwiping, lengthX } = useSwipe(el, {
   passive: true,
   onSwipeEnd() {
     if (lengthX.value > 80) {
-      isAlive.value = false;
-      emit('remove');
+      isAlive.value = false
+      emit('remove')
     }
   },
-});
+})
 </script>
 
 <template>

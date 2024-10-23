@@ -1,5 +1,5 @@
 <script setup>
-const { toggleCart, cart } = useCart();
+const { toggleCart, cart } = useCart()
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import { getULinkProps } from '#ui/utils';
-import type { FooterLink } from '~~/woonuxt_base/app/types';
+import type { PropType } from 'vue'
+import { getULinkProps } from '#ui/utils'
+import type { FooterLink } from '~~/woonuxt_base/app/types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'flex flex-col md:flex-row items-center justify-center gap-4 lg:gap-6',
@@ -14,11 +14,11 @@ const config = computed(() => ({
     name: appConfig.ui.icons.external,
     base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500',
   },
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   links: {
@@ -33,9 +33,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('footer.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('footer.links', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

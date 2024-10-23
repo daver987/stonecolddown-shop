@@ -12,12 +12,12 @@ useSeoMeta({
     'Connect with Natasha Smith for tattoo appointments, custom designs, or any questions about her fine line black and grey tattoo artistry.',
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
-});
+})
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 
 useHead({
   htmlAttrs: {
@@ -30,7 +30,7 @@ useHead({
       href: '/favicon.ico',
     },
   ],
-});
+})
 </script>
 
 <template>

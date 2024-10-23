@@ -1,36 +1,40 @@
-<script setup>
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
-const selectedTerms = ref(getFilter('sale') || []);
-
-const isOpen = ref(true);
+<script setup lang="ts">
+const { getFilter, setFilter, isFiltersActive } = useFiltering()
+const selectedTerms = ref(getFilter('sale') || [])
 
 watch(isFiltersActive, () => {
-  // uncheck all radio boxes when filters are cleared
-  if (!isFiltersActive.value) selectedTerms.value = [];
-});
+  // uncheck all checkboxes when filters are cleared
+  if (!isFiltersActive.value) selectedTerms.value = []
+})
 
-const checkboxClicked = (e) => {
-  if (selectedTerms.value.length === 0) {
-    selectedTerms.value = [e.target.value];
-    setFilter('sale', [e.target.value]);
+const checkboxClicked = (value: boolean) => {
+  if (value) {
+    selectedTerms.value = ['true']
+    setFilter('sale', ['true'])
   } else {
-    selectedTerms.value = [];
-    setFilter('sale', []);
+    selectedTerms.value = []
+    setFilter('sale', [])
   }
-};
+}
+
+const items = [
+  {
+    label: 'Sale Products Only',
+    defaultOpen: true,
+    slot: 'content',
+  },
+]
 </script>
 
 <template>
-  <div>
-    <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
-      <span>Sale Products Only</span>
-      <Icon name="ion:chevron-down-outline" class="transform" :class="isOpen ? 'rotate-180' : ''" />
-    </div>
-    <div v-if="isOpen" class="mt-3 mr-1 max-h-[240px] grid gap-1 overflow-auto custom-scrollbar">
-      <div class="flex gap-2 items-center">
-        <label for="sale-true" class="cursor-pointer m-0 text-sm sr-only" aria-label="Only show products on sale"> Only show products on sale</label>
-        <input id="sale-true" v-model="selectedTerms" type="checkbox" :value="true" aria-label="Sale Products Only" @click="checkboxClicked" />
+  <UAccordion :items="items">
+    <template #default="{ item, open }">
+      <UButton :icon="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'" color="gray" variant="ghost" :label="item.label" />
+    </template>
+    <template #content>
+      <div class="mt-3 px-2">
+        <UCheckbox :model-value="selectedTerms.length > 0" label="Only show products on sale" name="sale" @update:model-value="checkboxClicked" />
       </div>
-    </div>
-  </div>
+    </template>
+  </UAccordion>
 </template>

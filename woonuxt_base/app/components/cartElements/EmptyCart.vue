@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { emptyCart } = useCart();
+const { emptyCart } = useCart()
 </script>
 
 <template>

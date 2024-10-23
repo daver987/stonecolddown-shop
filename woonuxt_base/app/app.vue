@@ -13,38 +13,38 @@ useHead({
   bodyAttrs: {
     class: 'dark:bg-gray-900',
   },
-});
-const colorMode = useColorMode();
+})
+const colorMode = useColorMode()
 
-colorMode.forced = true;
-colorMode.preference = 'dark';
+colorMode.forced = true
+colorMode.preference = 'dark'
 
-const route = useRoute();
-const { isShowingCart, toggleCart } = useCart();
-const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
-const { siteName } = useAppConfig();
+const route = useRoute()
+const { isShowingCart, toggleCart } = useCart()
+const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers()
+const { siteName } = useAppConfig()
 
 const closeCartAndMenu = () => {
-  toggleCart(false);
-  toggleMobileMenu(false);
-};
+  toggleCart(false)
+  toggleMobileMenu(false)
+}
 
 watch([isShowingCart, isShowingMobileMenu], () => {
   if (isShowingCart.value || isShowingMobileMenu.value) {
-    addBodyClass('overflow-hidden');
+    addBodyClass('overflow-hidden')
   } else {
-    removeBodyClass('overflow-hidden');
+    removeBodyClass('overflow-hidden')
   }
-});
+})
 
 watch(
   () => route.path,
   () => closeCartAndMenu(),
-);
+)
 
 useHead({
   titleTemplate: `%s - ${siteName}`,
-});
+})
 </script>
 
 <template>

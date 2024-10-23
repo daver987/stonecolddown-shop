@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
-import { useI18n } from 'vue-i18n';
+import { z } from 'zod'
+import type { FormSubmitEvent } from '#ui/types'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const router = useRouter();
-const route = useRoute();
-const { viewer, resetPasswordWithKey, loginUser } = useAuth();
+const { t } = useI18n()
+const router = useRouter()
+const route = useRoute()
+const { viewer, resetPasswordWithKey, loginUser } = useAuth()
 
 const schema = z
   .object({
@@ -16,63 +16,63 @@ const schema = z
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: t('messages.error.passwordMismatch'),
     path: ['confirmPassword'],
-  });
+  })
 
 const state = reactive({
   newPassword: '',
   confirmPassword: '',
-});
+})
 
-const isPending = ref(false);
-const isInvalidLink = ref(false);
+const isPending = ref(false)
+const isInvalidLink = ref(false)
 
 if (!route.query.key && !route.query.login) {
-  router.push('/my-account?action=forgotPassword');
+  router.push('/my-account?action=forgotPassword')
 }
 
 async function onSubmit(event: FormSubmitEvent<typeof schema>) {
-  isPending.value = true;
-  isInvalidLink.value = false;
+  isPending.value = true
+  isInvalidLink.value = false
 
   try {
     const userInfo = {
       key: route.query.key as string,
       login: route.query.login as string,
       password: state.newPassword,
-    };
-
-    if (!userInfo.key || !userInfo.login) {
-      isInvalidLink.value = true;
-      throw new Error(t('messages.error.invalidPasswordResetLink'));
     }
 
-    const resetResult = await resetPasswordWithKey(userInfo);
+    if (!userInfo.key || !userInfo.login) {
+      isInvalidLink.value = true
+      throw new Error(t('messages.error.invalidPasswordResetLink'))
+    }
+
+    const resetResult = await resetPasswordWithKey(userInfo)
     if (!resetResult.success) {
-      isInvalidLink.value = true;
-      throw new Error(typeof resetResult.error === 'string' ? resetResult.error : String(resetResult.error));
+      isInvalidLink.value = true
+      throw new Error(typeof resetResult.error === 'string' ? resetResult.error : String(resetResult.error))
     }
 
     if (viewer.value) {
       const loginResult = await loginUser({
         username: userInfo.login,
         password: userInfo.password,
-      });
+      })
       if (!loginResult.success) {
-        throw new Error(typeof loginResult.error === 'string' ? loginResult.error : String(loginResult.error));
+        throw new Error(typeof loginResult.error === 'string' ? loginResult.error : String(loginResult.error))
       }
     }
 
-    await navigateTo('/my-account');
+    await navigateTo('/my-account')
   } catch (error: unknown) {
-    console.error((error as Error).message || t('messages.error.general'));
+    console.error((error as Error).message || t('messages.error.general'))
   } finally {
-    isPending.value = false;
+    isPending.value = false
   }
 }
 
 useHead({
   title: t('messages.account.resetPassword'),
-});
+})
 </script>
 
 <template>

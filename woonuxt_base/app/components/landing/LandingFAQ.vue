@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
-import type { AccordionItem } from '#ui/types';
+import type { PropType } from 'vue'
+import type { AccordionItem } from '#ui/types'
 
-const appConfig = useAppConfig();
+const appConfig = useAppConfig()
 
 const config = computed(() => ({
   wrapper: 'divide-y divide-gray-200 dark:divide-gray-800 -mt-6',
@@ -21,11 +21,11 @@ const config = computed(() => ({
       inactive: '-rotate-90',
     },
   },
-}));
+}))
 
 defineOptions({
   inheritAttrs: false,
-});
+})
 
 const props = defineProps({
   items: {
@@ -44,9 +44,9 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({}),
   },
-});
+})
 
-const { ui, attrs } = useUI('landing.faq', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true);
+const { ui, attrs } = useUI('landing.faq', toRef(props, 'ui'), config, toRef(props, 'class') as Ref<string>, true)
 </script>
 
 <template>

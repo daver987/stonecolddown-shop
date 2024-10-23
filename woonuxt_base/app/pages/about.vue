@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ButtonSize, ButtonColor, ButtonVariant } from '#ui/types';
-import type { Review } from '../types';
+import type { ButtonSize, ButtonColor, ButtonVariant } from '#ui/types'
+import type { Review } from '../types'
 
 useSeoMeta({
   title: 'About Natasha Smith | Stone Cold Down',
@@ -15,12 +15,12 @@ useSeoMeta({
   twitterDescription: 'Discover the journey of Natasha Smith, a premier tattoo artist specializing in fine line black and grey tattoos at Stone Cold Down.',
   twitterImage: '/images/scd_logo.png',
   twitterCard: 'summary',
-});
+})
 
 definePageMeta({
   layout: 'default',
   colorMode: 'dark',
-});
+})
 
 const bio = {
   headline: 'About Me',
@@ -39,7 +39,7 @@ const bio = {
       variant: 'outline' as ButtonVariant,
     },
   ],
-};
+}
 
 const { data: reviews } = await useFetch<Review[]>('/api/reviews', {
   key: 'reviews',
@@ -47,7 +47,7 @@ const { data: reviews } = await useFetch<Review[]>('/api/reviews', {
     Accept: 'application/json',
   },
   method: 'GET',
-});
+})
 </script>
 
 <template>

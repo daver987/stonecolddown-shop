@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { theList } = useWishlist();
+const { theList } = useWishlist()
 </script>
 
 <template>

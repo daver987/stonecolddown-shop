@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import Slider from '@vueform/slider';
+import Slider from '@vueform/slider'
 
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
-const runtimeConfig = useRuntimeConfig();
-const maxPrice = runtimeConfig?.public?.MAX_PRICE || 1000;
-const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || '$';
+const { getFilter, setFilter, isFiltersActive } = useFiltering()
+const runtimeConfig = useRuntimeConfig()
+const maxPrice = runtimeConfig?.public?.MAX_PRICE || 1000
+const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || '$'
 
-const activeFilters = ref(getFilter('price'));
-const price = activeFilters.value.length ? ref(activeFilters.value) : ref([0, maxPrice]);
+const activeFilters = ref(getFilter('price'))
+const price = activeFilters.value.length ? ref(activeFilters.value) : ref([0, maxPrice])
 
 const resetSlider = () => {
-  price.value = [0, maxPrice];
-};
+  price.value = [0, maxPrice]
+}
 
 const applyPrice = () => {
-  //@ts-ignore
-  setFilter('price', price.value);
-};
+  setFilter('price', price.value.map(String))
+}
 
 watch(isFiltersActive, () => {
-  if (!isFiltersActive.value) resetSlider();
-});
+  if (!isFiltersActive.value) resetSlider()
+})
 
 const items = [
   {
@@ -29,7 +28,7 @@ const items = [
     defaultOpen: true,
     slot: 'content',
   },
-];
+]
 </script>
 
 <template>
@@ -38,7 +37,7 @@ const items = [
       <UButton :icon="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'" color="gray" variant="ghost" :label="$t(item.label)" />
     </template>
     <template #content>
-      <div class="mt-3 grid gap-4 grid-cols-2">
+      <div class="mt-3 grid gap-3 px-2 grid-cols-2">
         <UFormGroup name="minPrice" :label="$t('messages.shop.productResultCount.from')">
           <UInput id="price-from" v-model="price[0]" type="number" placeholder="From" min="0" />
         </UFormGroup>

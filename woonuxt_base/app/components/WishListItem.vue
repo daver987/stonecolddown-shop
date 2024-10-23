@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Product } from '../types';
+import type { Product } from '../types'
 
-const { removeFromWishlist } = useWishlist();
-const props = defineProps<{ product: Product }>();
+const { removeFromWishlist } = useWishlist()
+const props = defineProps<{ product: Product }>()
 
-const productLink = computed(() => (props.product.slug ? `/product/${decodeURIComponent(props.product.slug)}` : ''));
-const productImage = computed(() => props.product.image?.cartSourceUrl || props.product.image?.sourceUrl || '/images/placeholder.jpg');
+const productLink = computed(() => (props.product.slug ? `/product/${decodeURIComponent(props.product.slug)}` : ''))
+const productImage = computed(() => props.product.image?.cartSourceUrl || props.product.image?.sourceUrl || '/images/placeholder.jpg')
 </script>
 
 <template>
