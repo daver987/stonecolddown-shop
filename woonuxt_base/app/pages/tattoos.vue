@@ -1,64 +1,71 @@
 <script setup lang="ts">
-import type { ButtonColor, ButtonSize, ButtonVariant } from '#ui/types'
+import type { ButtonColor, ButtonSize, ButtonVariant } from "#ui/types";
 
 useSeoMeta({
-  title: 'Custom Tattoos | Natasha Smith',
-  description: 'Explore custom tattoo designs by Natasha Smith. Get a unique, personalized tattoo that tells your story.',
-  ogTitle: 'Custom Tattoos | Natasha Smith',
-  ogDescription: "Discover the art of custom tattoos by Natasha Smith. Work with her to create a unique design that's perfect for you.",
-  ogImage: '/images/scd_logo.jpg',
-  ogUrl: 'https://stonecolddown.com/tattoos',
-  twitterTitle: 'Custom Tattoos | Natasha Smith',
-  twitterDescription: 'Create your perfect tattoo with Natasha Smith. Personalized designs that bring your vision to life.',
-  twitterImage: '/images/scd_logo.jpg',
-  twitterCard: 'summary',
-})
+	title: "Custom Tattoos | Natasha Smith",
+	description:
+		"Explore custom tattoo designs by Natasha Smith. Get a unique, personalized tattoo that tells your story.",
+	ogTitle: "Custom Tattoos | Natasha Smith",
+	ogDescription:
+		"Discover the art of custom tattoos by Natasha Smith. Work with her to create a unique design that's perfect for you.",
+	ogImage: "/images/scd_logo.jpg",
+	ogUrl: "https://stonecolddown.com/tattoos",
+	twitterTitle: "Custom Tattoos | Natasha Smith",
+	twitterDescription:
+		"Create your perfect tattoo with Natasha Smith. Personalized designs that bring your vision to life.",
+	twitterImage: "/images/scd_logo.jpg",
+	twitterCard: "summary",
+});
 
 definePageMeta({
-  layout: 'default',
-  colorMode: 'dark',
-})
+	layout: "default",
+	colorMode: "dark",
+});
 
 const customTattooInfo = {
-  headline: 'Custom Designs',
-  title: 'Your Vision, My Artistry',
-  description: `As an independent tattoo artist, I specialize in bringing your unique tattoo ideas to life. Whether you have a specific design in mind or need help developing your concept, I'll work closely with you to create a custom tattoo that perfectly captures your vision and personality.`,
-  align: 'left' as const,
-  links: [
-    {
-      label: 'Book a Consultation',
-      color: 'primary' as ButtonColor,
-      size: 'lg' as ButtonSize,
-      variant: 'outline' as ButtonVariant,
-      to: '/booking',
-    },
-  ],
-}
+	headline: "Custom Designs",
+	title: "Your Vision, My Artistry",
+	description: `As an independent tattoo artist, I specialize in bringing your unique tattoo ideas to life. Whether you have a specific design in mind or need help developing your concept, I'll work closely with you to create a custom tattoo that perfectly captures your vision and personality.`,
+	align: "left" as const,
+	links: [
+		{
+			label: "Book a Consultation",
+			color: "primary" as ButtonColor,
+			size: "lg" as ButtonSize,
+			variant: "outline" as ButtonVariant,
+			to: "/booking",
+		},
+	],
+};
 
 const processSteps = [
-  {
-    title: 'Initial Consultation',
-    description: "We'll discuss your ideas, placement, and size preferences in detail.",
-  },
-  {
-    title: 'Design Development',
-    description: "I'll create a custom design based on our discussion and your vision.",
-  },
-  {
-    title: 'Refinement',
-    description: "We'll review and refine the design until you're completely satisfied.",
-  },
-  {
-    title: 'Tattooing Session',
-    description: "I'll bring your custom design to life in a professional, comfortable environment.",
-  },
-]
+	{
+		title: "Initial Consultation",
+		description:
+			"We'll discuss your ideas, placement, and size preferences in detail.",
+	},
+	{
+		title: "Design Development",
+		description:
+			"I'll create a custom design based on our discussion and your vision.",
+	},
+	{
+		title: "Refinement",
+		description:
+			"We'll review and refine the design until you're completely satisfied.",
+	},
+	{
+		title: "Tattooing Session",
+		description:
+			"I'll bring your custom design to life in a professional, comfortable environment.",
+	},
+];
 
 const galleryImages = [
-  'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
-  'https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137881/stonecolddown/Portfolio/portfolio_10.jpg',
-  'https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137912/stonecolddown/Portfolio/portfolio_02.jpg',
-]
+	"https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28",
+	"https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137881/stonecolddown/Portfolio/portfolio_10.jpg",
+	"https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137912/stonecolddown/Portfolio/portfolio_02.jpg",
+];
 </script>
 
 <template>
@@ -76,16 +83,16 @@ const galleryImages = [
           :headline="customTattooInfo.headline"
           :title="customTattooInfo.title"
           :description="customTattooInfo.description"
-          :align="customTattooInfo.align"
-          :links="customTattooInfo.links"
-          :ui="{
-            title: 'text-3xl font-heading',
-            headline: 'text-lg font-thin text-white',
-            description: 'text-base',
+			:align="customTattooInfo.align"
+			:links="customTattooInfo.links"
+			:ui="{
+				title: 'text-3xl font-heading',
+				headline: 'text-lg font-thin text-white',
+				description: 'text-base',
           }">
           <NuxtImg
             class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700"
-            src="https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28"
+            src="https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137857/stonecolddown/Portfolio/portfolio_21"
             alt="Custom Tattoo Design Process" />
         </LandingSection>
 

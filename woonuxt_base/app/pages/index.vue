@@ -47,7 +47,7 @@ const aboutImg = {
 const backgroundCards = [
   {
     type: 'background' as 'background' | 'product',
-    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/Portfolio/portfolio_28',
+    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/v1722137870/stonecolddown/Portfolio/portfolio_13',
     title: 'Tattoos',
     description:
       'Whether you know exactly what you want or need some inspiration, Natasha will work with you to create a custom design that perfectly captures your style and personality.',
@@ -56,7 +56,7 @@ const backgroundCards = [
   },
   {
     type: 'background' as 'background' | 'product',
-    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/f_auto,q_auto/v1/stonecolddown/ballpoint/ballpoint_21',
+    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/c_pad,b_gen_fill,ar_1:1/v1728708023/stonecolddown/flash_girls_06-1.jpg',
     title: 'Flash Tattoo Designs',
     description: 'Check out our flash tattoo designs. These designs are ready to be tattooed and are a great way to get started with your tattoo journey.',
     to: '/flash-designs',
@@ -64,7 +64,7 @@ const backgroundCards = [
   },
   {
     type: 'background' as 'background' | 'product',
-    image: 'https://res-console.cloudinary.com/dks0sw9qh/media_explorer_thumbnails/a2bffa0c5dcff7b8f4473d8d9650cb5f/detailed',
+    image: 'https://res.cloudinary.com/dks0sw9qh/image/upload/c_pad,b_gen_fill,ar_1:1/v1729725193/stonecolddown/merch_handbag_1.png',
     title: 'Merchandise',
     description: 'Shop our exclusive merchandise. We have a wide range of product from hats to shirts to mugs and more.',
     to: '/products',
